@@ -1,0 +1,42 @@
+nav.nav {
+
+    margin: 0 auto;
+
+    .nav-brandlogo {
+        width: 150px;
+        margin: 10vh auto 0 auto;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .nav-items {
+        margin: 10vh auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        a {
+            color: $primary-color-1;
+            line-height: 140%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            img {
+                width: 30px;
+            }
+        }
+    }
+
+    .statement {
+        margin-top: 5vh;
+
+        p {
+            font-size: $fs14;
+            color: $primary-color-1;
+            padding: 0 20px;
+        }
+    }
+}

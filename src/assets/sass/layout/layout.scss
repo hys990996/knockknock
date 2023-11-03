@@ -1,0 +1,35 @@
+body {
+    height: 100vh;
+}
+
+main,
+.main-block {
+
+    width: 100%;
+    max-width: 1440px;
+    height: 100vh;
+    margin: 0 auto;
+
+    .main {
+        height: 95%;
+        background-color: $secondary-color-2;
+        border-radius: 40px;
+        display: flex;
+        margin: 40px;
+
+        .section {
+            &-left {
+                background-color: $secondary-color-1;
+                border-top-left-radius: 40px;
+                border-bottom-left-radius: 40px;
+                padding: 0px;
+                flex-basis: 280px;
+                flex-shrink: 0;
+            }
+
+            &-right {
+                padding: 20px;
+            }
+        }
+    }
+}
