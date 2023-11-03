@@ -1,5 +1,17 @@
 <template>
-    <main class="main">
-        <h1>this is service</h1>
-    </main>
+    <layout>
+        <template #section-right-content>
+
+        </template>
+    </layout>
 </template>
+<script>
+//import 這頁需要的元件
+import layout from '@/components/layout.vue'
+
+export default {
+    components: {
+        layout
+    }
+}
+</script>

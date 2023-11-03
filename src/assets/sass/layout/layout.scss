@@ -25,10 +25,14 @@ main,
                 padding: 0px;
                 flex-basis: 280px;
                 flex-shrink: 0;
+
+                overflow-y: scroll;
             }
 
             &-right {
                 padding: 20px;
+
+                overflow-y: scroll;
             }
         }
     }

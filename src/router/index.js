@@ -39,6 +39,12 @@ const routes = [
         name: 'service',
         component: () => import('../views/service.vue')
     },
+    {
+        // 前台 個人版面
+        path: '/mypage',
+        name: 'mypage',
+        component: () => import('../views/mypage.vue')
+    },
 
 ]
 

@@ -17,12 +17,16 @@
                 <h3>主題活動</h3>
             </router-link>
             <router-link :to="{ name: 'about-us' }">
-                <img src="../assets/images/icon/about-us.svg" alt="activity icon" />
-                <h3>關於我們</h3>
+                <img src="../assets/images/icon/about-us.svg" alt="about-us icon" />
+                <h3>關於叩叩</h3>
             </router-link>
             <router-link :to="{ name: 'service' }">
-                <img src="../assets/images/icon/qa.svg" alt="activity icon" />
+                <img src="../assets/images/icon/qa.svg" alt="service icon" />
                 <h3>我有問題</h3>
+            </router-link>
+            <router-link :to="{ name: 'mypage' }">
+                <img src="../assets/images/icon/mypage.svg" alt="mypage icon" />
+                <h3>個人版面</h3>
             </router-link>
         </div>
         <div class="statement">
