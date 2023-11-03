@@ -22,10 +22,34 @@ const routes = [
         component: () => import('../views/playground.vue')
     },
     {
+        // 前台 貪食蛇
+        path: '/playground/snake',
+        name: 'snake',
+        component: () => import('../views/snake.vue')
+    },
+    {
+        // 前台 白萬小學堂
+        path: '/playground/million_school',
+        name: 'million_school',
+        component: () => import('../views/million_school.vue')
+    },
+    {
         // 前台 主題活動
         path: '/activity',
         name: 'activity',
         component: () => import('../views/activity.vue')
+    },
+    {
+        // 前台 活動詳細頁
+        path: '/activity/activity_info',
+        name: 'activity_info',
+        component: () => import('../views/activity_info.vue')
+    },
+    {
+        // 前台 活動搜尋結果
+        path: '/activity/activity_search',
+        name: 'activity_search',
+        component: () => import('../views/activity_search.vue')
     },
     {
         // 前台 關於我們
@@ -40,10 +64,46 @@ const routes = [
         component: () => import('../views/service.vue')
     },
     {
+        // 前台 聯繫我們
+        path: '/customer-service/contact_us',
+        name: 'contact_us',
+        component: () => import('../views/contact_us.vue')
+    },
+    {
+        // 前台 常見問題
+        path: '/customer-service/qa',
+        name: 'qa',
+        component: () => import('../views/qa.vue')
+    },
+    {
+        // 前台 客服小幫手
+        path: '/customer-service/chatbot',
+        name: 'chatbot',
+        component: () => import('../views/chatbot.vue')
+    },
+    {
         // 前台 個人版面
         path: '/mypage',
         name: 'mypage',
         component: () => import('../views/mypage.vue')
+    },
+    {
+        // 前台 編輯個人版面
+        path: '/mypage/mypage_edit',
+        name: 'mypage_edit',
+        component: () => import('../views/mypage_edit.vue')
+    },
+    {
+        // 前台 我要去流浪
+        path: '/mypage/wander',
+        name: 'wander',
+        component: () => import('../views/wander.vue')
+    },
+    {
+        // 前台 好友清單
+        path: '/mypage/friends',
+        name: 'friends',
+        component: () => import('../views/friends.vue')
     },
 
 ]
