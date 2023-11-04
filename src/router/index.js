@@ -105,6 +105,57 @@ const routes = [
         name: 'friends',
         component: () => import('../views/friends.vue')
     },
+    {
+        // 前台 會員登入
+        path: '/login',
+        name: 'member_login',
+        component: () => import('../views/member_login.vue')
+    },
+    {
+        // 前台 會員註冊
+        path: '/sign_up',
+        name: 'member_signup',
+        component: () => import('../views/member_signup.vue')
+    },
+
+    /*--------------------------  backside --------------------------*/
+
+    {
+        // 後台 登入頁
+        path: '/back/login',
+        name: 'b_index',
+        component: () => import('../views/b_index.vue')
+    },
+    {
+        // 後台 會員管理
+        path: '/back/member',
+        name: 'b_member',
+        component: () => import('../views/b_member.vue')
+    },
+    {
+        // 後台 活動管理
+        path: '/back/activity',
+        name: 'b_activity',
+        component: () => import('../views/b_activity.vue')
+    },
+    {
+        // 後台 客服專區
+        path: '/back/service',
+        name: 'b_service',
+        component: () => import('../views/b_service.vue')
+    },
+    {
+        // 後台 任務管理
+        path: '/back/mission',
+        name: 'b_mission',
+        component: () => import('../views/b_mission.vue')
+    },
+    {
+        // 後台 常見問題
+        path: '/back/qa',
+        name: 'b_qa',
+        component: () => import('../views/b_qa.vue')
+    },
 
 ]
 
