@@ -1,14 +1,15 @@
 <template>
     <main class="main-block">
         <div class="main">
-            <section class="section-left">
+            <section class="section section-left">
                 <navbar></navbar>
+                <div class="left-expand">
+                    <button>
+                        <img src="../assets/images/icon/right-arrow.svg" alt="">
+                    </button>
+                </div>
             </section>
             <section class="section-right">
-                <!-- <h1>this is right</h1>
-                <div class="btn btn-dark">開始</div>
-                <div class="btn btn-light">取消</div> -->
-                <div class="user-info"></div>
                 <slot name="section-right-content"></slot>
             </section>
         </div>

@@ -1,0 +1,15 @@
+<template>
+    <div class="user-info">
+        <div class="user-search">
+            <img src="../assets/images/icon/search.svg" alt="">
+            <input type="text" placeholder="搜尋好友">
+        </div>
+        <div class="user-detail-info">
+            <div class="user-image"><img src="../assets/images/user/userimage.png" alt=""></div>
+            <h3>王小明</h3>
+        </div>
+        <div class="login-out">
+            <img src="../assets/images/icon/logout.svg" alt="">
+        </div>
+    </div>
+</template>
