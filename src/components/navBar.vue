@@ -1,8 +1,10 @@
 <template>
-    <nav class="nav">
-        <router-link :to="{ name: 'home' }" class="nav-brandlogo">
-            <img src="../assets/images/logo/logo_desk.svg" alt="logo" />
-        </router-link>
+    <nav :class="['nav', { 'nav-off': !show }]" ref="navBar">
+        <div>
+            <router-link :to="{ name: 'home' }" class="nav-brandlogo">
+                <img src="../assets/images/logo/logo_desk.svg" alt="logo" />
+            </router-link>
+        </div>
         <div class="nav-items">
             <router-link :to="{ name: 'chatting_room' }">
                 <img src="../assets/images/icon/chat.svg" alt="chat icon" />
@@ -24,15 +26,12 @@
                 <img src="../assets/images/icon/qa.svg" alt="service icon" />
                 <h3>我有問題</h3>
             </router-link>
-            <router-link :to="{ name: 'mypage' }">
-                <img src="../assets/images/icon/mypage.svg" alt="mypage icon" />
-                <h3>個人版面</h3>
-            </router-link>
-        </div>
-        <div class="statement">
-            <p>
-                ©本網站為緯育TibaMe第87期前端工程師專業技術養成班學員作品,僅供學習、展示之用途。
-            </p>
         </div>
     </nav>
 </template>
+
+<script>
+export default {
+    props: ['show'],
+}
+</script>

@@ -1,14 +1,18 @@
 nav.nav {
 
-    margin-top: 80px;
+    height: 100%;
+    width: 280px;
     display: flex;
     flex-direction: column;
+    flex: 1;
     align-items: center;
-    gap: 80px;
+    overflow: auto;
+    flex-wrap: nowrap;
+    transition: width .3s linear;
 
     .nav-brandlogo {
         width: 150px;
-        // margin: 10vh auto 0 auto;
+        padding-top: 80px;
 
         img {
             width: 100%;
@@ -16,7 +20,7 @@ nav.nav {
     }
 
     .nav-items {
-        // margin: 10vh auto;
+        padding-top: 40px;
         display: flex;
         flex-direction: column;
         gap: 16px;
@@ -34,13 +38,22 @@ nav.nav {
         }
     }
 
-    .statement {
-        // margin-top: 5vh;
+    &-off {
+        width: 100px;
 
-        p {
-            font-size: $fs14;
-            color: $primary-color-1;
-            padding: 0 20px;
+        .nav-brandlogo {
+            width: 80px;
+        }
+
+        .nav-items {
+            gap: 20px;
+
+            a {
+
+                h3 {
+                    display: none;
+                }
+            }
         }
     }
 }

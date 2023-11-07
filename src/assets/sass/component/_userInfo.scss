@@ -31,21 +31,23 @@
     }
 
     .user-detail-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
 
-        .user-image {
-            width: 60px;
-            border-radius: 100px;
+            .user-image {
+                width: 60px;
+                border-radius: 100px;
 
-            img {
-                width: 100%;
+                img {
+                    width: 100%;
+                }
             }
-        }
 
-        h3 {
-            color: $primary-color-1;
+            h3 {
+                color: $primary-color-1;
+            }
         }
     }
 
