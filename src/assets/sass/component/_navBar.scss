@@ -1,14 +1,30 @@
 nav.nav {
 
-    margin-top: 80px;
+    height: 100%;
+    width: 280px;
     display: flex;
     flex-direction: column;
+    flex: 1;
     align-items: center;
-    gap: 80px;
+    overflow: auto;
+    flex-wrap: nowrap;
+    transition: width .3s linear;
+
+    @media (max-width: 991.98px) {
+        width: 200px;
+    }
+
+    @media (max-width: 767.98px) {
+        width: 100%;
+    }
 
     .nav-brandlogo {
         width: 150px;
-        // margin: 10vh auto 0 auto;
+        padding-top: 80px;
+
+        @media (max-width: 767.98px) {
+            display: none;
+        }
 
         img {
             width: 100%;
@@ -16,10 +32,20 @@ nav.nav {
     }
 
     .nav-items {
-        // margin: 10vh auto;
+        padding-top: 40px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
+
+        @media (max-width: 767.98px) {
+            flex-direction: row;
+            padding-top: 8px;
+        }
+
+        @media (max-width: 575.98px) {
+            gap: 12px;
+        }
+
 
         a {
             color: $primary-color-1;
@@ -27,20 +53,54 @@ nav.nav {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px;
 
             img {
                 width: 30px;
             }
+
+            &:hover {
+                background: white;
+                padding: 8px;
+                border-radius: 100px;
+            }
+
+            @media (max-width: 767.98px) {
+                h3 {
+                    font-size: $fs16;
+                }
+            }
+
+            @media (max-width: 575.98px) {
+                h3 {
+                    display: none;
+                }
+            }
+        }
+
+        a.current {
+            background: white;
+            padding: 8px;
+            border-radius: 100px;
         }
     }
 
-    .statement {
-        // margin-top: 5vh;
+    &-off {
+        width: 100px;
 
-        p {
-            font-size: $fs14;
-            color: $primary-color-1;
-            padding: 0 20px;
+        .nav-brandlogo {
+            width: 80px;
+        }
+
+        .nav-items {
+            gap: 12px;
+
+            a {
+
+                h3 {
+                    display: none;
+                }
+            }
         }
     }
 }
