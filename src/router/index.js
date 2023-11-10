@@ -29,9 +29,21 @@ const routes = [
     },
     {
         // 前台 白萬小學堂
+        path: '/playground/million_school_start',
+        name: 'million_school_start',
+        component: () => import('../views/million_school_start.vue')
+    },
+    {
+        // 前台 白萬小學堂
         path: '/playground/million_school',
         name: 'million_school',
         component: () => import('../views/million_school.vue')
+    },
+    {
+        // 前台 白萬小學堂
+        path: '/playground/million_school_end',
+        name: 'million_school_end',
+        component: () => import('../views/million_school_end.vue')
     },
     {
         // 前台 主題活動
