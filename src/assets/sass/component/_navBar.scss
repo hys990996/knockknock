@@ -10,9 +10,21 @@ nav.nav {
     flex-wrap: nowrap;
     transition: width .3s linear;
 
+    @media (max-width: 991.98px) {
+        width: 200px;
+    }
+
+    @media (max-width: 767.98px) {
+        width: 100%;
+    }
+
     .nav-brandlogo {
         width: 150px;
         padding-top: 80px;
+
+        @media (max-width: 767.98px) {
+            display: none;
+        }
 
         img {
             width: 100%;
@@ -23,7 +35,17 @@ nav.nav {
         padding-top: 40px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
+
+        @media (max-width: 767.98px) {
+            flex-direction: row;
+            padding-top: 8px;
+        }
+
+        @media (max-width: 575.98px) {
+            gap: 12px;
+        }
+
 
         a {
             color: $primary-color-1;
@@ -31,10 +53,35 @@ nav.nav {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px;
 
             img {
                 width: 30px;
             }
+
+            &:hover {
+                background: white;
+                padding: 8px;
+                border-radius: 100px;
+            }
+
+            @media (max-width: 767.98px) {
+                h3 {
+                    font-size: $fs16;
+                }
+            }
+
+            @media (max-width: 575.98px) {
+                h3 {
+                    display: none;
+                }
+            }
+        }
+
+        a.current {
+            background: white;
+            padding: 8px;
+            border-radius: 100px;
         }
     }
 
@@ -46,7 +93,7 @@ nav.nav {
         }
 
         .nav-items {
-            gap: 20px;
+            gap: 12px;
 
             a {
 
