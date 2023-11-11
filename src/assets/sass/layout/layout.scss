@@ -18,11 +18,11 @@ main.main-block {
         flex: 1;
         overflow: hidden;
 
-        @media (max-width: 991.98px) {
+        @include media-breakpoint-down(lg) {
             margin: 20px;
         }
 
-        @media (max-width: 767.98px) {
+        @include media-breakpoint-down(md) {
             flex-direction: column-reverse;
             background-color: transparent;
             border-radius: 0;
@@ -39,7 +39,7 @@ main.main-block {
                 display: flex;
                 flex-direction: column;
 
-                @media (max-width: 767.98px) {
+                @include media-breakpoint-down(md) {
                     min-height: auto;
                     height: 130px;
                     border-top-left-radius: 0px;
@@ -51,11 +51,11 @@ main.main-block {
                     padding: 12px 20px;
                     text-align: right;
 
-                    @media (max-width: 991.98px) {
+                    @include media-breakpoint-down(lg) {
                         width: 200px;
                     }
 
-                    @media (max-width: 767.98px) {
+                    @include media-breakpoint-down(md) {
                         width: 100%;
                     }
 
@@ -65,7 +65,7 @@ main.main-block {
                         padding-bottom: 12px;
                         text-align: left;
 
-                        @media (max-width: 767.98px) {
+                        @include media-breakpoint-down(md) {
                             text-align: center;
                             padding-bottom: 0px;
                         }
@@ -82,7 +82,7 @@ main.main-block {
                                 padding-right: 4px;
                             }
 
-                            @media (max-width: 767.98px) {
+                            @include media-breakpoint-down(md) {
                                 justify-content: center;
                             }
                         }
@@ -92,7 +92,7 @@ main.main-block {
                         transform: rotate(0deg);
                         transition: transform .8s;
 
-                        @media (max-width: 767.98px) {
+                        @include media-breakpoint-down(md) {
                             display: none;
                         }
                     }
@@ -122,10 +122,11 @@ main.main-block {
                 // overflow-y: auto;
 
                 .slot-content {
-                    overflow-y: auto
+                    overflow-y: auto;
+                    flex-grow: 1;
                 }
 
-                @media (max-width: 767.98px) {
+                @include media-breakpoint-down(md) {
                     min-height: calc(100% - 120px);
                     padding: 0 20px;
                 }
