@@ -11,7 +11,7 @@
                             Staff-only
                         </router-link>
                     </p>
-                    <button class="arrowBtn" @click="show">
+                    <button class="arrowBtn" @click="clickShow">
                         <img src="../assets/images/icon/right-arrow.svg" alt="">
                     </button>
                 </div>
@@ -42,20 +42,29 @@ export default {
     },
     mounted() {
 
-        let localShow = localStorage.getItem('navBarShow')
-        if (localShow != null) {
-            if (localShow == 'false') {
-                // console.log(localShow)
-                this.$refs.leftExpand.classList.add("left-expand-off")
-                this.navBarShow = false
-            }
-        }
+        this.localShow();
+        window.addEventListener('resize', this.localShow());
+
     },
     methods: {
-        show() {
-            this.$refs.leftExpand.classList.toggle("left-expand-off")
+        clickShow() {
+            this.$refs.leftExpand.classList.toggle("left-expand-off");
             this.navBarShow = !this.navBarShow;
-            localStorage.setItem('navBarShow', this.navBarShow)
+            localStorage.setItem('navBarShow', this.navBarShow);
+        },
+
+        localShow() {
+            let localShow = localStorage.getItem('navBarShow');
+            if (localShow != null) {
+                if (window.innerWidth < 767.98 && localShow == 'false') {
+                    this.navBarShow = true;
+                    this.$refs.leftExpand.classList.remove("left-expand-off")
+                } else if (localShow == 'false') {
+                    // console.log(localShow)
+                    this.$refs.leftExpand.classList.add("left-expand-off")
+                    this.navBarShow = false
+                }
+            }
         }
     }
 }

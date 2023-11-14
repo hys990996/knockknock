@@ -58,16 +58,13 @@
 //     }
 // }
 .chatroom-start {
-    width: 1000px;
+    width: 100%;
     height: 100%;
-
-    opacity: 80%;
-    border-radius: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+
 
     h1 {
         margin-bottom: 40px;
@@ -81,24 +78,22 @@
 
     input {
         width: 350px;
-        height: 59px;
-        background-color: #FFFFFF;
-        font-size: $fs24;
-        margin-right: 20px;
+        font-size: $fs16;
         border: none;
-        border-radius: 30px;
-        padding: 12px 16px;
+        border-radius: 100px;
+        padding: 16px;
         margin-bottom: 40px;
+        line-height: 140%;
+        color: $primary-color-1;
+
+        &:focus {
+            outline-color: $primary-color-2;
+        }
     }
 
     .chatbtn {
         width: 350px;
-        height: 54px;
-        border-radius: 30px;
-        border: none;
-        background-color: $primary-color-1;
-        color: white;
-        font-size: $fs24;
+        // height: 60px;
     }
 }
 
@@ -106,9 +101,13 @@
 
     border-radius: 40px;
     width: 100%;
+    // opacity: 80%;
+    padding: 0 50px;
 
-    opacity: 80%;
-    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
 
     h1 {
         text-align: center;
@@ -120,64 +119,56 @@
         ul {
             display: flex;
             flex-direction: column;
-            border-radius: 20px;
-            // width: 383.75px;
-            margin: 20px;
-            padding: 20px;
+            padding-top: 12px;
 
             span.top {
-                color: $primary-color-1;
                 display: flex;
-            }
+                align-items: center;
 
-            .user-left {
-                margin-right: auto;
+                li {
+                    color: $primary-color-2 ;
+                    margin: 8px 12px 8px 0;
+                    font-size: $fs14;
+                }
+
+                .username {
+                    color: $primary-color-1 ;
+                    font-size: $fs16;
+                }
 
             }
 
             .user-right {
-                margin-left: auto;
+                justify-content: flex-end;
             }
 
             .content-left {
 
-                background-color: $primary-color-1;
+                background-color: $secondary-color-4;
                 margin-right: auto;
 
                 li {
-                    color: white;
+                    color: $primary-color-1;
                 }
             }
 
             .content-right {
-                background-color: $secondary-color-4;
+                background-color: $primary-color-1;
                 margin-left: auto;
 
-            }
-
-
-            li {
-                margin: 10px 0;
-                color: black;
-                font-size: $fs24;
-
-            }
-
-            span.top {
-                margin-bottom: 20px;
-
-
                 li {
-                    color: $primary-color-1 ;
-                    margin-right: 20px;
-
+                    color: $white;
                 }
+
             }
 
             span.bottom {
-                width: 383.75px;
-                border-radius: 20px;
-                padding: 15px;
+                // width: 383.75px;
+                width: auto;
+                min-width: 200px;
+                min-height: 30px;
+                border-radius: 12px;
+                padding: 8px 12px;
             }
 
         }
@@ -189,32 +180,36 @@
     .user-section {
         display: flex;
         flex-direction: column;
-        margin: 20px;
+        margin-top: 20px;
+        padding: 20px 20px 20px 20px;
         justify-content: center;
         align-items: center;
 
-        .user-content {
-            margin: 50px 0;
-        }
+        border-top: 1px solid $secondary-color-4;
+
+        // .user-content {
+        //     margin: 50px 0;
+        // }
 
         input {
             width: 650px;
-            height: 68px;
-            background-color: $secondary-color-4;
-            font-size: $fs24;
+            // height: 68px;
+            // background-color: $secondary-color-4;
+            // font-size: $fs20;
             margin-right: 20px;
             border: none;
             border-radius: 30px;
+            line-height: 140%;
+            padding: 12px;
+            color: $primary-color-1;
+
+            &:focus {
+                outline-color: $primary-color-2;
+            }
         }
 
         .chatbtn {
-            width: 195px;
-            height: 68px;
-            border-radius: 30px;
-            border: none;
-            background-color: $primary-color-1;
-            color: white;
-            font-size: $fs24;
+            padding: 8px;
         }
 
 

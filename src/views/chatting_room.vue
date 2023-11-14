@@ -18,20 +18,20 @@
                 <h1>加入聊天大廳</h1>
                 <div class="user-content">
                     <input type="text" placeholder="請輸入暱稱" v-model="tempUsername">
-                    <button @click="submitUsername" class="chatbtn ">進入</button>
+                    <button @click="submitUsername" class="Btn Btn-dark chatbtn">進入</button>
                 </div>
             </div>
 
 
             <div class="chatroom" v-else>
-                <h1>聊天大廳</h1>
+                <!-- <h1>聊天大廳</h1> -->
                 <div class="chat-section">
                     <ul v-for="(i, key) in chatroom" :key="key">
                         <span class="top" :class="{
                             'user-right': i.username === username,
                             'user-left': i.username !== username
                         }">
-                            <li>{{ i.username }}</li>
+                            <li class="username">{{ i.username }}</li>
                             <li> {{ i.time }}</li>
 
                         </span>
@@ -48,12 +48,12 @@
 
                 </div>
 
-                
+
                 <div class="user-section">
 
                     <div class="text-content">
-                        <input type="text" v-model="message" placeholder="信息">
-                        <button @click="addMessage" class="chatbtn ">送出</button>
+                        <input type="text" v-model="message" placeholder="請輸入信息">
+                        <button @click="addMessage" class="Btn Btn-dark chatbtn ">送出</button>
                     </div>
 
                 </div>
