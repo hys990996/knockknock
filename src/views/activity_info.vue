@@ -8,23 +8,10 @@
         <h1>{{ activityData.ACTIVITY_NAME }}</h1>
         <div class="act_ph">
           <img
-            src="../assets/images/actitity/001.jpg"
+            src="../assets/images/actitity-info/001.jpg"
             alt="夏日音樂祭"
             class="activity_ph"
           />
-        </div>
-
-        <h1>活動資訊</h1>
-        <div>
-          <p>活動名稱: {{ activityData.ACTIVITY_NAME }}</p>
-          <p>活動地址: {{ activityData.ACTIVITY_ADDRESS }}</p>
-          <p>活動日期: {{ activityData.ACTIVITY_DATE }}</p>
-          <p>報名截止日期時間: {{ activityData.ACTIVITY_ENDDATE }}</p>
-          <p>活動描述: {{ activityData.ACTIVITY_DESCRIBE }}</p>
-          <p>活動名額: {{ activityData.ACTIVITY_QUOTA }}</p>
-          <p>單人金額: {{ activityData.ACTIVITY_SINGLE_PRICE }}</p>
-          <p>團報金額: {{ activityData.ACTIVITY_GROUP_PRICE }}</p>
-          <p>剩餘名額: {{ activityData.REMAINING_PLACES }}</p>
         </div>
 
         <div class="act-content">
@@ -33,7 +20,7 @@
               <div class="content-top-L-1">
                 <span>
                   <img
-                    src="../assets/images/actitity/location-outline.svg"
+                    src="../assets/images/actitity-info/location-outline.svg"
                     alt="活動地址"
                 /></span>
                 {{ activityData.ACTIVITY_ADDRESS }}
@@ -41,7 +28,7 @@
               <div class="content-top-L-2">
                 <span
                   ><img
-                    src="../assets/images/actitity/Date.svg"
+                    src="../assets/images/actitity-info/Date.svg"
                     alt="活動日期"
                   /> </span
                 >{{ activityData.ACTIVITY_DATE }}
@@ -50,7 +37,7 @@
                 <div class="content-top-L-3-1">
                   <span
                     ><img
-                      src="../assets/images/actitity/截止時間.svg"
+                      src="../assets/images/actitity-info/截止時間.svg"
                       alt="報名截止"
                   /></span>
                   {{ activityData.ACTIVITY_ENDDATE }} 截止報名
@@ -58,17 +45,17 @@
                 <div class="content-top-L-3-2">
                   <span
                     ><img
-                      src="../assets/images/actitity/人數.svg"
+                      src="../assets/images/actitity-info/人數.svg"
                       alt="活動名額"
                   /></span>
                   名額{{ activityData.ACTIVITY_QUOTA }}人(剩餘名額:
-                  {{ activityData.REMAINING_PLACES }}人)
+                  {{ activityData.ACTIVITY_REMAINING_PLACES }}人)
                 </div>
               </div>
               <div class="content-top-L-4">
                 <span>
                   <img
-                    src="../assets/images/actitity/費用.svg"
+                    src="../assets/images/actitity-info/費用.svg"
                     alt="活動費用"
                   />
                 </span>
@@ -80,7 +67,7 @@
             <div class="content-top-R">
               <div id="btn">
                 <!-- 觸發按鈕 -->
-                <button @click="showModal = true" class="btn btn-dark">
+                <button @click="showModal = true" class="Btn Btn-dark chatbtn">
                   我要報名
                 </button>
                 <!-- 彈跳視窗 -->
@@ -102,7 +89,7 @@
                           <div>王小明</div>
                           <div>
                             <img
-                              src="../assets/images/actitity/小明.svg"
+                              src="../assets/images/actitity-info/小明.svg"
                               alt="小明自拍照"
                             />
                           </div>
@@ -145,7 +132,7 @@
                           <div>王小明</div>
                           <div>
                             <img
-                              src="../assets/images/actitity/小明.svg"
+                              src="../assets/images/actitity-info/小明.svg"
                               alt="小明自拍照"
                             />
                           </div>
@@ -193,8 +180,9 @@
                             v-model="isChecked"
                           />
                           <label for="agree">
-                            我已閱讀並同意遵守本網站的使用
-                            <span class="link" @click="goToItem1">條款</span>和
+                            我已閱讀並同意遵守本網站的
+                            <span class="link" @click="goToItem1">服務條款</span
+                            >和
                             <span class="link" @click="goToItem2"
                               >隱私政策</span
                             ></label
@@ -207,7 +195,7 @@
                       <div class="modal-footer">
                         <button
                           type="button"
-                          class="btn btn-dark btn-center"
+                          class="Btn Btn-dark chatbtn"
                           @click="changeContent()"
                           :disabled="!isChecked"
                         >
@@ -222,42 +210,10 @@
           </div>
           <div class="content-bottom">
             <div class="b-t">
-              <br />
-              <div>炎炎夏日，與音樂相遇！</div>
-              <div>
-                夏日的風，熱情的陽光，和你最愛的旋律，2023夏日音樂祭邀請你一同來場音樂的派對！
-              </div>
-              <br />
-              <div class="b-b">
-                <div class="b-b1">
-                  <span
-                    ><img
-                      src="../assets/images/actitity/🎤活動1-內容icon(1).svg"
-                      alt="知名歌手" /></span
-                  >國內外知名歌手現場演出
-                </div>
-                <div class="b-b2">
-                  <span
-                    ><img
-                      src="../assets/images/actitity/🍹活動1-內容icon(2).svg"
-                      alt="美食" /></span
-                  >美食和飲品攤位，讓你的味蕾也來場盛宴
-                </div>
-                <div class="b-b3">
-                  <span
-                    ><img
-                      src="../assets/images/actitity/💃活動1-內容icon(3).svg"
-                      alt="舞池" /></span
-                  >現場DJ和舞池，讓你舞動夏日
-                </div>
-                <div class="b-b4">
-                  <span
-                    ><img
-                      src="../assets/images/actitity/🎨活動1-內容icon(4).svg"
-                      alt="遊戲" /></span
-                  >藝術裝置和互動遊戲，讓你與朋友留下美好回憶
-                </div>
-              </div>
+              <p
+                v-html="activityData.ACTIVITY_DESCRIBE.replace(`n`, '<br>')"
+                :style="{ 'white-space': 'pre-wrap' }"
+              ></p>
             </div>
           </div>
         </div>
@@ -289,7 +245,7 @@ export default {
         ACTIVITY_QUOTA: "",
         ACTIVITY_SINGLE_PRICE: "",
         ACTIVITY_GROUP_PRICE: "",
-        REMAINING_PLACES: "",
+        ACTIVITY_REMAINING_PLACES: "",
       },
       data: null,
       loading: false,
@@ -331,6 +287,7 @@ export default {
 
     goToItem1() {
       window.location.href = "https://www.google.com"; // 替換成實際的條款頁面 URL
+      // 使用vue.router
     },
     goToItem2() {
       window.location.href = "https://edition.cnn.com/"; // 替換成實際的隱私政策頁面 URL

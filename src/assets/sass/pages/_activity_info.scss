@@ -25,8 +25,9 @@
 
   //===================================================== 活動內容(上)
   .act-content {
+    // border: 1px solid #000;
     margin-left: 20px;
-    width: 100%;
+    width: 98%;
     margin: 0px auto;
     // border: 1px solid #000;
 
@@ -447,22 +448,6 @@
         margin-top: 20px;
         // margin-bottom: 20px;
         color: $primary-color-1;
-      }
-
-      .b-t {
-        .b-b {
-          .b-b1,
-          .b-b2,
-          .b-b3,
-          .b-b4 {
-            // border: 1px solid #000;
-            display: flex;
-            span {
-              display: flex;
-              align-items: center;
-            }
-          }
-        }
       }
 
       img {
