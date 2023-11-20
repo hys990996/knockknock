@@ -12,5 +12,14 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src") // @ 符號：直接指向到 src 資料夾
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080/API/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })
