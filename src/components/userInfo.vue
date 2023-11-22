@@ -7,8 +7,8 @@
         </div>
         <div class="user-info">
             <div class="user-search">
-                <img src="../assets/images/icon/search.svg" alt="">
-                <input ref="searchFriend" type="search" placeholder="搜尋好友" @keyup.enter="search">
+                <img src="../assets/images/icon/search.svg" alt="" @click="expandSearch">
+                <input ref="searchFriend" type="search" placeholder="搜尋好友" @keyup.enter="search" @blur="closeSearch">
             </div>
             <div class="user-detail-info">
                 <router-link :to="{ name: 'mypage' }">
@@ -17,7 +17,8 @@
                 </router-link>
             </div>
             <div class="login-out">
-                <img src="../assets/images/icon/logout.svg" alt="">
+                <router-link :to="{ name: 'member_login' }"> <img src="../assets/images/icon/logout.svg"
+                        alt=""></router-link>
             </div>
         </div>
     </div>
@@ -37,6 +38,12 @@ export default {
                 const keyword = this.$refs.searchFriend.value;
                 this.$router.push({ name: 'search_friends', params: { keyword: keyword } })
             }
+        },
+        expandSearch() {
+            this.$refs.searchFriend.classList.toggle("expand");
+        },
+        closeSearch() {
+            this.$refs.searchFriend.classList.remove("expand");
         }
     }
 }
