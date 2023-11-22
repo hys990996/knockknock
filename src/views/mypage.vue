@@ -264,94 +264,57 @@
                             </div>
                             <ul class="past_activity_list">
                                 <li>
+                                    <!-- <li v-for="(activityItem, index) in activityItems"></li> -->
                                     <p>活動名稱</p>
                                     <div class="score_box" :class="add_score ? 'score-box-bg ' : ''">
                                         <div v-if="add_score" class="score">
-                                            <div class="star">
-                                                <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                            <div class="star_box">
+                                                <div v-for="(score, index) in scores" :key="index">
+                                                    <svg class="star" :class="{ 'light': star }" @click="light"
+                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                        viewBox="0 0 576 512">
+                                                        <path
+                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                                    </svg>
+                                                </div>
+                                                <!-- <div>
+                                                    <svg class="star" :class="{ 'light': star }" @click="light"
+                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
                                                 </div>
                                                 <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    <svg class="star" :class="{ 'light': star }" @click="light"
+                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
                                                 </div>
                                                 <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    <svg class="star" :class="{ 'light': star }" @click="light"
+                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
                                                 </div>
                                                 <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    <svg class="star" :class="{ 'light': star }" @click="light"
+                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
-                                                </div>
-                                                <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div>
-                                            <button @click="add_score = !add_score" class="mypage_button ">確定</button>
+                                            <button @click="add_score = !add_score" class="mypage_button">確定</button>
                                         </div>
                                     </div>
-                                    <!-- <div class="score">
-                                        <div>
-                                                <svg :class="{ '-on': task.star >= 1 }"
-                                                    @click="$emit('taskStar', $event, index, 1)"
-                                                    xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <path
-                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <svg :class="{ '-on': task.star >= 2 }"
-                                                    @click="$emit('taskStar', $event, index, 2)"
-                                                    xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <path
-                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <svg :class="{ '-on': task.star >= 3 }"
-                                                    @click="$emit('taskStar', $event, index, 3)"
-                                                    xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <path
-                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <svg :class="{ '-on': task.star >= 4 }"
-                                                    @click="$emit('taskStar', $event, index, 4)"
-                                                    xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <path
-                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <svg :class="{ '-on': task.star >= 5 }"
-                                                    @click="$emit('taskStar', $event, index, 5)"
-                                                    xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <path
-                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                </svg>
-                                            </div>
-                                        </div> -->
-
 
                                 </li>
                                 <li>
@@ -455,7 +418,12 @@
                                     今天天氣真好
                                 </p>
                             </div>
-                            <div class="post-images"></div>
+                            <div class="post-images show">
+                                <div class="img-item"><img src="../assets/images/post/sample.jpeg" alt=""></div>
+                                <div class="img-item"><img src="../assets/images/post/sample2.jpeg" alt=""></div>
+                                <div class="img-item"><img src="../assets/images/post/sample3.jpeg" alt=""></div>
+                                <div class="img-item"><img src="../assets/images/post/sample3.jpeg" alt=""></div>
+                            </div>
                             <div class="post-feedback">
                                 <div class="good-block">
                                     <img src="../assets/images/icon/good-line.svg" alt="" class="good">
@@ -469,15 +437,53 @@
                                 </div>
                             </div>
                             <div class="post-reply">
-                                <div class="replied">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
+                                <div class="replied showScrollbar">
+                                    <div class="replied-msg">
+                                        <div class="user-image">
+                                            <img src="../assets/images/user/userimage.png" alt="">
+                                        </div>
+                                        <div class="replied-message">
+                                            <div class="user-name">王小明</div>
+                                            <div class="content">
+                                                <div class="text">好棒的天氣啊啊啊</div>
+                                                <div class="replied-time">2023/10/10 23:59:59</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="replied-message">
-                                        <div class="user-name">王小明</div>
-                                        <div class="content">
-                                            <div class="text">好棒的天氣啊啊啊</div>
-                                            <div class="replied-time">2023/10/10 23:59:59</div>
+                                    <div class="replied-msg">
+                                        <div class="user-image">
+                                            <img src="../assets/images/user/userimage.png" alt="">
+                                        </div>
+                                        <div class="replied-message">
+                                            <div class="user-name">王小明</div>
+                                            <div class="content">
+                                                <div class="text">好棒的天氣啊啊啊</div>
+                                                <div class="replied-time">2023/10/10 23:59:59</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="replied-msg">
+                                        <div class="user-image">
+                                            <img src="../assets/images/user/userimage.png" alt="">
+                                        </div>
+                                        <div class="replied-message">
+                                            <div class="user-name">王小明</div>
+                                            <div class="content">
+                                                <div class="text">真的好棒</div>
+                                                <div class="replied-time">2023/10/10 23:59:59</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="replied-msg">
+                                        <div class="user-image">
+                                            <img src="../assets/images/user/userimage.png" alt="">
+                                        </div>
+                                        <div class="replied-message">
+                                            <div class="user-name">王小明</div>
+                                            <div class="content">
+                                                <div class="text">真的好棒</div>
+                                                <div class="replied-time">2023/10/10 23:59:59</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +492,7 @@
                                         <img src="../assets/images/user/userimage.png" alt="">
                                     </div>
                                     <div class="reply-input">
-                                        <input type="text">
+                                        <input type="text" class="inputCommon">
                                         <button type="button"><img src="../assets/images/icon/submit.svg" alt=""></button>
                                     </div>
                                 </div>
@@ -522,14 +528,16 @@
                             </div>
                             <div class="post-reply">
                                 <div class="replied">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
-                                    </div>
-                                    <div class="replied-message">
-                                        <div class="user-name">王小明</div>
-                                        <div class="content">
-                                            <div class="text">好棒的天氣啊啊啊</div>
-                                            <div class="replied-time">2023/10/10 23:59:59</div>
+                                    <div class="replied-msg">
+                                        <div class="user-image">
+                                            <img src="../assets/images/user/userimage.png" alt="">
+                                        </div>
+                                        <div class="replied-message">
+                                            <div class="user-name">王小明</div>
+                                            <div class="content">
+                                                <div class="text">好棒的天氣啊啊啊</div>
+                                                <div class="replied-time">2023/10/10 23:59:59</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -538,65 +546,12 @@
                                         <img src="../assets/images/user/userimage.png" alt="">
                                     </div>
                                     <div class="reply-input">
-                                        <input type="text">
+                                        <input type="text" class="inputCommon">
                                         <button type="button"><img src="../assets/images/icon/submit.svg" alt=""></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="post-item">
-                            <div class="post-user-info">
-                                <div class="post-user-image">
-                                    <img src="../assets/images/user/userimage-g.png" alt="">
-                                </div>
-                                <div class="post-user-time">
-                                    <p class="user-name">林小美</p>
-                                    <p class="user-post-time">2023/10/25</p>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>
-                                    今天天氣真好
-                                </p>
-                            </div>
-                            <div class="post-images"></div>
-                            <div class="post-feedback">
-                                <div class="good-block">
-                                    <img src="../assets/images/icon/good-line.svg" alt="" class="good">
-                                    <p class="good-nums">123</p>
-                                    <p>人</p>
-                                </div>
-                                <div class="reply-block">
-                                    <img src="../assets/images/icon/message.svg" alt="">
-                                    <p class="reply-nums">123</p>
-                                    <p>則</p>
-                                </div>
-                            </div>
-                            <div class="post-reply">
-                                <div class="replied">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
-                                    </div>
-                                    <div class="replied-message">
-                                        <div class="user-name">王小明</div>
-                                        <div class="content">
-                                            <div class="text">好棒的天氣啊啊啊</div>
-                                            <div class="replied-time">2023/10/10 23:59:59</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="reply-message">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
-                                    </div>
-                                    <div class="reply-input">
-                                        <input type="text">
-                                        <button type="button"><img src="../assets/images/icon/submit.svg" alt=""></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -614,34 +569,54 @@ export default {
     components: {
         layout
     },
+
     data() {
         return {
             collectionShow: false,
             postShow: false,
             add_score: false,
-            // taskText: "",
-            // tasks: [],
-            // selectImg: {}
             selectedBoxes: [],
             maxSelection: 3,
+            star: false,
+            scores: Array(5).fill(null),
+            // activityItems: [{
+            //     name: "活動名稱A",
+            //     star: 0,
+            // }, {
+            //     name: "活動名稱B",
+            //     star: 0,
+            // }, {
+            //     name: "活動名稱C",
+            //     star: 0,
+            // }],
+            //buttonColor: false,
         };
     },
 
     methods: {
-        // taskStar(e, i, star) {
-        //     // alert(star);
-        //     this.tasks[i].star = star; //取得陣列裡面的物件,改變值
-        //     localStorage.setItem("tasks", JSON.stringify(this.tasks)); //把值存入localStorage
+        light() {
+            this.star = true;
+        },
+
+        // light(e, i, star) {
+        //     //alert("ss");
+        //     this.activityItem[i].star = star;
+        // },
+
+
+        //判斷星星是否有更動過,如果有更動過的話按紐更換顏色並改變顯示的字
+        //         if(star[i] > 0){
+        //     this.buttonColor = true;
         // },
 
         toggleSelection(index) {
             const selectedIndex = this.selectedBoxes.indexOf(index);
 
             if (selectedIndex !== -1) {
-                // 如果已经选中，取消选择
+                // 如果已經選中,取消選擇
                 this.selectedBoxes.splice(selectedIndex, 1);
             } else {
-                // 如果未选中，并且未达到最大选择数，选中
+                // 如果未選中,並且未達到最大選擇數,選中
                 if (this.selectedBoxes.length < this.maxSelection) {
                     this.selectedBoxes.push(index);
                 }
@@ -653,13 +628,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.selected-box {
-    box-shadow: 0 0 10px #66669A;
-}
-
-&svg.-on {
-    color: yellow
-}
-</style>
-
