@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layoutFull>
         <template #section-right-content>
             <div class="wander">
                 <div :class="{ 'start': animationMove }" class="container">
@@ -92,7 +92,7 @@
 
 
         </template>
-    </layout>
+    </layoutFull>
 </template>
 <script>
 //import 這頁需要的元件
