@@ -85,6 +85,10 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, push, set, get, query, orderByKey, limitToLast, onValue } from 'firebase/database';
 import { nextTick } from 'vue';
+import userImg1 from '@/assets/images/user/userimage.png';
+import userImg2 from '@/assets/images/user/userimage-g.png';
+import userImg3 from '@/assets/images/chatroom/man_A.png';
+import userImg4 from '@/assets/images/chatroom/woman_B.png';
 
 const firebaseApp = initializeApp({
     apiKey: "AIzaSyBLqg3ReSlc8ukkM6Fq3syretEb-zJ6MDs",
@@ -164,19 +168,19 @@ export default {
             imgList: [
                 {
                     id: 1,
-                    url: 'src/assets/images/user/userimage.png'
+                    url: userImg1
                 },
                 {
                     id: 2,
-                    url: 'src/assets/images/user/userimage-g.png'
+                    url: userImg2
                 },
                 {
                     id: 3,
-                    url: 'src/assets/images/chatroom/man_A.png'
+                    url: userImg3
                 },
                 {
                     id: 4,
-                    url: 'src/assets/images/chatroom/woman_B.png'
+                    url: userImg4
                 }
             ]
         }

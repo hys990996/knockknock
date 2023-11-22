@@ -160,10 +160,10 @@ export default {
                 this.passwordError = '';
             }
             if (this.signUpData.lastName != '') {
-                this.passwordError = '';
+                this.lastNameError = '';
             }
             if (this.signUpData.firstName != '') {
-                this.passwordError = '';
+                this.firstNameError = '';
             }
         }
     }
