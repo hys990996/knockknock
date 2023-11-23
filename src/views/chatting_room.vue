@@ -1,19 +1,6 @@
 <template>
     <layout>
         <template #section-right-content>
-            <!-- <h1>KNOCK KNOCK 聊天大廳</h1>
-            <input type="text" placeholder="username" v-model="username">
-            <input type="text" placeholder="text" v-model="message">
-            <button @click="addMessage" class="btn btn-outline-secondary">送出</button>
-            <ul class="messages">
-
-                <li v-for="(i, index) in chatroom" :key="index"
-                    :class="{ 'is-right': isCurrentUser(i.username), 'is-left': !isCurrentUser(i.username) }">
-                    <span>
-                        {{ isCurrentUser(i.username) ? 'You' : i.username }}: {{ i.message }}{{ i.time }}
-                    </span>
-                </li>
-            </ul> -->
             <div class="chatroom-start" v-if="!isSubmitted">
                 <h1>加入聊天大廳</h1>
                 <div class="user-img-section">
@@ -109,43 +96,6 @@ function writeUserData(userID, name, email) {
 // writeUserData(3, "測試測試", "ttt@gmail.com");
 
 const messageRef = ref(db, 'chatroom/messages');
-
-// export default {
-//     components: {
-//         layout
-//     },
-//     data() {
-//         return {
-//             message: " ",
-//             chatroom: [],
-//             username: " ",
-
-//         }
-//     },
-//     methods: {
-//         isCurrentUser(username) {
-//             return username === this.username; // 返回 true 或 false
-//         },
-//         addMessage() {
-//             const date = new Date().getTime();
-//             const newMessage = push(messageRef);
-//             set(newMessage, {
-//                 username: this.username,
-//                 message: this.message,
-//                 time: new Date(date).toLocaleString()
-//             })
-//             this.message = ''
-//         },
-
-//     },
-//     mounted() {
-//         onValue(messageRef, (snapshot) => {
-//             const data = snapshot.val();
-//             // console.log(data)
-//             this.chatroom = data
-//         })
-//     }
-// }
 
 export default {
     components: {
