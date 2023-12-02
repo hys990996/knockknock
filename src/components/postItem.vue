@@ -79,7 +79,7 @@ export default {
             // console.log(scrollContainer.scrollHeight)
 
             // 視窗滾到底部
-            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            // scrollContainer.scrollTop = scrollContainer.scrollHeight;
         },
         bindCommentText(e) {
             if (e.target.value != '') {
@@ -105,7 +105,7 @@ export default {
 
     },
     mounted() {
-        this.scrollToBottom();
+        // this.scrollToBottom();
     },
 }
 </script>

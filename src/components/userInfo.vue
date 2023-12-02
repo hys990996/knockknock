@@ -58,7 +58,7 @@ export default {
         axios
             .post('api/queryMember.php', JSON.stringify(this.userData))
             .then(response => {
-                // console.log(response.data);
+                console.log(response.data);
                 if (response.data != '0') {
                     this.userData.userImg = 'data:image/png;base64,' + response.data['img'];
                     userStore.userImg = response.data['img'];
