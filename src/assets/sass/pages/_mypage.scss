@@ -47,7 +47,6 @@
             &-large {
                 // height: 350px;
                 border-radius: 16px;
-                transition: all 0.5 linear;
             }
 
             .add-post-block {
@@ -96,6 +95,30 @@
                     }
                 }
 
+                .add-images-block {
+                    width: 100%;
+                    display: flex;
+                    padding: 12px 12px 0 12px;
+                    overflow-x: scroll;
+
+                    .add-post-images {
+                        width: 100px;
+                        position: relative;
+
+                        .delete-img {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 20px;
+                            cursor: pointer;
+                        }
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+
                 .postImg {
                     display: flex;
                     align-items: center;
@@ -122,6 +145,7 @@
 
                 .btn-block {
                     display: flex;
+                    gap: 8px;
                     justify-content: flex-end;
                     margin: 8px 0;
 
@@ -254,6 +278,11 @@
                     width: 250px;
                     height: 250px;
                 }
+
+                @media screen and (max-width: 430px) {
+                    width: 200px;
+                    height: 200px;
+                }
             }
 
             .head_sticker img {
@@ -261,9 +290,15 @@
                 height: 400px;
                 border-radius: 50px;
 
+
                 @include media-breakpoint-down(sm) {
                     width: 250px;
                     height: 250px;
+                }
+
+                @media screen and (max-width: 430px) {
+                    width: 200px;
+                    height: 200px;
                 }
             }
 
@@ -288,7 +323,7 @@
 
     .mypage_info {
         text-align: center;
-        margin: 20px auto;
+        margin: 50px auto;
         width: 47%;
 
         @include media-breakpoint-down(md) {
@@ -299,22 +334,22 @@
             width: 100%;
         }
 
-        label {
-            width: 150px;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-            margin: 40px auto;
+        // label {
+        //     width: 150px;
+        //     align-items: center;
+        //     justify-content: center;
+        //     display: flex;
+        //     margin: 40px auto;
 
 
-            input[type=file] {
-                display: none;
-                outline: 0;
-                opacity: 0;
-                // pointer-events: none;
-                // user-select: none;
-            }
-        }
+        //     input[type=file] {
+        //         display: none;
+        //         outline: 0;
+        //         opacity: 0;
+        //         // pointer-events: none;
+        //         // user-select: none;
+        //     }
+        // }
 
         p {
             text-align: start;
@@ -345,6 +380,10 @@
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
+
+            @include media-breakpoint-down(sm) {
+                width: 80%;
+            }
 
 
             .collection_window_title {
@@ -524,7 +563,6 @@
 
             .face {
                 z-index: 2;
-                background-image: url("@/assets/images/mypage/hehe.png");
                 background-size: 100%;
 
                 @include media-breakpoint-down(md) {
@@ -542,7 +580,6 @@
 
             .hair {
                 z-index: 3;
-                background-image: url("@/assets/images/mypage/purple_hair.png");
                 background-size: 100%;
 
                 @include media-breakpoint-down(md) {
@@ -559,7 +596,6 @@
 
             .cloth {
                 z-index: 4;
-                background-image: url("@/assets/images/mypage/pink_vest.png");
                 background-size: 100%;
 
                 @include media-breakpoint-down(md) {
@@ -576,7 +612,6 @@
 
             .accessories {
                 z-index: 5;
-                background-image: url("@/assets/images/mypage/bubble.png");
                 background-size: 100%;
 
                 @include media-breakpoint-down(md) {
@@ -629,6 +664,10 @@
                 position: relative;
                 width: 110px;
                 text-align: end;
+
+                @include media-breakpoint-down(md) {
+                    margin: 20px 0;
+                }
 
                 &::before {
                     content: '';
@@ -740,6 +779,10 @@
 
             @include media-breakpoint-down(lg) {
                 width: 90%;
+            }
+
+            @include media-breakpoint-down(md) {
+                width: 95%;
             }
 
             .activity_list {
@@ -865,6 +908,10 @@
                 width: 90%;
                 margin: 20px auto;
                 padding: 15px;
+            }
+
+            @include media-breakpoint-down(md) {
+                width: 95%;
             }
 
             .mission_list {
@@ -1111,6 +1158,5 @@
                 }
             }
         }
-
     }
 }

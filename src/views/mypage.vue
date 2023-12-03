@@ -10,20 +10,30 @@
                             <div class="add-block-title">
                                 <h5 class="post-edit-title">發表貼文</h5>
                                 <div class="post-view-setting">
-                                    <img src="../assets/images/icon/friend-view.svg" alt="" class="" value="friend">
-                                    <img src="../assets/images/icon/global-view-select.svg" alt="" class="select"
-                                        value="global">
-                                    <img src="../assets/images/icon/private-view-select.svg" alt="" class="select"
-                                        value="private">
+                                    <img ref="friendView" src="../assets/images/icon/friend-view-select.svg" alt=""
+                                        :class="{ select: friendSelect }" value="friend" @click="friendViewSetting($event)">
+                                    <img ref="globalView" src="../assets/images/icon/global-view.svg" alt=""
+                                        :class="{ select: globalSelect }" value="global" @click="globalViewSetting($event)">
+                                    <img ref="privateView" src="../assets/images/icon/private-view.svg" alt=""
+                                        :class="{ select: privateSelect }" value="private"
+                                        @click="privateViewSetting($event)">
                                 </div>
                             </div>
-                            <textarea name="" id="post-content" rows="10" placeholder="輸入想說的話"></textarea>
+                            <textarea name="" id="post-content" rows="10" placeholder="輸入想說的話"
+                                ref="addPostContent"></textarea>
+                            <div class="add-images-block" v-if="addImages">
+                                <div class="add-post-images" v-for="(image, index) in addImages" :key="index">
+                                    <img src="../assets/images/icon/reject.svg" alt="delete icon" class="delete-img"
+                                        @click="deleteImg(index)">
+                                    <img :src="image.img" alt="">
+                                </div>
+                            </div>
                             <label for="postImg" class="postImg">
                                 <span>
                                     新增照片
                                 </span>
                                 <img src="../assets/images/icon/image.svg" alt="">
-                                <input type="file" name="postImg" id="postImg">
+                                <input type="file" name="postImg" id="postImg" @change="previewImage" multiple>
                             </label>
                             <div class="btn-block">
                                 <button class="Btn Btn-light" @click="postShow = !postShow">取消</button>
@@ -43,8 +53,7 @@
                         </router-link>
                         <div>
                             <img src="../assets/images/mypage/gold_coin.png">
-                            <p>持有金幣${{ "99999" }}</p>
-                            <!-- <p>持有金幣${{ "HoldCoins" }}</p> --> <!--金幣值最大五位數-->
+                            <p>持有金幣${{ hold_coins }}</p>
                         </div>
                     </div>
                     <div class="my_introduction">
@@ -52,8 +61,8 @@
                             <button @click="postShow = !postShow" class="new_post_button Btn">發表新貼文</button>
                         </div>
                         <div class="head_sticker">
-                            <!-- <img :class="head_sticker" src="{{ headSticker }}" id="head_sticker" alt="head_sticker"> -->
-                            <img :class="head_sticker_img" src="../assets/images/mypage/TibameCAT.jpg" alt="head_sticker">
+                            <img :class="head_sticker_img" :src="'data:image;base64,' + userImg" ref="head_sticker"
+                                alt="head_sticker">
                         </div>
                         <div class="guide_button">
                             <router-link :to="{ name: 'mypage_edit' }">
@@ -68,7 +77,7 @@
                                 <button class="Btn">好友清單</button>
                             </router-link>
 
-                            <button class="Btn">＋加朋友</button>
+                            <!-- <button class="Btn">＋加朋友</button> -->
 
                             <div>
                                 <button @click="postShow = !postShow" class="new_post_button_RWD Btn">發表新貼文</button>
@@ -78,13 +87,12 @@
                 </div>
 
                 <div class="mypage_info">
-                    <label class="mypage_button Btn">
+                    <!-- <label class="mypage_button Btn">
                         <span>更換大頭貼</span>
-                        <input type="file" class="upload_photos_input">
-                    </label>
-                    <!-- <p>{{ self_introduction }}</p> -->
-                    <p>嗨！我是工程師。工作中喜歡挑戰技術極限，<br>
-                        業餘時間熱衷極限運動，喜歡攀岩和跳傘。期待在技術和生活中不斷挑戰自己！</p>
+                        <input type="file" class="upload_photos_input" ref="imgInput" accept=".jpg,.png"
+                            @change="uploadImg">
+                    </label> -->
+                    <p>{{ SelfIntroduction }}</p>
                 </div>
 
 
@@ -207,27 +215,18 @@
 
                 <!-------------------------------蒐藏品區塊------------------------------->
                 <div class="tag">
-                    <!-- <span>{{ hobby1 }}</span>
-                    <span>{{ hobby2 }}</span>
-                    <span>{{ hobby3 }}</span>
-                    <span>{{ hobby4 }}</span>
-                    <span>{{ hobby5 }}</span> -->
-                    <span> constellation </span>
-                    <span> job </span>
-                    <span> city </span>
-                    <span> hobby1 </span>
-                    <span> hobby2 </span>
+                    <span> {{ constellation }} </span>
+                    <span> {{ job }} </span>
+                    <span> {{ city }} </span>
+                    <span> {{ hobbyA }} </span>
+                    <span> {{ hobbyB }} </span>
                 </div>
                 <div class="custom_display">
                     <div class="show_role">
-                        <!-- <div class="face">{{ face }}</div>
-                        <div class="hair">{{ hair }}</div>
-                        <div class="cloth">{{ cloth }}</div>
-                        <div class="accessories">{{ accessories }}</div> -->
-                        <div class="face character_parts"></div>
-                        <div class="hair character_parts"></div>
-                        <div class="cloth character_parts"></div>
-                        <div class="accessories character_parts"></div>
+                        <img :src="faceImageChange" class="face character_parts">
+                        <img :src="hairImageChange" class="hair character_parts">
+                        <img :src="clothImageChange" class="cloth character_parts">
+                        <img :src="accessoriesImageChange" class="accessories character_parts">
                         <div class="base_plate"></div>
                     </div>
                     <div class="my_collect">
@@ -237,9 +236,6 @@
                             <hr>
                         </div>
                         <div class="collect">
-                            <!-- <div class="collectA">{{ collectA }}</div>
-                            <div class="collectB">{{ collectB }}</div>
-                            <div class="collectC">{{ collectC }}</div> -->
                             <div class="collectA"></div>
                             <div class="collectB"></div>
                             <div class="collectC"></div>
@@ -248,7 +244,7 @@
                 </div>
 
                 <!-------------------------------活動區塊------------------------------->
-
+                <!-- <editActivityScore></editActivityScore> -->
                 <div class="life">
                     <div class="activity">
                         <div class="activity_list">
@@ -263,68 +259,37 @@
                                 <span>歷史活動</span>
                             </div>
                             <ul class="past_activity_list">
-                                <li>
-                                    <!-- <li v-for="(activityItem, index) in activityItems"></li> -->
-                                    <p>活動名稱</p>
-                                    <div class="score_box" :class="add_score ? 'score-box-bg ' : ''">
-                                        <div v-if="add_score" class="score">
+
+                                <li v-for="(activityItem, index) in activityItems">
+                                    <p>{{ activityItem.name }}</p>
+                                    <div class="score_box">
+                                        <div class="score">
                                             <div class="star_box">
-                                                <div v-for="(score, index) in scores" :key="index">
-                                                    <svg class="star" :class="{ 'light': star }" @click="light"
-                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                <div v-for="(score, dIndex) in scores" :key="index">
+                                                    <svg class="star" :class="{ 'light': dIndex < activityItem.star }"
+                                                        @click="light" xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
                                                 </div>
-                                                <!-- <div>
-                                                    <svg class="star" :class="{ 'light': star }" @click="light"
-                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <svg class="star" :class="{ 'light': star }" @click="light"
-                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <svg class="star" :class="{ 'light': star }" @click="light"
-                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <svg class="star" :class="{ 'light': star }" @click="light"
-                                                        xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div>
-                                            <button @click="add_score = !add_score" class="mypage_button">確定</button>
+                                            <button :value="index" @click="addScore($event)"
+                                                class="mypage_button">修改</button>
                                         </div>
                                     </div>
 
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <p>活動名稱</p>
                                     <button class="mypage_button">待評分</button>
                                 </li>
                                 <li class="cancel_activity">
                                     <p>活動名稱</p>
                                     <button class="mypage_button">已取消報名</button>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -350,7 +315,7 @@
                             <li>
                                 <div class="mission">
                                     <div>
-                                        <img src="../assets/images/mypage/Finish_icon.png">
+                                        <img src="../assets/images/mypage/unFinish_icon.png">
                                     </div>
                                     <p>流浪一次</p>
                                 </div>
@@ -403,155 +368,7 @@
                 <!-------------------------------貼文區塊------------------------------->
                 <div class="page-post">
                     <div class="post-items">
-                        <div class="post-item">
-                            <div class="post-user-info">
-                                <div class="post-user-image">
-                                    <img src="../assets/images/user/userimage-g.png" alt="">
-                                </div>
-                                <div class="post-user-time">
-                                    <p class="user-name">林小美</p>
-                                    <p class="user-post-time">2023/10/25</p>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>
-                                    今天天氣真好
-                                </p>
-                            </div>
-                            <div class="post-images show">
-                                <div class="img-item"><img src="../assets/images/post/sample.jpeg" alt=""></div>
-                                <div class="img-item"><img src="../assets/images/post/sample2.jpeg" alt=""></div>
-                                <div class="img-item"><img src="../assets/images/post/sample3.jpeg" alt=""></div>
-                                <div class="img-item"><img src="../assets/images/post/sample3.jpeg" alt=""></div>
-                            </div>
-                            <div class="post-feedback">
-                                <div class="good-block">
-                                    <img src="../assets/images/icon/good-line.svg" alt="" class="good">
-                                    <p class="good-nums">123</p>
-                                    <p>人</p>
-                                </div>
-                                <div class="reply-block">
-                                    <img src="../assets/images/icon/message.svg" alt="">
-                                    <p class="reply-nums">123</p>
-                                    <p>則</p>
-                                </div>
-                            </div>
-                            <div class="post-reply">
-                                <div class="replied showScrollbar">
-                                    <div class="replied-msg">
-                                        <div class="user-image">
-                                            <img src="../assets/images/user/userimage.png" alt="">
-                                        </div>
-                                        <div class="replied-message">
-                                            <div class="user-name">王小明</div>
-                                            <div class="content">
-                                                <div class="text">好棒的天氣啊啊啊</div>
-                                                <div class="replied-time">2023/10/10 23:59:59</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="replied-msg">
-                                        <div class="user-image">
-                                            <img src="../assets/images/user/userimage.png" alt="">
-                                        </div>
-                                        <div class="replied-message">
-                                            <div class="user-name">王小明</div>
-                                            <div class="content">
-                                                <div class="text">好棒的天氣啊啊啊</div>
-                                                <div class="replied-time">2023/10/10 23:59:59</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="replied-msg">
-                                        <div class="user-image">
-                                            <img src="../assets/images/user/userimage.png" alt="">
-                                        </div>
-                                        <div class="replied-message">
-                                            <div class="user-name">王小明</div>
-                                            <div class="content">
-                                                <div class="text">真的好棒</div>
-                                                <div class="replied-time">2023/10/10 23:59:59</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="replied-msg">
-                                        <div class="user-image">
-                                            <img src="../assets/images/user/userimage.png" alt="">
-                                        </div>
-                                        <div class="replied-message">
-                                            <div class="user-name">王小明</div>
-                                            <div class="content">
-                                                <div class="text">真的好棒</div>
-                                                <div class="replied-time">2023/10/10 23:59:59</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="reply-message">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
-                                    </div>
-                                    <div class="reply-input">
-                                        <input type="text" class="inputCommon">
-                                        <button type="button"><img src="../assets/images/icon/submit.svg" alt=""></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-item">
-                            <div class="post-user-info">
-                                <div class="post-user-image">
-                                    <img src="../assets/images/user/userimage-g.png" alt="">
-                                </div>
-                                <div class="post-user-time">
-                                    <p class="user-name">林小美</p>
-                                    <p class="user-post-time">2023/10/25</p>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <p>
-                                    今天天氣真好
-                                </p>
-                            </div>
-                            <div class="post-images"></div>
-                            <div class="post-feedback">
-                                <div class="good-block">
-                                    <img src="../assets/images/icon/good-line.svg" alt="" class="good">
-                                    <p class="good-nums">123</p>
-                                    <p>人</p>
-                                </div>
-                                <div class="reply-block">
-                                    <img src="../assets/images/icon/message.svg" alt="">
-                                    <p class="reply-nums">123</p>
-                                    <p>則</p>
-                                </div>
-                            </div>
-                            <div class="post-reply">
-                                <div class="replied">
-                                    <div class="replied-msg">
-                                        <div class="user-image">
-                                            <img src="../assets/images/user/userimage.png" alt="">
-                                        </div>
-                                        <div class="replied-message">
-                                            <div class="user-name">王小明</div>
-                                            <div class="content">
-                                                <div class="text">好棒的天氣啊啊啊</div>
-                                                <div class="replied-time">2023/10/10 23:59:59</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="reply-message">
-                                    <div class="user-image">
-                                        <img src="../assets/images/user/userimage.png" alt="">
-                                    </div>
-                                    <div class="reply-input">
-                                        <input type="text" class="inputCommon">
-                                        <button type="button"><img src="../assets/images/icon/submit.svg" alt=""></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <postItem></postItem>
                     </div>
                 </div>
             </div>
@@ -564,10 +381,18 @@
 <script>
 //import 這頁需要的元件
 import layout from '@/components/layout.vue'
+import postItem from '@/components/postItem.vue'
+import addPost from '@/components/addPost.vue'
+import editActivityScore from '@/components/editActivityScore.vue'
+
+import { useUserStore } from '@/store/user';
 
 export default {
     components: {
-        layout
+        layout,
+        postItem,
+        addPost,
+        editActivityScore
     },
 
     data() {
@@ -577,26 +402,82 @@ export default {
             add_score: false,
             selectedBoxes: [],
             maxSelection: 3,
+            id: '7',
+            hold_coins: '',
             star: false,
+            // isUpload: false,
             scores: Array(5).fill(null),
-            // activityItems: [{
-            //     name: "活動名稱A",
-            //     star: 0,
-            // }, {
-            //     name: "活動名稱B",
-            //     star: 0,
-            // }, {
-            //     name: "活動名稱C",
-            //     star: 0,
-            // }],
+            activityItems: [{
+                name: "活動名稱A",
+                star: 0,
+            }, {
+                name: "活動名稱B",
+                star: 3,
+            }, {
+                name: "活動名稱C",
+                star: 5,
+            }],
             //buttonColor: false,
         };
     },
-
+    created() {
+        //載入頁面時先讀取用戶資訊填在input裡
+        this.getData();
+    },
     methods: {
+        async getData() {
+            axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+                this.constellation = resData.data[0].MEMBER_CONSTELLATION;
+                this.job = resData.data[0].MEMBER_JOB;
+                this.city = resData.data[0].MEMBER_CITY;
+                this.hobbyA = resData.data[0].MEMBER_HOBBY_TEXT_A;
+                this.hobbyB = resData.data[0].MEMBER_HOBBY_TEXT_B;
+                this.SelfIntroduction = resData.data[0].MEMBER_INTRODUCE;
+                this.faceImageChange = resData.data[0].MEMBER_AVATAR_FACE;
+                this.hairImageChange = resData.data[0].MEMBER_AVATAR_HAIR;
+                this.clothImageChange = resData.data[0].MEMBER_AVATAR_CLOTH;
+                this.accessoriesImageChange = resData.data[0].MEMBER_AVATAR_ACCESSORIES;
+                this.hold_coins = resData.data[0].MEMBER_COIN;
+
+                this.userImg = resData.data[0].MEMBER_PIC;
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            })
+        },
         light() {
             this.star = true;
         },
+        addScore(e) {
+            console.log(e.target.value)
+        },
+        // async uploadImg(e) {
+        //     this.isUpload = true;
+        //     let file = e.target.files[0];
+        //     let imageData = '';
+        //     let reader = new FileReader();
+
+        //     reader.readAsDataURL(file);
+        //     reader.onload = async (e) => {
+        //         // 使用 e.target.result 取得讀取的資料
+        //         // console.log(e.target.result);
+
+        //         imageData = e.target.result.substring(e.target.result.indexOf(',') + 1);
+        //         console.log(imageData)
+        //         this.userImg = imageData;
+
+        //         // 將圖片資料上傳到 upload_img.php
+        //         try {
+        //             const response = await axios.post("api/upload_img.php", {
+        //                 id: this.id,
+        //                 imageData: imageData,
+        //             });
+
+        //             console.log(response.data); // 可以根據需要處理後端返回的數據
+        //         } catch (error) {
+        //             console.error("Error uploading image:", error);
+        //         }
+        //     };
+        // },
 
         // light(e, i, star) {
         //     //alert("ss");
@@ -625,6 +506,17 @@ export default {
         isSelected(index) {
             return this.selectedBoxes.includes(index);
         },
-    }
+    },
+    // mounted() {
+    //     //取得會員資料
+    //     const userStore = useUserStore();
+
+    //     this.userData = {
+    //         userId: userStore.userID,
+    //         userName: userStore.userName,
+    //         userImg: userStore.userImg,
+    //     }
+    //     this.getPostItems();
+    // },
 }
 </script>
