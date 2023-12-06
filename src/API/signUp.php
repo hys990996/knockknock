@@ -9,8 +9,12 @@ $pwd = password_hash($signupData['userPassword'], PASSWORD_BCRYPT);
 $lastName = $signupData['lastName'];
 $firstName = $signupData['firstName'];
 
-$img = file_get_contents($signupData['img']);
-$memebrPic = base64_encode($img);
+$img1 = file_get_contents($signupData['img']);
+
+$img2 = base64_encode($img1);
+
+$memebrPic = base64_encode($img2);
+
 
 $sql = "insert into
 MEMBER (MEMBER_FIRST_NAME,MEMBER_LAST_NAME,MEMBER_ACCOUNT,MEMBER_PASSWORD,MEMBER_COIN,MEMBER_PIC,MEMBER_STATUS,MEMBER_CREATETIME)

@@ -64,6 +64,7 @@ export default {
             userImg: userStore.userImg,
         }
 
+        // console.log(this.userData);
     },
     mounted() {
 
@@ -94,7 +95,7 @@ export default {
                 // 將 cookie 字串分割成每個 cookie
                 let cookies = document.cookie.split("; ");
 
-                console.log(this.userData);
+                // console.log(this.userData);
 
                 axios
                     .post('api/logout.php', JSON.stringify(this.userData))

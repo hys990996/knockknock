@@ -44,7 +44,7 @@
                             <img src="../assets/images/login/boy-base.png" alt="">
                         </div>
                         <div ref="baseGImg" class="girl" @click="imgGSelect">
-                            <img src="../assets/images/login/IMG_4517.jpeg" alt="">
+                            <img src="../assets/images/login/girl-base.png" alt="">
                         </div>
                     </div>
                     <button type="button" class="Btn Btn-dark" @click="doSignUp">註冊</button>
