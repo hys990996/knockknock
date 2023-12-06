@@ -48,9 +48,9 @@
 
                 <div class="introduction_guided_tour">
                     <div class="property">
-                        <router-link :to="{ name: buy_coin }">
+                        <!-- <router-link :to="{ name: buy_coin }">
                             <button class="mypage_button">購買金幣</button>
-                        </router-link>
+                        </router-link> -->
                         <div>
                             <img src="../assets/images/mypage/gold_coin.png">
                             <p>持有金幣${{ hold_coins }}</p>
@@ -61,8 +61,7 @@
                             <button @click="postShow = !postShow" class="new_post_button Btn">發表新貼文</button>
                         </div>
                         <div class="head_sticker">
-                            <img :class="head_sticker_img" :src="'data:image;base64,' + userImg" ref="head_sticker"
-                                alt="head_sticker">
+                            <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="head_sticker">
                         </div>
                         <div class="guide_button">
                             <router-link :to="{ name: 'mypage_edit' }">
@@ -111,97 +110,44 @@
                             <div class="collection_window_Classification">
                                 <h2>SSR</h2>
                                 <div class="collection_list">
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SSR_git') }"
-                                            @click="toggleSelection('SSR_git')" src="../assets/images/mypage/SSR_git.png"
-                                            alt="">
-                                        <h6>Git王</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SSR_MySQL') }"
-                                            @click="toggleSelection('SSR_MySQL')"
-                                            src="../assets/images/mypage/SSR_MySQL.png" alt="">
-                                        <h6>DBA大哥</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SSR_vue') }"
-                                            @click="toggleSelection('SSR_vue')" src="../assets/images/mypage/SSR_vue.png"
-                                            alt="">
-                                        <h6>YYDS</h6>
+                                    <div v-for="(collection, index) in collections.SSR" :key="index"
+                                        class="collection_detailed">
+                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
+                                            @click="toggleSelection(index)" alt="">
+                                        <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="collection_window_Classification">
                                 <h2>SR</h2>
                                 <div class="collection_list">
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SR_html') }"
-                                            @click="toggleSelection('SR_html')" src="../assets/images/mypage/SR_html.png"
-                                            alt="">
-                                        <h6>建築師</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SR_CSS') }"
-                                            @click="toggleSelection('SR_CSS')" src="../assets/images/mypage/SR_CSS.png"
-                                            alt="">
-                                        <h6>裝潢師</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SR_js') }"
-                                            @click="toggleSelection('SR_js')" src="../assets/images/mypage/SR_js.png"
-                                            alt="">
-                                        <h6>邏輯大師</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('SR_gasp') }"
-                                            @click="toggleSelection('SR_gasp')" src="../assets/images/mypage/SR_gasp.png"
-                                            alt="">
-                                        <h6>動畫超人</h6>
+                                    <div v-for="(collection, index) in collections.SR" :key="index"
+                                        class="collection_detailed">
+                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
+                                            @click="toggleSelection(index)" alt="">
+                                        <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="collection_window_Classification">
                                 <h2>R</h2>
                                 <div class="collection_list">
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('R_game') }"
-                                            @click="toggleSelection('R_game')" src="../assets/images/mypage/R_game.png"
-                                            alt="">
-                                        <h6>遊戲王</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('R_unicorn') }"
-                                            @click="toggleSelection('R_unicorn')"
-                                            src="../assets/images/mypage/R_unicorn.png" alt="">
-                                        <h6>白日夢</h6>
+                                    <div v-for="(collection, index) in collections.R" :key="index"
+                                        class="collection_detailed">
+                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
+                                            @click="toggleSelection(index)" alt="">
+                                        <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="collection_window_Classification">
                                 <h2>N</h2>
                                 <div class="collection_list">
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('N_OK') }"
-                                            @click="toggleSelection('N_OK')" src="../assets/images/mypage/N_OK.png" alt="">
-                                        <h6>職場小尖兵</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('N_TropicalFish') }"
-                                            @click="toggleSelection('N_TropicalFish')"
-                                            src="../assets/images/mypage/N_TropicalFish.png" alt="">
-                                        <h6>熱帶魚</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('N_saltedFish') }"
-                                            @click="toggleSelection('N_saltedFish')"
-                                            src="../assets/images/mypage/N_saltedFish.png" alt="">
-                                        <h6>鹹魚</h6>
-                                    </div>
-                                    <div class="collection_detailed">
-                                        <img :class="{ 'selected-box': isSelected('N_tilapiaFish') }"
-                                            @click="toggleSelection('N_tilapiaFish')"
-                                            src="../assets/images/mypage/N_tilapiaFish.png" alt="">
-                                        <h6>吳郭魚</h6>
+                                    <div v-for="(collection, index) in collections.N" :key="index"
+                                        class="collection_detailed">
+                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
+                                            @click="toggleSelection(index)" alt="">
+                                        <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -230,15 +176,22 @@
                         <div class="base_plate"></div>
                     </div>
                     <div class="my_collect">
-                        <button @click="collectionShow = !collectionShow" class="mypage_button">編輯收藏品</button>
+                        <button @click="collectionShow = !collectionShow, editCollection()"
+                            class="mypage_button">編輯收藏品</button>
                         <div class="my_collect_title">
                             <span>我的收藏</span>
                             <hr>
                         </div>
                         <div class="collect">
-                            <div class="collectA"></div>
-                            <div class="collectB"></div>
-                            <div class="collectC"></div>
+                            <div class="collectA">
+                                <img :src="'data:image;base64,' + exhibit_collection_A" alt="">
+                            </div>
+                            <div class="collectB">
+                                <img :src="'data:image;base64,' + exhibit_collection_B" alt="">
+                            </div>
+                            <div class="collectC">
+                                <img :src="'data:image;base64,' + exhibit_collection_C" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -249,10 +202,10 @@
                     <div class="activity">
                         <div class="activity_list">
                             <h4>即將開始的活動</h4>
-                            <!-- <span>{{ activity_name }}</span>
-                            <p>{{ activity_day }}</p> -->
-                            <span>活動名稱</span>
-                            <p>日期</p>
+                            <span>{{ activity_name }}</span>
+                            <p>{{ '活動日期：' + (activity_date ? activity_date : '無活動報名紀錄') }}</p>
+
+                            <!-- <p>{{ '報名時間' + activity_start + '~' + activity_end }}</p> -->
                         </div>
                         <div class="past_activity">
                             <div class="past_activity_title">
@@ -260,13 +213,13 @@
                             </div>
                             <ul class="past_activity_list">
 
-                                <li v-for="(activityItem, index) in activityItems">
-                                    <p>{{ activityItem.name }}</p>
+                                <li v-for="(activityItem, index) in activityItems" :key="index">
+                                    <p>{{ activityItem.ACTIVITY_NAME }}</p>
                                     <div class="score_box">
                                         <div class="score">
                                             <div class="star_box">
-                                                <div v-for="(score, dIndex) in scores" :key="index">
-                                                    <svg class="star" :class="{ 'light': dIndex < activityItem.star }"
+                                                <div v-for="(starCount, dIndex) in scores" :key="dIndex">
+                                                    <svg class="star" :class="{ 'light': dIndex < starCount }"
                                                         @click="light" xmlns="http://www.w3.org/2000/svg" height="1em"
                                                         viewBox="0 0 576 512">
                                                         <path
@@ -280,16 +233,8 @@
                                                 class="mypage_button">修改</button>
                                         </div>
                                     </div>
-
                                 </li>
-                                <!-- <li>
-                                    <p>活動名稱</p>
-                                    <button class="mypage_button">待評分</button>
-                                </li>
-                                <li class="cancel_activity">
-                                    <p>活動名稱</p>
-                                    <button class="mypage_button">已取消報名</button>
-                                </li> -->
+                                <p v-if="activityItems.length === 0">無歷史紀錄</p>
                             </ul>
                         </div>
                     </div>
@@ -298,69 +243,7 @@
                     <!-------------------------------任務區塊------------------------------->
 
                     <div class="mission_board">
-                        <ul class="mission_list">
-                            <h4>今日任務</h4>
-                            <li>
-                                <div class="mission">
-                                    <div>
-                                        <img src="../assets/images/mypage/Finish_icon.png">
-                                    </div>
-                                    <p>每日登入獎勵</p>
-                                </div>
-                                <div class="mission_award">
-                                    <img src="../assets/images/mypage/gold_coin.png">
-                                    <p>+10</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="mission">
-                                    <div>
-                                        <img src="../assets/images/mypage/unFinish_icon.png">
-                                    </div>
-                                    <p>流浪一次</p>
-                                </div>
-                                <div class="mission_award">
-                                    <img src="../assets/images/mypage/gold_coin.png">
-                                    <p>+10</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="mission">
-                                    <div>
-                                        <img src="../assets/images/mypage/unFinish_icon.png">
-                                    </div>
-                                    <p>貪食蛇或百萬小學堂遊玩一次</p>
-                                </div>
-                                <div class="mission_award">
-                                    <img src="../assets/images/mypage/gold_coin.png">
-                                    <p>+10</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="mission">
-                                    <div>
-                                        <img src="../assets/images/mypage/unFinish_icon.png">
-                                    </div>
-                                    <p>大廳聊天一次</p>
-                                </div>
-                                <div class="mission_award">
-                                    <img src="../assets/images/mypage/gold_coin.png">
-                                    <p>+10</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="mission">
-                                    <div>
-                                        <img src="../assets/images/mypage/unFinish_icon.png">
-                                    </div>
-                                    <p>發表公開新貼文</p>
-                                </div>
-                                <div class="mission_award">
-                                    <img src="../assets/images/mypage/gold_coin.png">
-                                    <p>+10</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <missionList></missionList>
                     </div>
                 </div>
 
@@ -372,7 +255,6 @@
                     </div>
                 </div>
             </div>
-
         </template>
     </layout>
 </template>
@@ -384,6 +266,7 @@ import layout from '@/components/layout.vue'
 import postItem from '@/components/postItem.vue'
 import addPost from '@/components/addPost.vue'
 import editActivityScore from '@/components/editActivityScore.vue'
+import missionList from '@/components/missionList.vue'
 
 import { useUserStore } from '@/store/user';
 
@@ -392,7 +275,8 @@ export default {
         layout,
         postItem,
         addPost,
-        editActivityScore
+        editActivityScore,
+        missionList
     },
 
     data() {
@@ -402,31 +286,54 @@ export default {
             add_score: false,
             selectedBoxes: [],
             maxSelection: 3,
-            id: '7',
+            id: '',
             hold_coins: '',
             star: false,
+            constellation: '',
+            job: '',
+            city: '',
+            hobbyA: '',
+            hobbyB: '',
+            SelfIntroduction: '',
+            faceImageChange: '',
+            hairImageChange: '',
+            clothImageChange: '',
+            accessoriesImageChange: '',
+            userImg: '',
+            activityId: '',
+            activity_name: '',
+            activity_start: '',
+            activity_end: '',
+            activity_img: '',
+            activity_date: '',
+            exhibit_collection_A: '',
+            exhibit_collection_B: '',
+            exhibit_collection_C: '',
             // isUpload: false,
             scores: Array(5).fill(null),
-            activityItems: [{
-                name: "活動名稱A",
-                star: 0,
-            }, {
-                name: "活動名稱B",
-                star: 3,
-            }, {
-                name: "活動名稱C",
-                star: 5,
-            }],
+            activityItems: [],
+            scores: [],
             //buttonColor: false,
+            collections: {
+                SSR: [],
+                SR: [],
+                R: [],
+                N: []
+            }
         };
     },
     created() {
+        //取得會員資料
+        const userStore = useUserStore();
+        this.id = userStore.userID;
+
         //載入頁面時先讀取用戶資訊填在input裡
         this.getData();
     },
     methods: {
         async getData() {
             axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+                // const member_id = resData.data[0].MEMBER_ID;
                 this.constellation = resData.data[0].MEMBER_CONSTELLATION;
                 this.job = resData.data[0].MEMBER_JOB;
                 this.city = resData.data[0].MEMBER_CITY;
@@ -438,11 +345,34 @@ export default {
                 this.clothImageChange = resData.data[0].MEMBER_AVATAR_CLOTH;
                 this.accessoriesImageChange = resData.data[0].MEMBER_AVATAR_ACCESSORIES;
                 this.hold_coins = resData.data[0].MEMBER_COIN;
-
                 this.userImg = resData.data[0].MEMBER_PIC;
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
-            })
+            });
+            axios.post("api/comming_soon_activity.php", { id: this.id }).then((resData) => {
+                this.activity_name = resData.data[0].ACTIVITY_NAME;
+                this.activity_date = resData.data[0].ACTIVITY_DATE;
+                this.activity_start = resData.data[0].ACTIVITY_STARTDATE;
+                this.activity_end = resData.data[0].ACTIVITY_ENDDATE;
+                this.activity_img = resData.data[0].ACTIVITY_ACTIVITY_IMAGE;
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            });
+            axios.post("api/history_activity.php", { id: this.id }).then((resData) => {
+                this.activityItems = resData.data;
+                // this.activityItem.name = resData.data.ACTIVITY_NAME;
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            });
+            axios.post("api/member_collection_exhibit.php", { id: this.id }).then((resData) => {
+                console.log(resData.data);
+                this.exhibit_collection_A = resData.data[0]['COLLECTION_IMAGE'];
+                this.exhibit_collection_B = resData.data[1]['COLLECTION_IMAGE'];
+                this.exhibit_collection_C = resData.data[2]['COLLECTION_IMAGE'];
+
+            }).catch((e) => {
+                console.log(e);
+            });
         },
         light() {
             this.star = true;
@@ -506,17 +436,47 @@ export default {
         isSelected(index) {
             return this.selectedBoxes.includes(index);
         },
-    },
-    // mounted() {
-    //     //取得會員資料
-    //     const userStore = useUserStore();
 
-    //     this.userData = {
-    //         userId: userStore.userID,
-    //         userName: userStore.userName,
-    //         userImg: userStore.userImg,
-    //     }
-    //     this.getPostItems();
-    // },
+        editCollection() {
+            axios.post("api/member_collection.php", { id: this.id }).then((resData) => {
+                // 清空舊有資料
+                this.collections.SSR = [];
+                this.collections.SR = [];
+                this.collections.R = [];
+                this.collections.N = [];
+
+                // 分類資料
+                resData.data.forEach(collection => {
+                    const formattedCollection = {
+                        title: collection.COLLECTION_NAME,
+                        ownedImg: 'data:image;base64,' + collection.COLLECTION_IMAGE
+                    };
+
+                    switch (collection.COLLECTION_LEVEL) {
+                        case 'SSR':
+                            this.collections.SSR.push(formattedCollection);
+                            break;
+                        case 'SR':
+                            this.collections.SR.push(formattedCollection);
+                            break;
+                        case 'R':
+                            this.collections.R.push(formattedCollection);
+                            break;
+                        case 'N':
+                            this.collections.N.push(formattedCollection);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+
+                console.log(this.collections);
+            }).catch((e) => {
+                console.log(e);
+            });
+        }
+
+    },
+
 }
 </script>

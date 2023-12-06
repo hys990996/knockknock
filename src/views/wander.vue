@@ -36,12 +36,12 @@
                             </button>
                             <div class="collection_bg_window">
                                 <div class="collection_bg">
-                                    <img src="../assets/images/wander/SSR_git.png">
+                                    <img :src="'data:image;base64,' + gift_img" ref="gift_img" alt="">
                                 </div>
                             </div>
-                            <div class="collection_name">
+                            <div class=" collection_name">
                                 <span>恭喜獲得</span>
-                                <h4>{{ gift.COLLECTION_NAME }}</h4>
+                                <h4>{{ giftTitle }}</h4>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 <img class="close" src="../assets/images/wander/X.png">
                             </button>
                             <div class="post_img">
-                                <img src="../assets/images/wander/morning.png">
+                                <img :src="'data:image;base64,' + postImg">
                             </div>
                             <div class="post_information">
                                 <div class="avatar">
@@ -128,16 +128,32 @@ export default {
             second: 59,
             countdownInterval: null, //時間暫停
             cd: false,
-            id: '',
+            id: '11',
+            giftId: '',
             post: '',
-            gift: '',
+            postMemberId: '',
+            giftTitle: '',
             faceImageChange: '',
             hairImageChange: '',
             clothImageChange: '',
-            accessoriesImageChange: ''
+            accessoriesImageChange: '',
+            gift_img: '',
+            postImg: ''
         }
     },
+    created() {
+        //載入頁面時先讀取用戶資訊
+        this.getData();
+    },
     methods: {
+        async getData() {
+            axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+                const id = resData.data[0].MEMBER_ID;
+                this.id = resData.data[0].MEMBER_ID;
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            });
+        },
         start() {
             this.animationDrive = true;
             this.animationMove = true;
@@ -197,9 +213,24 @@ export default {
             } else {
                 this.giftShow = false;
             };
-            axios.post("api/gift_card.php").then(response => {
-                this.gift = response.data[0];
-            })
+
+            axios.post("api/gift_card.php", { giftId: this.giftId }).then((resData) => {
+                const giftId = resData.data[0].COLLECTION_ID;
+                this.giftTitle = resData.data[0].COLLECTION_NAME;
+                this.gift_img = resData.data[0].COLLECTION_IMAGE;
+
+                this.giftId = giftId;
+
+                console.log(this.giftId);
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            });
+
+            const response = await axios.post("api/gift_card_return.php", {
+                id: this.id,
+                giftId: this.giftId
+            });
+            console.log(response.data);
         },
 
         async readLetter() {
@@ -209,24 +240,47 @@ export default {
             } else {
                 this.letterShow = false;
             };
+
             axios.post("api/post_card.php").then(response => {
-                this.post = response.data[0];
-                this.postAvatar = response.data[0];
-                this.faceImageChange = response.data[0].MEMBER_AVATAR_FACE;
-                this.hairImageChange = response.data[0].MEMBER_AVATAR_HAIR;
-                this.clothImageChange = response.data[0].MEMBER_AVATAR_CLOTH;
-                this.accessoriesImageChange = response.data[0].MEMBER_AVATAR_ACCESSORIES;
+                const postId = response.data.secondQuery[0].POST_ID;
+                const postMemberId = response.data.secondQuery[0].MEMBER_ID;
+                this.post = response.data.firstQuery[0];
+                this.postAvatar = response.data.firstQuery[0];
+                this.faceImageChange = response.data.firstQuery[0].MEMBER_AVATAR_FACE;
+                this.hairImageChange = response.data.firstQuery[0].MEMBER_AVATAR_HAIR;
+                this.clothImageChange = response.data.firstQuery[0].MEMBER_AVATAR_CLOTH;
+                this.accessoriesImageChange = response.data.firstQuery[0].MEMBER_AVATAR_ACCESSORIES;
+                this.postImg = response.data.secondQuery[0].POST_IMAGE;
+
+                this.postId = postId;
+                this.postMemberId = postMemberId;
+            }).catch(error => {
+                console.error("Error fetching data:", error);
             });
 
+            //在加合併蒐集品的程式php
         },
 
-        addFriend() {
+        async addFriend() {
             this.addHim = true;
-        },
-        like() {
-            this.likePost = true;
-        },
 
+            const response = await axios.post("api/add_stranger_friend.php", {
+                id: this.id,
+                postMemberId: this.postMemberId
+            });
+            console.log(response.data);
+        },
+        async like() {
+            this.likePost = true;
+
+            const response = await axios.post("api/add_thumbs_up.php", {
+                id: this.id,
+                postId: this.postId
+            });
+            console.log(response.data); // 可以根據需要處理後端返回的數據
+
+        }
     }
 }
+
 </script>

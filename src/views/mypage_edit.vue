@@ -19,11 +19,11 @@
                         <div class="short_input">
                             <div>
                                 <p>姓氏*</p>
-                                <input type="text" name="firstName" ref="firstName" v-model="first_Name">
+                                <input type="text" name="lastName" ref="lastName" v-model="last_Name">
                             </div>
                             <div>
                                 <p>名字*</p>
-                                <input type="text" name="lastName" ref="lastName" v-model="last_Name">
+                                <input type="text" name="firstName" ref="firstName" v-model="first_Name">
                             </div>
                         </div>
                         <div class="long_input">
@@ -265,7 +265,7 @@ export default {
             hairImageChange: hairCurls,
             clothImageChange: clothBlack,
             accessoriesImageChange: accessoriesBachelorcap,
-            id: "7", //抓會員id編號,要是浮動的
+            id: "11", //抓會員id編號,要是浮動的
             first_Name: '',
             last_Name: '',
             tel: '',

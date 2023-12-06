@@ -11,15 +11,8 @@ $statement = $pdo->prepare($sql);
 $statement -> bindValue(":id",$id);
 $statement -> execute();
 $data = $statement -> fetchAll(PDO::FETCH_ASSOC);
-// print_r($data);
-// echo $data;
 
-if($data){
-    $data[0]['MEMBER_PIC']=base64_decode($data[0]['MEMBER_PIC']);
-}
-
-
-
+header('Content-Type:application/json');
 echo json_encode($data,JSON_UNESCAPED_UNICODE);
 
 ?>

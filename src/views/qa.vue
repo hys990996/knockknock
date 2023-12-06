@@ -21,14 +21,14 @@
                         <div class="list" v-for="(l, i) in lists" :key="i">
                             <div class="title" @click="toggle(i)">
                                 {{ l.title }}
-                                
+
                             </div>
                             <!-- <ul class="item" v-show="l.show">
                                 <li>{{ l.items }}</li>
                             </ul> -->
-                                <ul class="item" v-show="l.show">
+                            <ul class="item" v-show="l.show">
                                 <li v-for="(item, index) in l.items" :key="index">{{ item }}</li>
-                                </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export default {
             ],
             Categorieitems: [
                 {
-                    Id:"",
+                    Id: "",
                     Name: ""
                 }
             ]
@@ -87,70 +87,70 @@ export default {
     },
     methods: {
 
-        toggle: function(index) {
-    if (this.lists[index].show) {
-        this.lists[index].show = false; // 如果已展开，则关闭
-    } else {
-        this.lists.forEach((list, i) => (list.show = i === index)); // 展开当前项，关闭其他项
-    }
+        toggle: function (index) {
+            if (this.lists[index].show) {
+                this.lists[index].show = false; // 如果已展开，则关闭
+            } else {
+                this.lists.forEach((list, i) => (list.show = i === index)); // 展开当前项，关闭其他项
+            }
 
-    // console.log(this.lists[index])
-},
+            // console.log(this.lists[index])
+        },
 
-    GetCategories(){
-        fetch('http://localhost/knock/GetCategories.php', {
-          method: 'Get',
-          // 非同源
-          mode: 'cors',
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      }).then(resp => resp.json())
-      .then(questions => {
-        this.Categorieitems = questions.map(item => {
-                  return {
-                      Id: item.QUESTION_CATEGORY_ID,
-                      Name: item.QUESTION_CATEGORY_NAME,
-                  };
-        
-      })
-    })
-      .catch(error => {
-              alert('Error fetching data:', error);
-          })
-    },
+        GetCategories() {
+            fetch('http://localhost/API/GetCategories.php', {
+                method: 'Get',
+                // 非同源
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(resp => resp.json())
+                .then(questions => {
+                    this.Categorieitems = questions.map(item => {
+                        return {
+                            Id: item.QUESTION_CATEGORY_ID,
+                            Name: item.QUESTION_CATEGORY_NAME,
+                        };
 
-    getQuestionById(id) {
-        fetch(`http://localhost/knock/getQuestionById.php?id=${id}`, {
-          method: 'Get',
-          // 非同源
-          mode: 'cors',
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      }).then(resp => resp.json())
-      .then(questions => {
-        this.lists = questions.map(item => {
-                  return {
-                    title: item.QUESTION_TITLE,
-                    items: item.QUESTION_CONTENT.split('。')
-                  };
-        
-      })
-      })
-      .catch(error => {
-              alert('Error fetching data:', error);
-          })
-    },
+                    })
+                })
+                .catch(error => {
+                    alert('Error fetching data:', error);
+                })
+        },
 
-    fillLists(){
+        getQuestionById(id) {
+            fetch(`http://localhost/knock/getQuestionById.php?id=${id}`, {
+                method: 'Get',
+                // 非同源
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(resp => resp.json())
+                .then(questions => {
+                    this.lists = questions.map(item => {
+                        return {
+                            title: item.QUESTION_TITLE,
+                            items: item.QUESTION_CONTENT.split('。')
+                        };
 
-    }
+                    })
+                })
+                .catch(error => {
+                    alert('Error fetching data:', error);
+                })
+        },
+
+        fillLists() {
+
+        }
 
     },
     mounted() {
         this.GetCategories();
-        const CategoryId = 1 ;
+        const CategoryId = 1;
         this.getQuestionById(CategoryId);
     }
 };
