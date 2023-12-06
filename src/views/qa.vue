@@ -98,7 +98,7 @@ export default {
         },
 
         GetCategories() {
-            fetch('http://localhost/API/GetCategories.php', {
+            fetch('http://localhost/knock/GetCategories.php', {
                 method: 'Get',
                 // 非同源
                 mode: 'cors',
@@ -155,5 +155,3 @@ export default {
     }
 };
 </script>
-
-  
