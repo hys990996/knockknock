@@ -6,7 +6,7 @@
                     <h3>搜尋好友</h3>
                     <p>關鍵字：{{ keyword }}</p>
                 </div>
-                <results></results>
+                <results :keyword="keyword"></results>
             </div>
         </template>
     </layout>
@@ -27,6 +27,12 @@ export default {
             keyword: this.$route.params.keyword,
         }
 
-    }
+    },
+    mounted() {
+        this.keyword = this.$route.params.keyword;
+    },
+    watch: {
+
+    },
 }
 </script>

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-
+import { useUserStore } from '@/store/user';
 export default {
     data() {
         return {
@@ -86,6 +86,8 @@ export default {
                             document.cookie = "userID" + "=" + response.data["ID"] + ";path=/;expires=" + exdate.toGMTString();
                             document.cookie = "userName" + "=" + response.data["Fullname"] + ";path=/;expires=" + exdate.toGMTString();
 
+                            this.saveToPinia(response.data["ID"], response.data["Fullname"], response.data["img"]);
+
                             this.$router.push({ name: 'home' });
                         }
                     })
@@ -93,6 +95,15 @@ export default {
                         console.log(error);
                     });
             }
+        },
+        saveToPinia(id, name, img) {
+
+            //將資料存到pinia
+            const userStore = useUserStore();
+            userStore.userID = id;
+            userStore.userName = name;
+            userStore.userImg = 'data:image;base64,' + img;
+
         },
         clearErrorMsg() {
             if (this.loginData.userAccount != '') {

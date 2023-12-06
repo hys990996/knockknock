@@ -44,7 +44,7 @@
                             <img src="../assets/images/login/boy-base.png" alt="">
                         </div>
                         <div ref="baseGImg" class="girl" @click="imgGSelect">
-                            <img src="../assets/images/login/girl-base.png" alt="">
+                            <img src="../assets/images/login/IMG_4517.jpeg" alt="">
                         </div>
                     </div>
                     <button type="button" class="Btn Btn-dark" @click="doSignUp">註冊</button>
@@ -105,7 +105,7 @@ export default {
             this.bBaseImg = e.target.src;
             // console.log(this.bBaseImg);
         },
-        doSignUp() {
+        async doSignUp() {
 
             this.checkField();
 
@@ -117,13 +117,11 @@ export default {
                     this.signUpData.img = this.gBaseImg;
                 }
 
-                // console.log(this.signUpData);
-
-                //進行註冊
+                // 進行註冊
                 axios
                     .post('api/signUp.php', JSON.stringify(this.signUpData))
                     .then(response => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         if (response.data == '1') {
                             alert("註冊成功");
                             this.$router.push({ name: 'member_login' })
@@ -221,7 +219,7 @@ export default {
                     .post('api/checkAccount.php', JSON.stringify(this.signUpData))
                     .then(response => {
                         // console.log(response.data);
-                        if (response.data == '1') {
+                        if (response.data != '0') {
                             this.accountError = '此帳號曾經被註冊過!';
                         } else {
                             this.accountPass = true;

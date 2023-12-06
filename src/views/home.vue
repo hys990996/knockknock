@@ -8,63 +8,11 @@
                         <addPost v-else @keepPostBlock="keepPostBlock" @addPost="addPost"></addPost>
                     </div>
                     <div class="post-items">
-                        <postItem :postItems="postItems" @addComment="addComment">
+                        <postItem :postItems="postItems" :userImage="userData.userImg" @addComment="addComment">
                         </postItem>
                     </div>
                 </div>
                 <div class="home-info">
-                    <div class="home-hot-activity">
-                        <div class="hot-activity-title">
-                            <img src="../assets/images/icon/hot.svg" alt="">
-                            <h5>熱門活動</h5>
-                        </div>
-                        <div class="activity-list">
-                            <router-link :to="{ name: 'activity_info' }" class="activity-item">
-                                <div class="activity-date">
-                                    <p class="date">
-                                        <span class="month">10</span>月
-                                        <span class="month">20</span>日
-                                    </p>
-                                    <p class="week">星期六</p>
-                                </div>
-                                <div class="activity-title">
-                                    <p class="title">夏日音樂祭</p>
-                                    <p class="time">18:00-22:00 大台北河濱公園</p>
-                                </div>
-                            </router-link>
-                            <router-link :to="{ name: 'activity_info' }" class="activity-item">
-                                <div class="activity-date">
-                                    <p class="date">
-                                        <span class="month">10</span>月
-                                        <span class="month">20</span>日
-                                    </p>
-                                    <p class="week">星期六</p>
-                                </div>
-                                <div class="activity-title">
-                                    <p class="title">夏日音樂祭</p>
-                                    <p class="time">18:00-22:00 大台北河濱公園</p>
-                                </div>
-                            </router-link>
-                            <router-link :to="{ name: 'activity_info' }" class="activity-item">
-                                <div class="activity-date">
-                                    <p class="date">
-                                        <span class="month">10</span>月
-                                        <span class="month">20</span>日
-                                    </p>
-                                    <p class="week">星期六</p>
-                                </div>
-                                <div class="activity-title">
-                                    <p class="title">夏日音樂祭</p>
-                                    <p class="time">18:00-22:00 大台北河濱公園</p>
-                                </div>
-                            </router-link>
-                        </div>
-                        <div class="see-more">
-                            <router-link :to="{ name: 'activity' }">
-                                查看更多活動 >
-                            </router-link>
-                        </div>
-                    </div>
                     <div class="home-chatting-block">
                         <div class="chatting-title">
                             <div class="title">
@@ -91,6 +39,33 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="home-hot-activity">
+                        <div class="hot-activity-title">
+                            <img src="../assets/images/icon/hot.svg" alt="">
+                            <h5>熱門活動</h5>
+                        </div>
+                        <div class="activity-list">
+                            <router-link v-for="(item, index) in activities" :key="item.id"
+                                :to="{ name: 'activity_info', params: { activityID: item.id } }" class="activity-item">
+                                <div class="activity-date">
+                                    <p class="date">
+                                        <span class="month">{{ item.month }}</span>月
+                                        <span class="month">{{ item.day }}</span>日
+                                    </p>
+                                    <p class="week">{{ item.week }}</p>
+                                </div>
+                                <div class="activity-title">
+                                    <p class="title">{{ item.name }}</p>
+                                    <p class="time">{{ item.location }}</p>
+                                </div>
+                            </router-link>
+                        </div>
+                        <div class="see-more">
+                            <router-link :to="{ name: 'activity' }">
+                                查看更多活動
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -103,14 +78,11 @@ import addPost from '@/components/addPost.vue'
 import postItem from '@/components/postItem.vue'
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push, set, get, query, orderByKey, limitToLast, onValue } from 'firebase/database';
+import friendView from '@/assets/images/icon/friend-view-select.svg';
+import globalView from '@/assets/images/icon/global-view-select-2.svg';
+import privateView from '@/assets/images/icon/private-view-select.svg';
 
 import { useUserStore } from '@/store/user';
-
-import gBaseImg from '@/assets/images/login/girl-base.png';
-import bBaseImg from '@/assets/images/login/boy-base.png';
-import sampleImg from '@/assets/images/post/sample.jpeg';
-import sampleImg2 from '@/assets/images/post/sample2.jpeg';
-import sampleImg3 from '@/assets/images/post/sample3.jpeg';
 
 const firebaseApp = initializeApp({
     apiKey: "AIzaSyBLqg3ReSlc8ukkM6Fq3syretEb-zJ6MDs",
@@ -137,88 +109,50 @@ export default {
             chatroom: [],
             homeWidth: 0,
             postItems: [
-                {
-                    id: 1,
-                    userName: '林小美',
-                    userImg: gBaseImg,
-                    content: "今天天氣真好",
-                    status: 2, //設定狀態(公開 0/ 好友 1/私人 2)
-                    likes: 20,
-                    createTime: '2023/12/30 23:59',
-                    postImages: [
-                        {
-                            id: 1,
-                            src: sampleImg,
-                        },
-                        {
-                            id: 2,
-                            src: sampleImg2,
-                        },
-                        {
-                            id: 3,
-                            src: sampleImg3,
-                        },
-                        {
-                            id: 4,
-                            src: sampleImg3,
-                        },
-                    ],
-                    replieds: [
-                        {
-                            id: 1,
-                            commemtText: '好棒',
-                            name: '王小明',
-                            userImg: bBaseImg,
-                            createTime: '2023/12/31 23:50:59'
-                        },
-                        {
-                            id: 2,
-                            commemtText: 'Good!',
-                            name: '林小美',
-                            userImg: gBaseImg,
-                            createTime: '2023/12/31 23:59:59'
-                        },
-                        {
-                            id: 3,
-                            commemtText: 'Good!',
-                            name: '林小美',
-                            userImg: gBaseImg,
-                            createTime: '2023/12/31 23:59:59'
-                        },
-                        {
-                            id: 4,
-                            commemtText: '棒棒!',
-                            name: '蔡大頭',
-                            userImg: bBaseImg,
-                            createTime: '2023/12/31 23:59:59'
-                        },
-                    ],
-                },
-                {
-                    id: 2,
-                    userName: '林小美',
-                    userImg: gBaseImg,
-                    content: "今天天氣真好",
-                    status: 2, //設定狀態(公開 0/ 好友 1/私人 2)
-                    likes: 300,
-                    createTime: '2023/12/25 23:59',
-                    postImages: [],
-                    replieds: [
-                        {
-                            id: 1,
-                            commemtText: '羨慕',
-                            name: '王小明',
-                            userImg: bBaseImg,
-                            createTime: '2023/10/10 23:59:59'
-                        },
-                    ],
-                },
+                // {
+                //     id: 1,
+                //     userName: '林小美',
+                //     userImg: gBaseImg,
+                //     content: "今天天氣真好",
+                //     status: 2, //設定狀態(公開 0/ 好友 1/私人 2)
+                //     likes: 20,
+                //     createTime: '2023/12/30 23:59',
+                //     postImages: [
+                //         {
+                //             id: 1,
+                //             src: sampleImg,
+                //         },
+                //         {
+                //             id: 2,
+                //             src: sampleImg2,
+                //         },
+                //     ],
+                //     replieds: [
+                //         {
+                //             id: 1,
+                //             commemtText: '好棒',
+                //             name: '王小明',
+                //             userImg: bBaseImg,
+                //             createTime: '2023/12/31 23:50:59'
+                //         },
+                //     ],
+                // },
             ],
             userData: {
                 userId: '',
                 userName: '',
                 userImg: '',
             },
+            activities: [
+                // {
+                //     id: '1',
+                //     name: '夏日音樂祭',
+                //     month: '12',
+                //     day: '25',
+                //     week: '星期六',
+                //     location: '大台北河濱公園'
+                // },
+            ]
         }
     },
     methods: {
@@ -259,12 +193,13 @@ export default {
                 commemtText: text,
                 userId: this.userData.userId,
                 name: this.userData.userName,
-                userImg: 'data:image/png;base64,' + this.userData.userImg,
+                userImg: this.userData.userImg,
                 createTime: Today.toLocaleString("zh-tw", { hour12: false }),
                 postId: postId,
             };
             this.postItems[i].replieds.push(commentItem);
 
+            e.target.parentNode.previousSibling.value = '';
             // console.log(this.userData);
 
             // 新增回覆資料至DB
@@ -281,21 +216,206 @@ export default {
                 });
         },
         getPostItems() {
+
             const memberId = {
                 userID: this.userData.userId,
             }
 
-            //傳入memberID 取回相關自己及好友的貼文
+            //傳入memberID 取回自己、好友及公開的貼文
             axios
                 .post('api/getPostItems.php', JSON.stringify(memberId))
                 .then(response => {
                     // console.log(response.data);
 
+                    if (response.data != 0) {
+
+                        response.data.forEach((element, index) => {
+                            //設定post資料
+                            const post = {
+                                id: element['POST_ID'],
+                                userId: element['MENBER_ID'],
+                                userName: element['MEMBER_LAST_NAME'] + element['MEMBER_FIRST_NAME'],
+                                userImg: 'data:image;base64,' + element['MEMBER_PIC'],
+                                content: element['POST_CONTENT'],
+                                status: element['POST_STATUS'], //設定狀態(公開 0/ 好友 1/私人 2)
+                                likes: 0,
+                                createTime: element['POST_CREATETIME'].replaceAll('-', '/'),
+                                postImages: [],
+                                replieds: [],
+                            }
+
+                            if (post.status == 0) {
+                                post.status = globalView;
+                            } else if (post.status == 1) {
+                                post.status = friendView;
+                            } else {
+                                post.status = privateView;
+                            }
+
+                            // post.postImages = this.getPostImg(post.id);
+                            this.getPostImg(post.id, index);
+                            this.getPostComment(post.id, index);
+
+                            // post.replieds = this.replieds;
+
+
+                            this.postItems.push(post);
+                        });
+
+                        // console.log(posts);
+                    }
+
                 })
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        getPostImg(id, i) {
+
+            const postId = { id }
+
+            axios
+                .post('api/getPostImg.php', JSON.stringify(postId))
+                .then(response => {
+
+                    // console.log(response.data);
+
+                    if (response.data == '0') {
+                        console.log('no photo');
+                    } else {
+                        // console.log(response.data);
+                        const postImages = [];
+                        const result = response.data;
+
+                        result.forEach(element => {
+                            const imageItem = {
+                                id: element['ID'],
+                                // src: 'data:image;base64,' + element['POST_IMAGE'],
+                                src: element['POST_IMAGE'],
+                            }
+
+                            postImages.push(imageItem);
+                        })
+
+                        this.postItems[i].postImages = postImages;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        },
+        getPostComment(id, i) {
+
+            const postId = { id }
+
+            axios
+                .post('api/getPostComment.php', JSON.stringify(postId))
+                .then(response => {
+                    if (response.data != 0) {
+                        // console.log(response.data);
+                        const replieds = [];
+                        response.data.forEach(element => {
+                            const commentItem = {
+                                id: element['COMMENT_ID'],
+                                commemtText: element['COMMENT_TEXT'],
+                                name: element['MEMBER_LAST_NAME'] + element['MEMBER_FIRST_NAME'],
+                                userImg: 'data:image;base64,' + element['MEMBER_PIC'],
+                                createTime: element['COMMENT_CREATETIME'].replaceAll('-', '/'),
+                            }
+
+                            replieds.push(commentItem);
+                        })
+
+                        this.postItems[i].replieds = replieds;
+
+                    } else {
+                        // console.log('0');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        },
+        getActivities() {
+
+            axios.get('api/getHotActivities.php')
+                .then(response => {
+                    console.log(response.data)
+                    if (response.data != 0) {
+                        let count = 0;
+
+                        response.data.forEach(element => {
+                            if (element['ACTIVITY_REMAINING_PLACES'] != 0 && count < 3) {
+                                const activity = {
+                                    id: element['ACTIVITY_ID'],
+                                    name: element['ACTIVITY_NAME'],
+                                    month: new Date(element['ACTIVITY_DATE'].replaceAll('-', '/')).getMonth() + 1,
+                                    day: new Date(element['ACTIVITY_DATE'].replaceAll('-', '/')).getDate(),
+                                    week: new Date(element['ACTIVITY_DATE'].replaceAll('-', '/')).getDay(),
+                                    location: element['ACTIVITY_ADDRESS']
+                                }
+
+                                this.activities.push(activity);
+                                count++;
+                            }
+                        })
+
+                        // this.getWeek(this.activities);
+                        this.activities.forEach(element => {
+                            switch (element['week']) {
+                                case 0:
+                                    element['week'] = "星期天";
+                                    break;
+                                case 1:
+                                    element['week'] = "星期一";
+                                    break;
+                                case 2:
+                                    element['week'] = "星期二";
+                                    break;
+                                case 3:
+                                    element['week'] = "星期三";
+                                    break;
+                                case 4:
+                                    element['week'] = "星期四";
+                                    break;
+                                case 5:
+                                    element['week'] = "星期五";
+                                    break;
+                                case 6:
+                                    element['week'] = "星期六";
+                                    break;
+                            }
+
+                            if (element['month'] < 10) {
+
+                                element['month'] = '0' + element['month'];
+                            }
+                        })
+
+                        // console.log(this.activities);
+
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+    },
+    beforeMount() {
+        //取得會員資料
+        const userStore = useUserStore();
+
+        this.userData = {
+            userId: userStore.userID,
+            userName: userStore.userName,
+            userImg: userStore.userImg,
         }
+
+        this.getPostItems();
+        this.getActivities();
     },
     mounted() {
 
@@ -310,15 +430,6 @@ export default {
         // this.homeWidth = this.$refs.home.clientWidth;
         // console.log(this.homeWidth)
 
-        //取得會員資料
-        const userStore = useUserStore();
-
-        this.userData = {
-            userId: userStore.userID,
-            userName: userStore.userName,
-            userImg: userStore.userImg,
-        }
-        this.getPostItems();
     },
     watch: {
         chatroom() {

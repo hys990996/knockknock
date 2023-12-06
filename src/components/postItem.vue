@@ -6,7 +6,10 @@
             </div>
             <div class="post-user-time">
                 <p class="user-name">{{ item.userName }}</p>
-                <p class="user-post-time">{{ item.createTime.replaceAll('-', '/') }}</p>
+                <div class="post-time">
+                    <p class="user-post-time">{{ item.createTime.replaceAll('-', '/') }}</p>
+                    <img :src="item.status" alt="">
+                </div>
             </div>
         </div>
         <div class="post-content">
@@ -46,12 +49,14 @@
             </div>
             <div class="reply-message">
                 <div class="user-image">
-                    <img src="../assets/images/user/userimage.png" alt="">
+                    <img :src="userImage" alt="">
                 </div>
                 <div class="reply-input">
-                    <input type="text" class="inputCommon" @blur="bindCommentText($event)">
-                    <button type="button" @click="addComment($event, index, item.id)"><img
-                            src="../assets/images/icon/submit.svg" alt=""></button>
+                    <input type="text" class="inputCommon" @blur="bindCommentText($event)"
+                        @keyup.enter="bindCommentText($event), enterAddComment($event, index, item.id)">
+                    <button type="button" @click="addComment($event, index, item.id)">
+                        <img src="../assets/images/icon/submit.svg" alt="">
+                    </button>
                 </div>
             </div>
         </div>
@@ -65,12 +70,11 @@
 
 
 export default {
-    props: ["postItems"],
+    props: ["postItems", "userImage"],
     emits: ["addComment"],
     data() {
         return {
             commemtText: '',
-
         }
     },
     methods: {
@@ -97,12 +101,35 @@ export default {
                 //清空變數跟input欄位
                 this.commemtText = '';
                 // console.log(e.target.parentNode.previousSibling);
-                e.target.parentNode.previousSibling.value = ''
+                e.target.parentNode.previousSibling.value = '';
+
             } else {
                 alert('請輸入回覆內容');
             }
         },
+        enterAddComment(e, i, postId) {
 
+            this.addComment(e, i, postId);
+            e.target.value = '';
+        },
+
+    },
+    beforeMount() {
+        // const items = this.postItems;
+
+        // items.forEach(element => {
+
+        //     console.log(element['status']);
+
+        //     if (element['status'] == 0) {
+        //         element['status'] = globalView;
+        //     } else if (element['status'] == 1) {
+        //         element['status'] = friendView;
+        //     } else {
+        //         element['status'] = privateView;
+        //     }
+
+        // })
     },
     mounted() {
         // this.scrollToBottom();
