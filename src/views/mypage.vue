@@ -6,40 +6,7 @@
                 <!----------------新增貼文彈窗---------------->
                 <div v-if="postShow" class="add-post-blur">
                     <div class="add-post" ref="addPostBlock">
-                        <div class="add-post-block">
-                            <div class="add-block-title">
-                                <h5 class="post-edit-title">發表貼文</h5>
-                                <div class="post-view-setting">
-                                    <img ref="friendView" src="../assets/images/icon/friend-view-select.svg" alt=""
-                                        :class="{ select: friendSelect }" value="friend" @click="friendViewSetting($event)">
-                                    <img ref="globalView" src="../assets/images/icon/global-view.svg" alt=""
-                                        :class="{ select: globalSelect }" value="global" @click="globalViewSetting($event)">
-                                    <img ref="privateView" src="../assets/images/icon/private-view.svg" alt=""
-                                        :class="{ select: privateSelect }" value="private"
-                                        @click="privateViewSetting($event)">
-                                </div>
-                            </div>
-                            <textarea name="" id="post-content" rows="10" placeholder="輸入想說的話"
-                                ref="addPostContent"></textarea>
-                            <div class="add-images-block" v-if="addImages">
-                                <div class="add-post-images" v-for="(image, index) in addImages" :key="index">
-                                    <img src="../assets/images/icon/reject.svg" alt="delete icon" class="delete-img"
-                                        @click="deleteImg(index)">
-                                    <img :src="image.img" alt="">
-                                </div>
-                            </div>
-                            <label for="postImg" class="postImg">
-                                <span>
-                                    新增照片
-                                </span>
-                                <img src="../assets/images/icon/image.svg" alt="">
-                                <input type="file" name="postImg" id="postImg" @change="previewImage" multiple>
-                            </label>
-                            <div class="btn-block">
-                                <button class="Btn Btn-light" @click="postShow = !postShow">取消</button>
-                                <button class="Btn Btn-dark" @click="postShow = !postShow">發布</button>
-                            </div>
-                        </div>
+                        <addPost @hideBlock="postShowControl" @addPost="addPost"></addPost>
                     </div>
                 </div>
                 <!----------------新增貼文彈窗end---------------->
@@ -61,7 +28,7 @@
                             <button @click="postShow = !postShow" class="new_post_button Btn">發表新貼文</button>
                         </div>
                         <div class="head_sticker">
-                            <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="head_sticker">
+                            <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="" v-if="userImg">
                         </div>
                         <div class="guide_button">
                             <router-link :to="{ name: 'mypage_edit' }">
@@ -112,8 +79,9 @@
                                 <div class="collection_list">
                                     <div v-for="(collection, index) in collections.SSR" :key="index"
                                         class="collection_detailed">
-                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
-                                            @click="toggleSelection(index)" alt="">
+                                        <img :src="collection.ownedImg"
+                                            :class="{ 'selected-box': isSelected(collection.collectionID) }"
+                                            @click="toggleSelection(collection.collectionID)" alt="">
                                         <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
@@ -123,8 +91,9 @@
                                 <div class="collection_list">
                                     <div v-for="(collection, index) in collections.SR" :key="index"
                                         class="collection_detailed">
-                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
-                                            @click="toggleSelection(index)" alt="">
+                                        <img :src="collection.ownedImg"
+                                            :class="{ 'selected-box': isSelected(collection.collectionID) }"
+                                            @click="toggleSelection(collection.collectionID)" alt="">
                                         <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
@@ -134,8 +103,9 @@
                                 <div class="collection_list">
                                     <div v-for="(collection, index) in collections.R" :key="index"
                                         class="collection_detailed">
-                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
-                                            @click="toggleSelection(index)" alt="">
+                                        <img :src="collection.ownedImg"
+                                            :class="{ 'selected-box': isSelected(collection.collectionID) }"
+                                            @click="toggleSelection(collection.collectionID)" alt="">
                                         <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
@@ -145,15 +115,17 @@
                                 <div class="collection_list">
                                     <div v-for="(collection, index) in collections.N" :key="index"
                                         class="collection_detailed">
-                                        <img :src="collection.ownedImg" :class="{ 'selected-box': isSelected(index) }"
-                                            @click="toggleSelection(index)" alt="">
+                                        <img :src="collection.ownedImg"
+                                            :class="{ 'selected-box': isSelected(collection.collectionID) }"
+                                            @click="toggleSelection(collection.collectionID)" alt="">
                                         <h6>{{ collection.title }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="collection_window_summit">
-                            <button @click="collectionShow = !collectionShow" class="mypage_button Btn">確定</button>
+                            <button @click="collectionShow = !collectionShow, collectionReturn()"
+                                class="mypage_button Btn">確定</button>
                         </div>
                     </div>
                 </div>
@@ -161,18 +133,23 @@
 
                 <!-------------------------------蒐藏品區塊------------------------------->
                 <div class="tag">
-                    <span> {{ constellation }} </span>
-                    <span> {{ job }} </span>
-                    <span> {{ city }} </span>
-                    <span> {{ hobbyA }} </span>
-                    <span> {{ hobbyB }} </span>
+                    <span v-if="constellation != '-'"> {{ constellation }} </span>
+                    <span v-if="job"> {{ job }} </span>
+                    <span v-if="city"> {{ city }} </span>
+                    <span v-if="hobbyA"> {{ hobbyA }} </span>
+                    <span v-if="hobbyB"> {{ hobbyB }} </span>
                 </div>
                 <div class="custom_display">
                     <div class="show_role">
-                        <img :src="faceImageChange" class="face character_parts">
-                        <img :src="hairImageChange" class="hair character_parts">
-                        <img :src="clothImageChange" class="cloth character_parts">
-                        <img :src="accessoriesImageChange" class="accessories character_parts">
+                        <img :src="faceImageChange" class="face character_parts" v-if="faceImageChange">
+                        <img :src="hairImageChange" class="hair character_parts" v-if="hairImageChange">
+                        <img :src="clothImageChange" class="cloth character_parts" v-if="clothImageChange">
+                        <img :src="accessoriesImageChange" class="accessories character_parts"
+                            v-if="accessoriesImageChange">
+                        <p class="noAvatar"
+                            v-if="!faceImageChange && !hairImageChange && !clothImageChange && !accessoriesImageChange">
+                            無虛擬人物
+                        </p>
                         <div class="base_plate"></div>
                     </div>
                     <div class="my_collect">
@@ -184,13 +161,13 @@
                         </div>
                         <div class="collect">
                             <div class="collectA">
-                                <img :src="'data:image;base64,' + exhibit_collection_A" alt="">
+                                <img :src="'data:image;base64,' + exhibit_collection_A" alt="" v-if="exhibit_collection_A">
                             </div>
                             <div class="collectB">
-                                <img :src="'data:image;base64,' + exhibit_collection_B" alt="">
+                                <img :src="'data:image;base64,' + exhibit_collection_B" alt="" v-if="exhibit_collection_B">
                             </div>
                             <div class="collectC">
-                                <img :src="'data:image;base64,' + exhibit_collection_C" alt="">
+                                <img :src="'data:image;base64,' + exhibit_collection_C" alt="" v-if="exhibit_collection_C">
                             </div>
                         </div>
                     </div>
@@ -216,22 +193,24 @@
                                 <li v-for="(activityItem, index) in activityItems" :key="index">
                                     <p>{{ activityItem.ACTIVITY_NAME }}</p>
                                     <div class="score_box">
-                                        <div class="score">
+                                        <div v-if="addScoreShow" class="score">
                                             <div class="star_box">
                                                 <div v-for="(starCount, dIndex) in scores" :key="dIndex">
                                                     <svg class="star" :class="{ 'light': dIndex < starCount }"
-                                                        @click="light" xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 576 512">
+                                                        @click="light(dIndex)" xmlns="http://www.w3.org/2000/svg"
+                                                        height="1em" viewBox="0 0 576 512">
                                                         <path
                                                             d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
                                                     </svg>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div>
-                                            <button :value="index" @click="addScore($event)"
-                                                class="mypage_button">修改</button>
+                                            <button :value="index" @click="addScore($event), addScoreShow = !addScoreShow"
+                                                class="mypage_button">{{ addScoreShow ? '確定' : '評分' }}</button>
                                         </div>
+
                                     </div>
                                 </li>
                                 <p v-if="activityItems.length === 0">無歷史紀錄</p>
@@ -251,7 +230,8 @@
                 <!-------------------------------貼文區塊------------------------------->
                 <div class="page-post">
                     <div class="post-items">
-                        <postItem></postItem>
+                        <postItem :postItems="postItems" :userImage="'data:image;base64,' + userImg"
+                            @addComment="addComment"></postItem>
                     </div>
                 </div>
             </div>
@@ -300,8 +280,10 @@ export default {
             clothImageChange: '',
             accessoriesImageChange: '',
             userImg: '',
+            collectionID: '',
             activityId: '',
             activity_name: '',
+            ACTIVITY_NAME: '',
             activity_start: '',
             activity_end: '',
             activity_img: '',
@@ -310,25 +292,31 @@ export default {
             exhibit_collection_B: '',
             exhibit_collection_C: '',
             // isUpload: false,
-            scores: Array(5).fill(null),
+            addScoreShow: false,
+            scores: Array(5).fill(0),
             activityItems: [],
-            scores: [],
             //buttonColor: false,
             collections: {
                 SSR: [],
                 SR: [],
                 R: [],
                 N: []
-            }
+            },
+            postItems: [],
+            userName: '',
         };
     },
     created() {
         //取得會員資料
         const userStore = useUserStore();
         this.id = userStore.userID;
+        this.userName = userStore.userName;
 
         //載入頁面時先讀取用戶資訊填在input裡
         this.getData();
+
+        //讀取使用者貼文
+        this.getPostItems();
     },
     methods: {
         async getData() {
@@ -349,7 +337,7 @@ export default {
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
             });
-            axios.post("api/comming_soon_activity.php", { id: this.id }).then((resData) => {
+            axios.post("api/coming_soon_activity.php", { id: this.id }).then((resData) => {
                 this.activity_name = resData.data[0].ACTIVITY_NAME;
                 this.activity_date = resData.data[0].ACTIVITY_DATE;
                 this.activity_start = resData.data[0].ACTIVITY_STARTDATE;
@@ -365,10 +353,11 @@ export default {
                 console.log(e) //連線錯誤的時候會執行這邊
             });
             axios.post("api/member_collection_exhibit.php", { id: this.id }).then((resData) => {
-                console.log(resData.data);
+
                 this.exhibit_collection_A = resData.data[0]['COLLECTION_IMAGE'];
                 this.exhibit_collection_B = resData.data[1]['COLLECTION_IMAGE'];
                 this.exhibit_collection_C = resData.data[2]['COLLECTION_IMAGE'];
+                // console.log(resData.data);
 
             }).catch((e) => {
                 console.log(e);
@@ -379,41 +368,8 @@ export default {
         },
         addScore(e) {
             console.log(e.target.value)
+
         },
-        // async uploadImg(e) {
-        //     this.isUpload = true;
-        //     let file = e.target.files[0];
-        //     let imageData = '';
-        //     let reader = new FileReader();
-
-        //     reader.readAsDataURL(file);
-        //     reader.onload = async (e) => {
-        //         // 使用 e.target.result 取得讀取的資料
-        //         // console.log(e.target.result);
-
-        //         imageData = e.target.result.substring(e.target.result.indexOf(',') + 1);
-        //         console.log(imageData)
-        //         this.userImg = imageData;
-
-        //         // 將圖片資料上傳到 upload_img.php
-        //         try {
-        //             const response = await axios.post("api/upload_img.php", {
-        //                 id: this.id,
-        //                 imageData: imageData,
-        //             });
-
-        //             console.log(response.data); // 可以根據需要處理後端返回的數據
-        //         } catch (error) {
-        //             console.error("Error uploading image:", error);
-        //         }
-        //     };
-        // },
-
-        // light(e, i, star) {
-        //     //alert("ss");
-        //     this.activityItem[i].star = star;
-        // },
-
 
         //判斷星星是否有更動過,如果有更動過的話按紐更換顏色並改變顯示的字
         //         if(star[i] > 0){
@@ -435,6 +391,7 @@ export default {
         },
         isSelected(index) {
             return this.selectedBoxes.includes(index);
+
         },
 
         editCollection() {
@@ -449,7 +406,8 @@ export default {
                 resData.data.forEach(collection => {
                     const formattedCollection = {
                         title: collection.COLLECTION_NAME,
-                        ownedImg: 'data:image;base64,' + collection.COLLECTION_IMAGE
+                        ownedImg: 'data:image;base64,' + collection.COLLECTION_IMAGE,
+                        collectionID: collection.COLLECTION_ID
                     };
 
                     switch (collection.COLLECTION_LEVEL) {
@@ -469,14 +427,218 @@ export default {
                             break;
                     }
                 });
-
                 console.log(this.collections);
             }).catch((e) => {
                 console.log(e);
             });
-        }
+        },
+        async collectionReturn() {
+            const collectionIDs = this.selectedBoxes;
+            for (let index = 0; index < this.selectedBoxes.length; index++) {
+                const id = this.selectedBoxes[index];
+                const response = await axios.post("api/member_collection_return.php", {
+                    id: this.id,
+                    collectionID: id,
+                    collectionIDs: collectionIDs,
+                });
+                console.log(response.data);
+            }
+            // 在這裡清空selectedBoxes
+            this.selectedBoxes = [];
 
-    },
+            // 存檔後再次呼叫展示
+            axios.post("api/member_collection_exhibit.php", { id: this.id }).then((resData) => {
+                this.exhibit_collection_A = resData.data[0]['COLLECTION_IMAGE'];
+                this.exhibit_collection_B = resData.data[1]['COLLECTION_IMAGE'];
+                this.exhibit_collection_C = resData.data[2]['COLLECTION_IMAGE'];
+                console.log(resData.data);
+            }).catch((e) => {
+                console.log(e);
+            });
+        },
+
+
+
+        // 以下開始是貼文相關的Methods
+        postShowControl(show) {
+            this.postShow = show;
+        },
+        addPost(post) {
+            const newPost = post;
+            if (newPost.status == 0) {
+                newPost.status = globalView;
+            } else if (newPost.status == 1) {
+                newPost.status = friendView;
+            } else {
+                newPost.status = privateView;
+            }
+            this.postItems.unshift(newPost);
+            alert('新增完成');
+        },
+        getPostItems() {
+
+            const memberId = {
+                userID: this.id,
+            }
+
+            //傳入memberID 取回自己的貼文
+            axios
+                .post('api/getMyPostItems.php', JSON.stringify(memberId))
+                .then(response => {
+                    // console.log(response.data);
+
+                    if (response.data != 0) {
+
+                        response.data.forEach((element, index) => {
+                            //設定post資料
+                            const post = {
+                                id: element['POST_ID'],
+                                userId: element['MENBER_ID'],
+                                userName: element['MEMBER_LAST_NAME'] + element['MEMBER_FIRST_NAME'],
+                                userImg: 'data:image;base64,' + this.userImg,
+                                content: element['POST_CONTENT'],
+                                status: element['POST_STATUS'], //設定狀態(公開 0/ 好友 1/私人 2)
+                                likes: element['POST_LIKES'],
+                                liked: element['liked'],
+                                createTime: element['POST_CREATETIME'].replaceAll('-', '/'),
+                                postImages: [],
+                                replieds: [],
+                            }
+
+                            if (post.status == 0) {
+                                post.status = globalView;
+                            } else if (post.status == 1) {
+                                post.status = friendView;
+                            } else {
+                                post.status = privateView;
+                            }
+
+                            // post.postImages = this.getPostImg(post.id);
+                            this.getPostImg(post.id, index);
+                            this.getPostComment(post.id, index);
+
+                            // post.replieds = this.replieds;
+
+
+                            this.postItems.push(post);
+                        });
+
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getPostImg(id, i) {
+
+            const postId = { id }
+
+            axios
+                .post('api/getPostImg.php', JSON.stringify(postId))
+                .then(response => {
+
+                    // console.log(response.data);
+
+                    if (response.data == '0') {
+                        console.log('no photo');
+                    } else {
+                        // console.log(response.data);
+                        const postImages = [];
+                        const result = response.data;
+
+                        result.forEach(element => {
+                            const imageItem = {
+                                id: element['ID'],
+                                // src: 'data:image;base64,' + element['POST_IMAGE'],
+                                src: element['POST_IMAGE'],
+                            }
+
+                            postImages.push(imageItem);
+                        })
+
+                        this.postItems[i].postImages = postImages;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        },
+        getPostComment(id, i) {
+
+            const postId = { id }
+
+            axios
+                .post('api/getPostComment.php', JSON.stringify(postId))
+                .then(response => {
+                    if (response.data != 0) {
+                        // console.log(response.data);
+                        const replieds = [];
+                        response.data.forEach(element => {
+                            const commentItem = {
+                                id: element['COMMENT_ID'],
+                                commemtText: element['COMMENT_TEXT'],
+                                name: element['MEMBER_LAST_NAME'] + element['MEMBER_FIRST_NAME'],
+                                userImg: 'data:image;base64,' + element['MEMBER_PIC'],
+                                createTime: element['COMMENT_CREATETIME'].replaceAll('-', '/'),
+                            }
+
+                            replieds.push(commentItem);
+                        })
+
+                        this.postItems[i].replieds = replieds;
+
+                    } else {
+                        // console.log('0');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        },
+        addComment(e, i, postId, text) {
+
+            //初始化日期
+            const Today = new Date();
+
+            const commentItem =
+            {
+                id: Date.now(),
+                commemtText: text,
+                userId: this.id,
+                name: this.userName,
+                userImg: 'data:image;base64,' + this.userImg,
+                createTime: Today.toLocaleString("zh-tw", { hour12: false }),
+                postId: postId,
+            };
+            this.postItems[i].replieds.push(commentItem);
+
+            e.target.parentNode.previousSibling.value = '';
+            // console.log(this.userData);
+
+            // 新增回覆資料至DB
+            axios
+                .post('api/addPostComment.php', JSON.stringify(commentItem))
+                .then(response => {
+                    // console.log(response.data);
+                    if (response.data != 1) {
+                        alert('saveToDb Error');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+    }
+
 
 }
+
+
+
+
+
 </script>

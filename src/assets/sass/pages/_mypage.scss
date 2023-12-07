@@ -509,6 +509,8 @@
             line-height: 40px;
             color: $primary-color-1;
             font-weight: bold;
+            justify-content: space-around;
+            margin: 0 auto;
         }
     }
 
@@ -644,6 +646,15 @@
                     height: 300px;
                 }
 
+            }
+
+            .noAvatar {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 5;
+                color: $primary-color-1;
             }
         }
 
