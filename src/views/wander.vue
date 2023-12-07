@@ -104,6 +104,8 @@
 import layout from '@/components/layout.vue'
 import axios from 'axios'
 
+import { useUserStore } from '@/store/user';
+
 export default {
     components: {
         layout
@@ -128,7 +130,7 @@ export default {
             second: 59,
             countdownInterval: null, //時間暫停
             cd: false,
-            id: '11',
+            id: '',
             giftId: '',
             post: '',
             postMemberId: '',
@@ -142,6 +144,11 @@ export default {
         }
     },
     created() {
+
+        //取得會員資料
+        const userStore = useUserStore();
+        this.id = userStore.userID;
+
         //載入頁面時先讀取用戶資訊
         this.getData();
     },
@@ -214,23 +221,26 @@ export default {
                 this.giftShow = false;
             };
 
-            axios.post("api/gift_card.php", { giftId: this.giftId }).then((resData) => {
-                const giftId = resData.data[0].COLLECTION_ID;
-                this.giftTitle = resData.data[0].COLLECTION_NAME;
-                this.gift_img = resData.data[0].COLLECTION_IMAGE;
+            try {
+                const response = await axios.post("api/gift_card.php", { giftId: this.giftId });
+                const giftId = response.data[0].COLLECTION_ID;
+                this.giftTitle = response.data[0].COLLECTION_NAME;
+                this.gift_img = response.data[0].COLLECTION_IMAGE;
 
                 this.giftId = giftId;
 
-                console.log(this.giftId);
-            }).catch((e) => {
-                console.log(e) //連線錯誤的時候會執行這邊
-            });
+                // console.log(this.giftId);
+                // console.log(giftId);
 
-            const response = await axios.post("api/gift_card_return.php", {
-                id: this.id,
-                giftId: this.giftId
-            });
-            console.log(response.data);
+                const responseReturn = await axios.post("api/gift_card_return.php", {
+                    id: this.id,
+                    giftId: this.giftId
+                });
+
+                console.log(responseReturn.data);
+            } catch (error) {
+                console.log(error); // 連線錯誤時執行這邊
+            }
         },
 
         async readLetter() {
@@ -258,7 +268,6 @@ export default {
                 console.error("Error fetching data:", error);
             });
 
-            //在加合併蒐集品的程式php
         },
 
         async addFriend() {

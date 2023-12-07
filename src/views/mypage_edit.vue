@@ -7,7 +7,7 @@
                         <div class="head_sticker">
                             <div class="head_sticker_main">
                                 <div>
-                                    <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="head_sticker">
+                                    <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="" v-if="userImg">
                                 </div>
                                 <label class="mypage_button">
                                     <span>編輯大頭貼</span>
@@ -112,17 +112,22 @@
                     <div class="preview">
                         <h4>虛擬角色人物</h4>
                         <div class="preview_face avatar_preview">
-                            <img :src="faceImageChange" id="faceImage" alt="請選擇臉型" ref="faceImage">
+                            <img :src="faceImageChange" id="faceImage" alt="" ref="faceImage" v-if="faceImageChange">
                         </div>
                         <div class="preview_hair avatar_preview">
-                            <img :src="hairImageChange" id="hairImage" alt="請選擇髮型" ref="hairImage">
+                            <img :src="hairImageChange" id="hairImage" alt="" ref="hairImage" v-if="hairImageChange">
                         </div>
                         <div class="preview_cloth avatar_preview">
-                            <img :src="clothImageChange" id="clothImage" alt="請選擇服裝" ref="clothImage">
+                            <img :src="clothImageChange" id="clothImage" alt="" ref="clothImage" v-if="clothImageChange">
                         </div>
                         <div class="preview_accessories avatar_preview">
-                            <img :src="accessoriesImageChange" id="accessoriesImage" alt="請選擇配飾" ref="accessoriesImage">
+                            <img :src="accessoriesImageChange" id="accessoriesImage" alt="" ref="accessoriesImage"
+                                v-if="accessoriesImageChange">
                         </div>
+                        <p class="noAvatar"
+                            v-if="!faceImageChange && !hairImageChange && !clothImageChange && !accessoriesImageChange">
+                            無虛擬人物
+                        </p>
                     </div>
 
                     <!-------------------------配件頁籤------------------------->
@@ -254,6 +259,8 @@ import accessoriesChristmas from '@/assets/images/mypage_edit/accessories_Christ
 import accessoriesCrown from '@/assets/images/mypage_edit/accessories_crown.png'
 //這邊要把全部圖片import進去
 
+import { useUserStore } from '@/store/user';
+
 export default {
     components: {
         layout
@@ -265,7 +272,7 @@ export default {
             hairImageChange: hairCurls,
             clothImageChange: clothBlack,
             accessoriesImageChange: accessoriesBachelorcap,
-            id: "11", //抓會員id編號,要是浮動的
+            id: "", //抓會員id編號,要是浮動的
             first_Name: '',
             last_Name: '',
             tel: '',
@@ -282,6 +289,11 @@ export default {
         };
     },
     mounted() {
+
+        //取得會員資料
+        const userStore = useUserStore();
+        this.id = userStore.userID;
+
         //載入頁面時先讀取用戶資訊填在input裡
         this.getData();
     },
@@ -341,7 +353,7 @@ export default {
             } catch (error) {
                 console.error("Error submitting data:", error);
             }
-            // this.$router.push({ name: 'mypage' }) //存檔完導回個人頁面-測試完再取消註解
+            this.$router.push({ name: 'mypage' }) //存檔完導回個人頁面-測試完再取消註解
         },
 
 
