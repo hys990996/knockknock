@@ -248,6 +248,10 @@ import addPost from '@/components/addPost.vue'
 import editActivityScore from '@/components/editActivityScore.vue'
 import missionList from '@/components/missionList.vue'
 
+import friendView from '@/assets/images/icon/friend-view-select.svg';
+import globalView from '@/assets/images/icon/global-view-select-2.svg';
+import privateView from '@/assets/images/icon/private-view-select.svg';
+
 import { useUserStore } from '@/store/user';
 
 export default {

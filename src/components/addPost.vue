@@ -162,6 +162,7 @@ export default {
                             this.addImages = [];
                             this.keepBlock = false;
                             this.$emit('keepPostBlock', this.keepBlock);
+                            this.$emit('hideBlock', this.keepBlock)
                         }
                     })
                     .catch(error => {
