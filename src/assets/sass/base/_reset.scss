@@ -149,3 +149,8 @@ button {
 ::-webkit-scrollbar {
 	display: none;
 }
+
+::-webkit-scrollbar-thumb {
+	background-color: gray;
+	border-radius: 100px;
+}

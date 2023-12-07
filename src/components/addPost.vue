@@ -5,7 +5,7 @@
             <div class="post-view-setting">
                 <img ref="friendView" src="../assets/images/icon/friend-view-select.svg" alt=""
                     :class="{ select: friendSelect }" value="friend" @click="friendViewSetting($event)">
-                <img ref="globalView" src="../assets/images/icon/global-view.svg" alt="" :class="{ select: globalSelect }"
+                <img ref="globalView" src="../assets/images/icon/global-view-2.svg" alt="" :class="{ select: globalSelect }"
                     value="global" @click="globalViewSetting($event)">
                 <img ref="privateView" src="../assets/images/icon/private-view.svg" alt=""
                     :class="{ select: privateSelect }" value="private" @click="privateViewSetting($event)">
@@ -26,7 +26,7 @@
             <input type="file" name="postImg" id="postImg" @change="previewImage" multiple>
         </label>
         <div class="btn-block">
-            <button class="Btn Btn-light" @click="clearPostContent()">取消</button>
+            <button class="Btn Btn-light" @click="clearPostContent(), $emit('hideBlock', this.keepBlock)">取消</button>
             <button class="Btn Btn-dark" @click="addPost">發布</button>
         </div>
     </div>
@@ -35,15 +35,15 @@
 <script>
 import friendViewIcon from '@/assets/images/icon/friend-view.svg';
 import friendViewIconS from '@/assets/images/icon/friend-view-select.svg';
-import globalViewIcon from '@/assets/images/icon/global-view.svg';
-import globalViewIconS from '@/assets/images/icon/global-view-select.svg';
+import globalViewIcon from '@/assets/images/icon/global-view-2.svg';
+import globalViewIconS from '@/assets/images/icon/global-view-select-2.svg';
 import privateViewIcon from '@/assets/images/icon/private-view.svg';
 import privateViewIconS from '@/assets/images/icon/private-view-select.svg';
 
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
 export default {
-    emits: ["addPost", "keepPostBlock"],
+    emits: ["addPost", "keepPostBlock", "hideBlock"],
     data() {
         return {
             addImages: [],
@@ -119,10 +119,11 @@ export default {
                     id: Date.now(),
                     userId: userStore.userID,
                     userName: userStore.userName,
-                    userImg: 'data:image/png;base64,' + userStore.userImg,
+                    userImg: userStore.userImg,
                     content: postContent,
                     status: '', //設定狀態(公開 0/ 好友 1/私人 2)
                     likes: 0,
+                    liked: false,
                     createTime: today.toLocaleString("zh-tw", { hour12: false }).replaceAll('/', '-'),
                     postImages: this.addImages,
                     replieds: [],
@@ -142,7 +143,7 @@ export default {
                     .then(response => {
 
                         if (response.data != 0) {
-                            // console.log(response.data);
+                            console.log(response.data);
                             //新增成功後，將id更換成db的id
                             post.id = response.data[0]['POST_ID'];
 
@@ -150,16 +151,17 @@ export default {
                             console.log(post);
                             this.$emit('addPost', post);
 
+                            console.log(post);
+                            if (post.postImages.length > 0) {
+                                //將圖片存入DB
+                                this.saveImgToDb(post);
+                            }
+
                             //清空文字框內容及圖片並關閉新增區塊
                             this.$refs.addPostContent.value = '';
                             this.addImages = [];
                             this.keepBlock = false;
                             this.$emit('keepPostBlock', this.keepBlock);
-
-                            if (post.postImages.length > 0) {
-                                //將圖片存入DB
-                                this.saveImgToDb(post);
-                            }
                         }
                     })
                     .catch(error => {
@@ -176,10 +178,10 @@ export default {
                 imgList: [],
             }
 
-            //移除圖片src 前面 'data:image/png;base64'文字內容
-            this.post.postImages.forEach((item) => {
-                const image = item.src.split(",");
-                imgData.imgList.push(image[1]);
+            post.postImages.forEach((item) => {
+                // 把src組成陣列傳給php存進資料庫
+                const image = item.src;
+                imgData.imgList.push(image);
             })
 
             axios

@@ -11,13 +11,14 @@ $count = 0;
 foreach ($imgList as $key => $value) {
     // echo $postId . '' . $value;
 
-    $img = base64_decode($value);
+    // $img = base64_decode($value);
+    $img = $value;
 
     $sqlInsert = "insert into POST_IMAGE (POST_ID,POST_IMAGE)
                 values (:postId,:img)";
     $statement = $pdo->prepare($sqlInsert);
     $statement->bindValue(":postId", $postId);
-    $statement->bindValue(":img", $img);
+    $statement->bindValue(":img", $img, PDO::PARAM_LOB);
     $data = $statement->execute();
 
     //計算成功次數

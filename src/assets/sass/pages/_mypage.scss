@@ -711,18 +711,19 @@
             .my_collect_title {
                 display: flex;
                 align-items: center;
-            }
 
-            .my_collect_title span {
-                color: $primary-color-1;
-                padding-right: 10px;
-                white-space: nowrap;
-            }
 
-            .my_collect_title hr {
-                color: $primary-color-1;
-                border: 2px solid $primary-color-1;
-                width: 300px;
+                span {
+                    color: $primary-color-1;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                }
+
+                hr {
+                    color: $primary-color-1;
+                    border: 2px solid $primary-color-1;
+                    width: 300px;
+                }
             }
 
             .collect {
@@ -743,21 +744,36 @@
                 }
 
                 .collectA {
-                    background-image: url("@/assets/images/mypage/SSR_git.png");
+                    // background-image: url("@/assets/images/mypage/SSR_git.png");
                     background-size: 100%;
                     background-repeat: no-repeat;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
 
                 .collectB {
-                    background-image: url("@/assets/images/mypage/SSR_MySQL.png");
+                    // background-image: url("@/assets/images/mypage/SSR_MySQL.png");
                     background-size: 100%;
                     background-repeat: no-repeat;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
 
                 .collectC {
-                    background-image: url("@/assets/images/mypage/SR_js.png");
+                    // background-image: url("@/assets/images/mypage/SR_js.png");
                     background-size: 100%;
                     background-repeat: no-repeat;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
             }
         }
@@ -788,11 +804,39 @@
             .activity_list {
                 height: 300px;
                 border-radius: 30px 30px 0 0;
-                background-image: url("@/assets/images/mypage/rock_climbing.jpg");
-                background-size: 100%;
+                // background-image: url("@/assets/images/mypage/rock_climbing.jpg");
+                background-size: cover;
                 text-align: end;
                 color: white;
                 background-repeat: no-repeat;
+                animation: changeBackground 15s infinite;
+                background-position: center;
+
+                @keyframes changeBackground {
+                    0% {
+                        background-image: url("@/assets/images/mypage/rock_climbing.jpg");
+                    }
+
+                    20% {
+                        background-image: url("@/assets/images/mypage/alpinism.jpg");
+                    }
+
+                    40% {
+                        background-image: url("@/assets/images/mypage/diving.jpg");
+                    }
+
+                    60% {
+                        background-image: url("@/assets/images/mypage/volleyball.jpg");
+                    }
+
+                    80% {
+                        background-image: url("@/assets/images/mypage/coldplay.png");
+                    }
+
+                    100% {
+                        background-image: url("@/assets/images/mypage/rock_climbing.jpg");
+                    }
+                }
 
                 @include media-breakpoint-down(sm) {
                     background-size: cover;

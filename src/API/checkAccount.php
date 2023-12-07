@@ -13,7 +13,7 @@ $statement->execute();
 $data = $statement->fetchAll();
 
 if (COUNT($data) != 0) {
-    echo '1'; //有重複
+    echo json_encode($data[0]['MEMBER_ID']); //有找到
 } else {
-    echo '0'; //沒重複
+    echo '0'; //沒找到
 }

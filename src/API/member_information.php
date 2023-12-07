@@ -6,7 +6,6 @@ $req = json_decode(file_get_contents("php://input"),true);
 $id = $req['id'];
 
 $sql="SELECT * FROM MEMBER where MEMBER_ID = :id";
-// $sql="SELECT * FROM collection where COLLECTION_ID = :id";
 
 $statement = $pdo->prepare($sql);
 $statement -> bindValue(":id",$id);
@@ -18,10 +17,6 @@ $data = $statement -> fetchAll(PDO::FETCH_ASSOC);
 if($data){
     $data[0]['MEMBER_PIC']=base64_decode($data[0]['MEMBER_PIC']);
 }
-
-// if($data){
-//     $data[0]['COLLECTION_IMAGE']=base64_decode($data[0]['MEMBER_PIC']);
-// }
 
 
 

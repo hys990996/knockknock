@@ -30,6 +30,7 @@ if (COUNT($data) != 0 && password_verify($pwd, $data[0]['MEMBER_PASSWORD'])) {
     $respData["ID"] = $data[0]['MEMBER_ID'];
     $respData["Fullname"] = $data[0]['MEMBER_LAST_NAME'] . $data[0]['MEMBER_FIRST_NAME'];
     $respData["Account"] = $data[0]['MEMBER_ACCOUNT'];
+    $respData["img"] = base64_decode($data[0]['MEMBER_PIC']);
 
     echo json_encode($respData);
 } else {

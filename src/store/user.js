@@ -22,5 +22,6 @@ export const useUserStore = defineStore('userStore', {
         // updateUser() {
         //     this.name = 'Angel'
         // }
-    }
+    },
+    persist: true,
 })  

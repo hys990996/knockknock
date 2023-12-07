@@ -8,16 +8,16 @@
         <div class="user-info">
             <div class="user-search">
                 <img src="../assets/images/icon/search.svg" alt="" @click="expandSearch">
-                <input ref="searchFriend" type="search" placeholder="搜尋好友" @keyup.enter="search" @blur="closeSearch">
+                <input ref="searchFriend" type="search" placeholder="搜尋用戶" @keyup.enter="search" @blur="closeSearch">
             </div>
             <div class="user-detail-info">
                 <router-link :to="{ name: 'mypage' }">
-                    <div class="user-image"><img :src="userData.userImg" alt=""></div>
+                    <div class="user-image"><img :src="userData.userImg" alt="使用者照片"></div>
                     <h3>{{ userData.userName }}</h3>
                 </router-link>
             </div>
             <div class="login-out" @click="doLogout">
-                <img src="../assets/images/icon/logout.svg" alt="">
+                <img src="../assets/images/icon/logout.svg" alt="登出" title="登出">
             </div>
         </div>
     </div>
@@ -39,32 +39,32 @@ export default {
         }
     },
     beforeMount() {
-        //將資料存到pinia
+
+        //取得cookie的方法
+        // let cookies = document.cookie.split("; "); //['userID=1', 'userName=王小明']
+
+        // for (let i = 0; i < cookies.length; i++) {
+        //     let cookie = cookies[i].split("="); // ['userID', '1']、['userName', '王小明']
+        //     if (cookie[0] == 'userName') {
+        //         this.userData.userName = cookie[1];
+        //         userStore.userName = this.userData.userName;
+        //     } else if (cookie[0] == 'userID') {
+        //         this.userData.userID = cookie[1];
+        //         userStore.userID = this.userData.userID;
+        //     }
+        // }
+
+
+        //取得pinia
         const userStore = useUserStore();
 
-        let cookies = document.cookie.split("; "); //['userID=1', 'userName=王小明']
-
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].split("="); // ['userID', '1']、['userName', '王小明']
-            if (cookie[0] == 'userName') {
-                this.userData.userName = cookie[1];
-                userStore.userName = this.userData.userName;
-            } else if (cookie[0] == 'userID') {
-                this.userData.userID = cookie[1];
-                userStore.userID = this.userData.userID;
-            }
+        this.userData = {
+            userID: userStore.userID,
+            userName: userStore.userName,
+            userImg: userStore.userImg,
         }
 
-        axios
-            .post('api/queryMember.php', JSON.stringify(this.userData))
-            .then(response => {
-                console.log(response.data);
-                if (response.data != '0') {
-                    this.userData.userImg = 'data:image/png;base64,' + response.data['img'];
-                    userStore.userImg = response.data['img'];
-                }
-            })
-
+        // console.log(this.userData);
     },
     mounted() {
 
@@ -76,7 +76,8 @@ export default {
             } else {
 
                 const keyword = this.$refs.searchFriend.value;
-                this.$router.push({ name: 'search_friends', params: { keyword: keyword } })
+
+                this.$router.push({ name: 'search_friends', params: { keyword: keyword } });
             }
         },
         expandSearch() {
@@ -93,6 +94,8 @@ export default {
 
                 // 將 cookie 字串分割成每個 cookie
                 let cookies = document.cookie.split("; ");
+
+                // console.log(this.userData);
 
                 axios
                     .post('api/logout.php', JSON.stringify(this.userData))
@@ -116,6 +119,7 @@ export default {
 
                 const store = useUserStore();
                 store.$reset()
+                localStorage.removeItem("userStore");
             }
         }
     }

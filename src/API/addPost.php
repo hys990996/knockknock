@@ -13,7 +13,7 @@ $memberId = $postData['userId'];
 
 
 $sqlInsert = "insert into 
-POST (POST_CONTENT,POST_STATUS,POST_CREATETIME,POST_UPDATETIME,MENBER_ID)
+POST (POST_CONTENT,POST_STATUS,POST_CREATETIME,POST_UPDATETIME,MEMBER_ID)
 values (:postContent,:status,:createTime,:updateTime,:memebrId)";
 
 $statement = $pdo->prepare($sqlInsert);
@@ -27,7 +27,7 @@ $data = $statement->execute();
 
 if ($data > 0) {
 
-    $sqlSelect = "SELECT POST_ID FROM POST WHERE POST_CONTENT = :postContent && POST_CREATETIME =:createTime && MENBER_ID = :memebrId";
+    $sqlSelect = "SELECT POST_ID FROM POST WHERE POST_CONTENT = :postContent && POST_CREATETIME =:createTime && MEMBER_ID = :memebrId";
 
     $statement = $pdo->prepare($sqlSelect);
     $statement->bindValue(":postContent", $postContent);

@@ -1,0 +1,237 @@
+.post-item {
+    background-color: $primary-color-3;
+    border-radius: 16px;
+
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: opacity 0.5s;
+
+    &.fade_out {
+        opacity: 0
+    }
+
+    .post-user-delete {
+        display: flex;
+        justify-content: space-between;
+
+        .post-user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: $primary-color-1;
+
+            .post-user-image {
+                width: 40px;
+                height: 40px;
+                border-radius: 100px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    vertical-align: middle;
+                }
+            }
+
+            .post-user-time {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .post-time {
+                    display: flex;
+                    gap: 4px;
+
+                    .user-post-time {
+                        font-size: $fs14;
+                    }
+
+                    img {
+                        width: 15px;
+                    }
+
+                }
+            }
+        }
+
+        .delete-post {
+            width: 12px;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .post-content {
+        color: $primary-color-2;
+    }
+
+    .post-images {
+        display: none;
+
+        .img-item {
+            width: 300px;
+            height: 250px;
+            flex-shrink: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .show {
+        display: flex;
+        gap: 12px;
+        overflow-x: scroll;
+    }
+
+    .post-feedback {
+        display: flex;
+        gap: 16px;
+        color: $primary-color-1;
+        padding-bottom: 12px;
+        border-bottom: 1px solid $primary-color-2;
+
+        p {
+            font-size: $fs12;
+        }
+
+        .good-block {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .good {
+                cursor: pointer;
+            }
+        }
+
+        .reply-block {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    }
+
+    .post-reply {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .replied {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 125px;
+            overflow-y: scroll;
+
+            &.showScrollbar {
+                &::-webkit-scrollbar {
+                    display: initial;
+                    width: 5px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: $primary-color-1;
+                    border-radius: 100px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background-color: $secondary-color-4;
+                    border-radius: 100px;
+                }
+            }
+
+            .replied-msg {
+                display: flex;
+                gap: 8px;
+
+                .user-image {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 100px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        vertical-align: middle;
+                    }
+                }
+
+                .replied-message {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .user-name {
+                        color: $primary-color-1;
+                    }
+
+                    .content {
+                        color: $primary-color-2;
+                        display: flex;
+                        justify-content: space-between;
+                        padding-right: 4px;
+
+                        .replied-time {
+                            font-size: $fs12;
+                            color: $primary-color-2;
+                        }
+                    }
+                }
+            }
+        }
+
+        .reply-message {
+            display: flex;
+            gap: 8px;
+
+            .user-image {
+                width: 30px;
+                height: 30px;
+                border-radius: 100px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    vertical-align: middle;
+                }
+            }
+
+            .reply-input {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                position: relative;
+
+                input {
+                    width: 100%;
+                    // border: none;
+                    // border-radius: 32px;
+                    // line-height: 140%;
+                    // background-color: $white;
+                    // padding-left: 8px;
+
+                    // &:focus-visible {
+                    //     outline: none;
+                    // }
+                }
+
+                p.show {
+                    position: absolute;
+                    left: 4px;
+                    top: 6px;
+                }
+            }
+        }
+    }
+}
