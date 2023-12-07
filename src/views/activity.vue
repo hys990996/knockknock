@@ -15,14 +15,6 @@
                         </div>
                     </div>
                     <div class="banner-search">
-                        <!-- 搜尋欄 -->
-                        <div class="search-container">
-                            <form method="" action="" class="form">
-                                <button type="submit"><img src="../assets/images/activity/search.svg" alt=""></button>
-                                <input type="text" placeholder="輸入活動名稱、日期" name="search">
-
-                            </form>
-                        </div>
                         <div class="search-pic">
                             <img src="../assets/images/activity/party friend.png" alt="">
 
@@ -36,7 +28,7 @@
 
                 <!-- hot topic bar -->
                 <div class="sub-bar">
-                    <div>熱門主題</div>
+                    <div>最新活動</div>
                 </div>
                 <!-- topic card
                 <div class="topic-container">
@@ -77,83 +69,35 @@
                 <!-- 原本的topic card -->
                 <div class="topic-container">
                     <div class="cards">
-                        <div class="arrow">
-                            <img src="../assets/images/activity/icon_leftarrow.svg" alt="">
-                        </div>
 
-                        <router-link :to="{ name: 'activity_info' }" class="card">
+
+                        <router-link :to="{ name: 'activity_info', params: { activityID: i.ACTIVITY_ID } }" class="card"
+                            v-for="(i, key) in  showHotActivity" :key="i.ACTIVITY_ID" @click="getActivityId(key)">
                             <div class="card-pic">
-                                <img src="../assets/images/activity/music-fes.jpg" alt="">
+                                <img :src="i.ACTIVITY_IMAGE" alt="">
+                                <!-- <img src="../assets/images/activity/music-fes.jpg" alt=""> -->
                                 <div class="location">
                                     <img src="../assets/images/activity/location.svg" alt="">
-                                    <div class="text">北台灣，宜蘭</div>
+                                    <div class="text">{{ i.ACTIVITY_REGION }}，{{ i.ACTIVITY_ADDRESS.slice(0, 2) }}</div>
                                 </div>
                             </div>
                             <div class="card-details">
                                 <div class="card-details-title">
-                                    夏日音樂祭
+                                    {{ i.ACTIVITY_NAME }}
                                 </div>
                                 <div class="card-details-info">
                                     <img src="../assets/images/activity/calendar.svg" alt="">
-                                    <div>2023/12/25</div>
+                                    <div>{{ i.ACTIVITY_DATE }}</div>
                                 </div>
                                 <div class="card-details-info">
                                     <img src="../assets/images/activity/group.svg" alt="">
-                                    <div>剩餘5位名額</div>
-                                </div>
-
-                            </div>
-                        </router-link>
-                        <router-link :to="{ name: 'activity_info' }" class="card">
-                            <div class="card-pic">
-                                <img src="../assets/images/activity/music-fes.jpg" alt="">
-                                <div class="location">
-                                    <img src="../assets/images/activity/location.svg" alt="">
-                                    <div class="text">北台灣，宜蘭</div>
-                                </div>
-                            </div>
-                            <div class="card-details">
-                                <div class="card-details-title">
-                                    夏日音樂祭
-                                </div>
-                                <div class="card-details-info">
-                                    <img src="../assets/images/activity/calendar.svg" alt="">
-                                    <div>2023/12/25</div>
-                                </div>
-                                <div class="card-details-info">
-                                    <img src="../assets/images/activity/group.svg" alt="">
-                                    <div>剩餘5位名額</div>
-                                </div>
-
-                            </div>
-                        </router-link>
-                        <router-link :to="{ name: 'activity_info' }" class="card">
-                            <div class="card-pic">
-                                <img src="../assets/images/activity/music-fes.jpg" alt="">
-                                <div class="location">
-                                    <img src="../assets/images/activity/location.svg" alt="">
-                                    <div class="text">北台灣，宜蘭</div>
-                                </div>
-                            </div>
-                            <div class="card-details">
-                                <div class="card-details-title">
-                                    夏日音樂祭
-                                </div>
-                                <div class="card-details-info">
-                                    <img src="../assets/images/activity/calendar.svg" alt="">
-                                    <div>2023/12/25</div>
-                                </div>
-                                <div class="card-details-info">
-                                    <img src="../assets/images/activity/group.svg" alt="">
-                                    <div>剩餘5位名額</div>
+                                    <div>{{ i.ACTIVITY_REMAINING_PLACES }}</div>
                                 </div>
 
                             </div>
                         </router-link>
 
-                        <div class="arrow">
-                            <img src="../assets/images/activity/icon_rightarrow.svg" alt="">
-                        </div>
+
                         <div class="more">
                             查看更多 +
                         </div>
@@ -173,16 +117,16 @@
                     <div class="region-container">
 
                         <div class="region">
-                            <router-link :to="{ name: 'activity_search' }" class="">
+                            <router-link :to="{ name: 'activity_search', params: { activityRegion: '北區' } }" class="">
                                 <div class="region-pic">
-                                    <img src="../assets/images/activity/mid-opera.jpeg" alt="">
+                                    <img src="../assets/images/activity/taipei.jpg" alt="">
                                 </div>
                                 <div class="region-text">北區</div>
 
                             </router-link>
                         </div>
                         <div class="region">
-                            <router-link :to="{ name: 'activity_search' }" class="">
+                            <router-link :to="{ name: 'activity_search', params: { activityRegion: '中區' } }" class="">
                                 <div class="region-pic">
                                     <img src="../assets/images/activity/mid-opera.jpeg" alt="">
                                 </div>
@@ -191,18 +135,18 @@
                             </router-link>
                         </div>
                         <div class="region">
-                            <router-link :to="{ name: 'activity_search' }" class="">
+                            <router-link :to="{ name: 'activity_search', params: { activityRegion: '南區' } }" class="">
                                 <div class="region-pic">
-                                    <img src="../assets/images/activity/mid-opera.jpeg" alt="">
+                                    <img src="../assets/images/activity/kaohsiung.jpg" alt="">
                                 </div>
                                 <div class="region-text">南區</div>
 
                             </router-link>
                         </div>
                         <div class="region">
-                            <router-link :to="{ name: 'activity_search' }" class="">
+                            <router-link :to="{ name: 'activity_search', params: { activityRegion: '離島' } }" class="">
                                 <div class="region-pic">
-                                    <img src="../assets/images/activity/mid-opera.jpeg" alt="">
+                                    <img src="../assets/images/activity/penghu.jpg" alt="">
                                 </div>
                                 <div class="region-text">離島</div>
 
@@ -225,47 +169,16 @@
 
                         <div class="upcoming">
 
-                            <div class="upcoming-card">
+                            <div class="upcoming-card" v-for="(i,key) in upCommingActivity" :key="i.ACTIVITY_ID">
                                 <div class="card-pic">
-
-                                    <img src="../assets/images/activity/upcoming-min.png" alt="">
+                                    <img :src="i.ACTIVITY_IMAGE" alt="">
                                 </div>
                                 <div class="card-detail">
-                                    <div class="title">賞櫻季</div>
+                                    <div class="title">{{ i.ACTIVITY_NAME }}</div>
                                     <div class="date">活動日期：
-                                        <span>2024/01/01</span>
+                                        <span>{{ i.ACTIVITY_DATE }}</span>
                                     </div>
-                                    <button class="Btn">提醒我</button>
 
-
-                                </div>
-
-
-
-                            </div>
-                            <div class="upcoming-card">
-                                <div class="card-pic">
-                                    <img src="../assets/images/activity/upcoming-min.png" alt="">
-                                </div>
-                                <div class="card-detail">
-                                    <div class="title">賞櫻季</div>
-                                    <div class="date">活動日期：
-                                        <span>2024/01/01</span>
-                                    </div>
-                                    <button class="Btn">提醒我</button>
-                                </div>
-
-                            </div>
-                            <div class="upcoming-card">
-                                <div class="card-pic">
-                                    <img src="../assets/images/activity/upcoming-min.png" alt="">
-                                </div>
-                                <div class="card-detail">
-                                    <div class="title">賞櫻季</div>
-                                    <div class="date">活動日期：
-                                        <span>2024/01/01</span>
-                                    </div>
-                                    <button class="Btn">提醒我</button>
                                 </div>
 
                             </div>
@@ -291,68 +204,56 @@ import layout from '@/components/layout.vue'
 export default {
     components: {
         layout
-
     },
-    //     data() {
-    //     return {
-    //       topicCards: [
-    //         // Array of objects with card data
-    //         {
-    //           title: "夏日音樂祭",
-    //           image: "../assets/images/activity/music-fes.jpg",
-    //           location: "北台灣，宜蘭",
-    //           date: "2023/12/25",
-    //           remainingSlots: "剩餘5位名額",
-    //         },
-    //         {
-    //           title: "夏日AAA祭",
-    //           image: "../assets/images/activity/music-fes.jpg",
-    //           location: "北台灣，宜蘭",
-    //           date: "2023/12/25",
-    //           remainingSlots: "剩餘5位名額",
-    //         },
-    //         {
-    //           title: "夏日BBB祭",
-    //           image: "../assets/images/activity/music-fes.jpg",
-    //           location: "北台灣，宜蘭",
-    //           date: "2023/12/25",
-    //           remainingSlots: "剩餘5位名額",
-    //         },
-    //         {
-    //           title: "夏日CCC祭",
-    //           image: "../assets/images/activity/music-fes.jpg",
-    //           location: "北台灣，宜蘭",
-    //           date: "2023/12/25",
-    //           remainingSlots: "剩餘5位名額",
-    //         },
-    //         {
-    //           title: "夏日DDD祭",
-    //           image: "../assets/images/activity/music-fes.jpg",
-    //           location: "北台灣，宜蘭",
-    //           date: "2023/12/25",
-    //           remainingSlots: "剩餘5位名額",
-    //         },
-    //         // Add more cards as needed
-    //       ],
-    //       currentCardIndex: 0,
-    //     };
-    //   },
-    //   methods: {
-    //     changeCardContent(isPrevious) {
-    //       if (isPrevious) {
-    //         // If moving to the previous card:
-    //         this.currentCardIndex = (this.currentCardIndex - 1 + this.topicCards.length) % this.topicCards.length;
-    //       } else {
-    //         // If moving to the next card:
-    //         this.currentCardIndex = (this.currentCardIndex + 1) % this.topicCards.length;
-    //       }
-    //     },
-    //     shouldShowCard(index) {
-    //     const cardsPerPage = 3;
-    //     const start = this.currentCardIndex;
-    //     const end = (start + cardsPerPage - 1) % this.topicCards.length;
-    //     return index >= start && index <= end;
-    //   },
-    //   },
+    props: ["activityID", "activityRegion"],
+    data() {
+        return {
+            totalActivity: [],
+            hotActivity: [],
+            activityID: 0,
+            activityRegion: '',
+            upCommingActivity: [],
+        }
+    },
+    methods: {
+        // 獲取當下點擊的id()
+        getActivityId(id) {
+            this.activityID = id;
+            console.log('Clicked activity ID:', id);
+        },
+        // 獲取當下的區域
+        getActivityArea(area) {
+            this.activityRegion = area
+            console.log('Clicked activity Region:', area);
+        }
+    },
+    computed: {
+        showHotActivity() {
+            return this.hotActivity.slice(this.hotActivity.length - 4, this.hotActivity.length - 1)
+        }
+    },
+    mounted() {
+        fetch('api/showActivity.php')
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                this.totalActivity = data;
+                this.hotActivity = data;
+                this.activityID = this.$route.params.activityID;
+                this.upCommingActivity = this.totalActivity.filter((activity) => {
+                    let currentDate = new Date();
+                    let startDate = new Date(activity.ACTIVITY_DATE);
+
+                    let curretDate = new Date();
+                    curretDate.setMonth(currentDate.getMonth() + 2);
+
+                    return startDate <= curretDate && startDate >= currentDate;
+                });
+                console.log(this.upCommingActivity)
+            })
+    }
+
 };
 </script>

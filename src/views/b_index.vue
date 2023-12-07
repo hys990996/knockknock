@@ -17,7 +17,8 @@
                     <label for="exampleInputPassword1" class="form-label">使用者密碼</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
                 </div>
-
+                <p v-if="error">請重新檢查帳號密碼</p>
+                <!-- <p>請輸入帳號或密碼</p> -->
                 <button @click="getData" type="submit" class="btn btn-warning">送出
                 </button>
             </div>
@@ -33,12 +34,14 @@ export default {
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            error: false,
+            Verificationcode: [],
         }
     },
     methods: {
         getData() {
-            fetch("http://localhost/b_login.php", {
+            fetch("api/b_login.php", {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -53,11 +56,21 @@ export default {
                     return res.json();
                 })
                 .then((data) => {
+
+                    console.log(data)
                     console.log(data.success);
                     if (data.success == true) {
+                        const expirationDate = new Date();
+                        expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
+                        const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
+                        document.cookie = `bUserId=${data.id}; expires=${expires} ; bUserName=${data.username}`
+                        document.cookie = `bUserName=${data.username};expires=${expires} `
                         this.$router.push('/backend/member_management');
+                        console.log(data);
+
                     } else {
-                        alert("請重新檢查帳號密碼")
+                        this.error = true;
+                        // alert("請重新檢查帳號密碼")
                     }
                 })
             // 在.then()方法鏈中處理伺服器回應
@@ -74,6 +87,9 @@ export default {
             //         console.log('登入失敗');
             //     }
             // })
+        },
+        changeCode() {
+            this.Verificationcode
         }
     },
     mounted() {

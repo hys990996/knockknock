@@ -1,5 +1,5 @@
 .b_member {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
 
@@ -9,13 +9,13 @@
     .member-section {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
 
         .member {
             display: flex;
         }
 
-        h1 {}
+
 
         .member-img {
             width: 40px;
@@ -30,7 +30,16 @@
         p {
             margin-left: 20px;
             line-height: 40px;
+
         }
+
+        .b_logout_img {
+            width: 50px;
+            height: 40px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
     }
 
     .search-section {
