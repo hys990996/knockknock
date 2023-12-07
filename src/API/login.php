@@ -6,7 +6,7 @@ $loginData = json_decode(file_get_contents("php://input"), true);
 $account = $loginData["userAccount"];
 $pwd = $loginData["userPassword"];
 
-$selectSql = "SELECT * FROM MEMBER WHERE MEMBER_ACCOUNT = ?";
+$selectSql = "SELECT * FROM MEMBER WHERE MEMBER_ACCOUNT = ? && MEMBER_STATUS !=3";
 
 $statement = $pdo->prepare($selectSql);
 $statement->bindValue(1, $account);

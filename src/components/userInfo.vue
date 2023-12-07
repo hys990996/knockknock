@@ -108,10 +108,15 @@ export default {
                             exdate.setTime(exdate.getTime() - (1 * 24 * 60 * 60 * 1000)); //取得昨天的日期
 
                             // 迭代 cookies，將每個 cookie 都設置過期時間為過去的日期，使其被刪除
-                            for (let i = 0; i < cookies.length; i++) {
-                                let cookie = cookies[i].split("=");
-                                document.cookie = `${cookie[0]}=;expires=${exdate.toGMTString()}`;
-                            }
+                            // for (let i = 0; i < cookies.length; i++) {
+                            //     let cookie = cookies[i].split("=");
+                            //     document.cookie = cookie[0] + "=;expires=" + exdate.toGMTString();
+                            // }
+
+                            document.cookie = "userID" + "=" + ";path=/;expires=" + exdate.toGMTString();
+                            document.cookie = "userName" + "=" + ";path=/;expires=" + exdate.toGMTString();
+
+                            console.log(document.cookie);
 
                             this.$router.push({ name: 'member_login' });
                         }

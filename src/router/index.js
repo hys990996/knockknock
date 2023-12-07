@@ -5,7 +5,7 @@ import Home from '@/views/home.vue'
 const routes = [
     {
         // 前台 首頁
-        path: '/',
+        path: '/home',
         name: 'home',
         meta: {
             requiresAuth: true // 添加一個 meta 屬性來標記需要登錄的頁面
@@ -182,7 +182,7 @@ const routes = [
     },
     {
         // 前台 會員登入
-        path: '/login',
+        path: '/',
         name: 'member_login',
         component: () => import('@/views/member_login.vue')
     },
@@ -257,14 +257,25 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-    const noAuthPages = ['/login', '/sign_up', '/password_reset'];
+    const noAuthPages = ['/', '/sign_up', '/password_reset'];
     const cookies = document.cookie.split('; ');
 
-    if (noAuthPages.includes(to.path) && cookies.length > 1) {
+    const webCookie = [];
+
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].split("="); // ['userID', '1']、['userName', '王小明']
+        if (cookie[0] == 'userName') {
+            webCookie.push(cookie);
+        } else if (cookie[0] == 'userID') {
+            webCookie.push(cookie);
+        }
+    }
+
+    if (noAuthPages.includes(to.path) && webCookie.length > 0) {
         // 如果要訪問的頁面為登入頁，但用戶已經登錄，則跳轉到首頁
         next({ name: 'home' });
 
-    } else if (to.meta.requiresAuth && cookies.length <= 1) {
+    } else if (to.meta.requiresAuth && webCookie.length < 1) {
         // 如果要訪問的頁面需要登錄，但用戶未登錄，則跳轉到登錄頁面
         next({ name: 'member_login' });
 
