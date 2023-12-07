@@ -1,10 +1,11 @@
 .b_qa {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
 
 
     height: 100%;
+
 
     .qa-section {
         display: flex;
@@ -28,6 +29,13 @@
         p {
             margin-left: 20px;
             line-height: 40px;
+        }
+
+        .b_logout_img {
+            width: 50px;
+            height: 40px;
+            margin: 0 10px;
+            cursor: pointer;
         }
     }
 
@@ -91,7 +99,7 @@
 
 
     .table {
-        text-align: center;
+
         border: 1px solid black;
 
         margin: 0 auto;
@@ -102,9 +110,12 @@
             tr {
                 background-color: #FAEEE9;
                 border: 1px solid black;
+                text-align: center;
 
                 th {
                     color: $primary-color-1;
+                    margin: 0 auto;
+
                 }
 
 
@@ -115,6 +126,8 @@
             tr {
 
                 td {
+                    padding: 15px 25px;
+
                     .btn {
                         display: flex;
                         justify-content: center;

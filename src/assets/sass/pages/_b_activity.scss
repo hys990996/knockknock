@@ -1,5 +1,5 @@
 .b_active {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
 
@@ -28,6 +28,13 @@
         p {
             margin-left: 20px;
             line-height: 40px;
+        }
+
+        .b_logout_img {
+            width: 50px;
+            height: 40px;
+            margin: 0 10px;
+            cursor: pointer;
         }
     }
 
@@ -172,6 +179,8 @@
         // background-color: white;
         // border-radius: 20px;
         // position: absolute;
+
+
     }
 
     .editTitle {
@@ -203,6 +212,7 @@
             span {
                 font-weight: $fw600;
                 color: $primary-color-1;
+
 
             }
 
@@ -405,10 +415,39 @@
 
 
     .dialog {
+
         // width: 960px;
         // background-color: white;
         // border-radius: 20px;
         // position: absolute;
+
+
+        .addtop {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+
+            div {
+                border: 1px solid black;
+                width: 100px;
+                height: 100px;
+                margin-bottom: 20px;
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+
+                margin-bottom: 20px;
+            }
+
+            .imgNone {
+                display: none;
+            }
+        }
     }
 
     .editTitle {
@@ -440,13 +479,17 @@
             span {
                 font-weight: $fw600;
                 color: $primary-color-1;
-
+                margin-top: 5px;
             }
 
             input {
                 height: 24px;
                 font-weight: $fw600;
+                margin-top: 5px;
+            }
 
+            select {
+                height: 24px;
             }
         }
 
@@ -458,12 +501,13 @@
             span {
                 font-weight: $fw600;
                 color: $primary-color-1;
-
+                margin-top: 5px;
             }
 
             input {
                 height: 24px;
                 font-weight: $fw600;
+                margin-top: 5px;
 
             }
 
@@ -483,7 +527,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
+        margin-top: 30px;
         width: 100%;
 
         span {
@@ -499,20 +543,31 @@
         textarea {
             // margin-top: 30px;
             width: 600px;
+            height: 100px;
             margin-bottom: 20px;
             background-color: $secondary-color-1 ;
         }
     }
 
     .edit_btn {
-        margin: 30px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // border: 1px solid green;
+        margin: 0 auto;
+        padding: 0 300px;
+        gap: 20px;
+
+        input {
+
+            width: 90px;
+            border: 1px solid $primary-color-1;
+        }
 
         .mil-link {
-            display: grid;
-            grid-template-rows: auto auto;
+
             text-decoration: none;
             color: white;
             width: 100px;

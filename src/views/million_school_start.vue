@@ -28,12 +28,17 @@
                         </div>
                         <div class="right_down" v-for="(i, key) in qa" :key="i.id">
                             <div v-if="current_question === key">
-                                <h3>{{ i.topic_id }}:{{ i.topic }}</h3>
+                                <h3>{{ i.topic }}</h3>
                                 <div class="ans">
-                                    <span @click="addScore(key, 'A')">(A){{ i.option_A }}</span>
-                                    <span @click="addScore(key, 'B')">(B){{ i.option_B }}</span>
-                                    <span @click="addScore(key, 'C')">(C){{ i.option_C }}</span>
-                                    <span @click="addScore(key, 'D')">(D){{ i.option_D }}</span>
+                                    <span @click="addScore(key, 'A')">(A){{
+                                        i.option_A
+                                    }}</span>
+                                    <span @click="addScore(key, 'B')">(B){{
+                                        i.option_B }}</span>
+                                    <span @click="addScore(key, 'C')">(C){{
+                                        i.option_C }}</span>
+                                    <span @click="addScore(key, 'D')">(D){{
+                                        i.option_D }}</span>
                                 </div>
                             </div>
 
@@ -49,27 +54,27 @@
 
             </main>
 
-            <div class="million_school_end">
+            <div class="million_school_end" v-else>
 
                 <div class="end_top">
                     <div class="bg_img"></div>
 
                     <div class="member">
                         <div class="playerimg">
-                            <img src="../assets/images/playground/player.jpeg" alt="player">
+                            <img :src="user_img" alt="player">
                             <div class="banner">
                                 <p>遊戲結束</p>
 
                             </div>
                         </div>
 
-                        <p class="username">Wendy</p>
+                        <p class="username">{{ member_name }}</p>
 
                         <div class="bottom">
                             <div class="score">
 
                                 <p>最高紀錄</p>
-                                <p>98題</p>
+                                <p>{{ maxScore }}題</p>
 
                             </div>
 
@@ -99,6 +104,7 @@
 <script>
 //import 這頁需要的元件
 import layout from '@/components/layout.vue'
+import { useUserStore } from '@/store/user';
 
 export default {
     components: {
@@ -110,7 +116,7 @@ export default {
             score: 0,
             timer: '',
             qa: [],
-            current_question: 0,
+            current_question: 2,
             showAlert: false, // 追蹤是否已經顯示過警告
             gameEnd: false,
             number: 1,
@@ -119,7 +125,12 @@ export default {
             totalQuestions: 30,
             // 總時間數
             timeLimit: 10,
-            changBar: false
+            changBar: false,
+            MEMBER_ID :0,
+            member_name:'',
+            user_img:'',
+            maxScore:0
+
         }
     },
     methods: {
@@ -141,31 +152,64 @@ export default {
                     this.timercount = 10;
                     this.current_question++;
                     this.number++
-
                     this.change = false;
                     this.gameEnd = false;
                     this.changBar = false;
+                    console.log(this.current_question)
                 }
                 if (this.timercount <= 5) {
                     this.change = true;
                     this.changBar = true;
-                    console.log(this.change)
+                    // console.log(this.change)
                 }
+
+                
+
+                console.log(this.current_question == this.qa.length,this.current_question,this.qa.length-1);
+                
                 if (this.current_question == this.qa.length) {
+                   
                     if (!this.showAlert) {
                         this.showAlert = true;
                         // alert(`遊戲結束您獲得${this.score}分`);
+                      
                         clearInterval(this.setTime);
                         this.gameEnd = !this.gameEnd;
+                        const currentDate = new Date();
+                        const year = currentDate.getFullYear();
+                        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                        const day = currentDate.getDate().toString().padStart(2, '0');
+                        const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+                            fetch('api/snake_insert.php',{
+                                headers:{
+                                    'Content-Type':'application/json'
+                                },
+                                method:'POST',
+                                mode:'cors',
+                                body:JSON.stringify({
+                                    userID:this.MEMBER_ID,
+                                    gameID:2,
+                                    gameScore:this.score,
+                                    gameScoreCreateTime: formattedDateTime
+
+                                })
+                            })
+                            .then((res)=>{
+                                return res.json()
+                            })
+                            .then((data)=>{
+                                console.log(data);
+                                
+                            })
                     }
                 }
 
             }, 1000)
         },
         addScore(key, answer) {
-            console.log(key);
-            console.log(this.qa[key]);
-            console.log(answer);
+            // console.log(key);
+            // console.log(this.qa[key]);
+            // console.log(answer);
 
             if (this.qa[key].answer == answer) {
                 this.score++;
@@ -176,6 +220,7 @@ export default {
                 this.number++
                 this.change = false;
                 this.changBar = false;
+
             } else {
                 clearInterval(this.setTime);
                 // alert("答錯喽");
@@ -183,16 +228,43 @@ export default {
                 this.number++
                 this.change = false;
                 this.changBar = false;
+
             }
 
             this.timercount = 10;
             this.current_question++
-            if (this.current_question === this.qa.length) {
+            if (this.current_question == this.qa.length) {
                 if (!this.showAlert) {
                     this.showAlert = true;
                     // alert(`遊戲結束，您獲得 ${this.score} 分`);
                     clearInterval(this.timer);
                     this.gameEnd = !this.gameEnd;
+                    const currentDate = new Date();
+                        const year = currentDate.getFullYear();
+                        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                        const day = currentDate.getDate().toString().padStart(2, '0');
+                        const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+                            fetch('api/snake_insert.php',{
+                                headers:{
+                                    'Content-Type':'application/json'
+                                },
+                                method:'POST',
+                                mode:'cors',
+                                body:JSON.stringify({
+                                    userID:this.MEMBER_ID,
+                                    gameID:2,
+                                    gameScore:this.score,
+                                    gameScoreCreateTime: formattedDateTime
+
+                                })
+                            })
+                            .then((res)=>{
+                                return res.json()
+                            })
+                            .then((data)=>{
+                                console.log(data);
+                                
+                            })
                 }
             }
         },
@@ -203,21 +275,48 @@ export default {
 
     },
     mounted() {
+        const userStore = useUserStore();
+        this.MEMBER_ID = userStore.userID;
+        this.member_name = userStore.userName;
+        this.user_img = 'data:image/png;base64,'+userStore.userImg;
         console.log(this.change)
         this.barColorElement = this.$refs.barColor;
         this.$nextTick(() => {
             console.log(this.barColorElement.offsetWidth); // 使用 offsetWidth 取得元素寬度
         });
         this.setTime();
-        fetch("http://localhost/million_school.php"
+        fetch("api/million_school.php"
         )
             .then((res) => {
                 return res.json();
             })
             .then((data) => {
                 this.qa = data
-                console.log(data);
+                // console.log(data);
             })
+
+        // 最高分數
+        fetch('api/millionSchool_search.php',{
+        headers:{
+                'Content-Type':'application/json'
+            },
+            method:'POST',
+            mode:'cors',
+            body:JSON.stringify({
+                userID:this.MEMBER_ID,
+            })
+        })
+        .then((res)=>{
+            return res.json()
+        })
+        .then((data)=>{
+            console.log(data)
+            this.maxScore = data[0][0];
+            if(this.maxScore == null){
+                this.maxScore = 0
+            }
+            console.log(data[0][0])
+        })
     }
 }
 </script>

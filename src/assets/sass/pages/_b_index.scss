@@ -41,6 +41,12 @@
         align-items: center;
         margin: 10px 0;
 
+        p {
+            color: red;
+            margin-bottom: 20px;
+            font-size: $fs20;
+        }
+
         label {
             margin: 10px 0;
         }
