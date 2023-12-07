@@ -176,6 +176,15 @@ export default {
         },
         addPost(post) {
             const newPost = post;
+
+            if (newPost.status == 0) {
+                newPost.status = globalView;
+            } else if (newPost.status == 1) {
+                newPost.status = friendView;
+            } else {
+                newPost.status = privateView;
+            }
+
             this.postItems.unshift(newPost);
             alert('新增完成');
         },
@@ -238,7 +247,8 @@ export default {
                                 userImg: 'data:image;base64,' + element['MEMBER_PIC'],
                                 content: element['POST_CONTENT'],
                                 status: element['POST_STATUS'], //設定狀態(公開 0/ 好友 1/私人 2)
-                                likes: 0,
+                                likes: element['POST_LIKES'],
+                                liked: element['liked'],
                                 createTime: element['POST_CREATETIME'].replaceAll('-', '/'),
                                 postImages: [],
                                 replieds: [],
@@ -262,7 +272,7 @@ export default {
                             this.postItems.push(post);
                         });
 
-                        // console.log(posts);
+                        console.log(this.postItems);
                     }
 
                 })
@@ -342,7 +352,7 @@ export default {
 
             axios.get('api/getHotActivities.php')
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     if (response.data != 0) {
                         let count = 0;
 

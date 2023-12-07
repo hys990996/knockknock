@@ -35,7 +35,7 @@ switch ($action) {
 
 
 if ($data > 0) {
-    echo $action . ' 1'; //成功
+    echo '1'; //成功
 } else {
     echo "0"; //失敗
 }

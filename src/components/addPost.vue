@@ -26,7 +26,7 @@
             <input type="file" name="postImg" id="postImg" @change="previewImage" multiple>
         </label>
         <div class="btn-block">
-            <button class="Btn Btn-light" @click="clearPostContent()">取消</button>
+            <button class="Btn Btn-light" @click="clearPostContent(), $emit('hideBlock', this.keepBlock)">取消</button>
             <button class="Btn Btn-dark" @click="addPost">發布</button>
         </div>
     </div>
@@ -43,7 +43,7 @@ import privateViewIconS from '@/assets/images/icon/private-view-select.svg';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
 export default {
-    emits: ["addPost", "keepPostBlock"],
+    emits: ["addPost", "keepPostBlock", "hideBlock"],
     data() {
         return {
             addImages: [],
@@ -123,6 +123,7 @@ export default {
                     content: postContent,
                     status: '', //設定狀態(公開 0/ 好友 1/私人 2)
                     likes: 0,
+                    liked: false,
                     createTime: today.toLocaleString("zh-tw", { hour12: false }).replaceAll('/', '-'),
                     postImages: this.addImages,
                     replieds: [],
