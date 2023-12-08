@@ -23,8 +23,9 @@
                                 src="../assets/images/wander/campervan.png" alt="campervan">
                         </div>
                         <div class="middle_start">
-                            <button @click="start(); limit()" class="start Btn" :class="{ 'limit': cd }"
-                                :disabled="countingDown">Start</button>
+                            <!-- ===========開始按鈕============ -->
+                            <button @click="start(); limit(); deduct()" class="start Btn" :class="{ 'limit': cd }"
+                                :disabled="countingDown">{{ buttonText }}</button>
                         </div>
 
                     </div>
@@ -140,7 +141,8 @@ export default {
             clothImageChange: '',
             accessoriesImageChange: '',
             gift_img: '',
-            postImg: ''
+            postImg: '',
+            buttonText: 'Start'
         }
     },
     created() {
@@ -184,6 +186,14 @@ export default {
 
             if (this.countdownInterval) {
                 clearInterval(this.countdownInterval);
+                if (this.buttonText === '100金幣') {
+                    axios.post("api/luxury_wandering.php", { id: this.id }).then((resData) => {
+                        this.giftRedDot = true;
+                        this.giftLetterDot = true;
+                    }).catch((e) => {
+                        console.log(e);
+                    });
+                }
             }
 
             // 設定倒數計時
@@ -194,6 +204,8 @@ export default {
             this.countdownInterval = setInterval(() => {
                 this.minute = Math.floor(countdown / 60);
                 this.second = countdown % 60;
+                this.buttonText = '100金幣'
+
                 if (countdown === 0) {
                     clearInterval(this.countdownInterval); //倒數計時結束時停止計時器
                     this.animationDrive = false; //倒數結束全部動畫停止
@@ -201,11 +213,19 @@ export default {
                     this.dissipateA = false;
                     this.dissipateB = false;
                     this.cd = false; //倒數完成按鈕變回藍色
+                    this.buttonText = 'Start';
+
                 } else {
                     countdown -= 1;
                 }
             }, 5); //快轉
             // }, 1000); //一秒更新一次-測試完改回正確數值
+
+            axios.post("api/warning_time_return.php", { id: this.id }).then((resData) => {
+
+            }).catch((e) => {
+                console.log(e) //連線錯誤的時候會執行這邊
+            });
         },
 
         limit() {

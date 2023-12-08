@@ -181,7 +181,6 @@
                             <h4>即將開始的活動</h4>
                             <span>{{ activity_name }}</span>
                             <p>{{ '活動日期：' + (activity_date ? activity_date : '無活動報名紀錄') }}</p>
-
                             <!-- <p>{{ '報名時間' + activity_start + '~' + activity_end }}</p> -->
                         </div>
                         <div class="past_activity">
@@ -189,28 +188,18 @@
                                 <span>歷史活動</span>
                             </div>
                             <ul class="past_activity_list">
-
                                 <li v-for="(activityItem, index) in activityItems" :key="index">
                                     <p>{{ activityItem.ACTIVITY_NAME }}</p>
-                                    <div class="score_box">
-                                        <div v-if="addScoreShow" class="score">
-                                            <div class="star_box">
-                                                <div v-for="(starCount, dIndex) in scores" :key="dIndex">
-                                                    <svg class="star" :class="{ 'light': dIndex < starCount }"
-                                                        @click="light(dIndex)" xmlns="http://www.w3.org/2000/svg"
-                                                        height="1em" viewBox="0 0 576 512">
-                                                        <path
-                                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    <div class="activity_time_box"
+                                        :class="{ 'activity_time-bg': pastActivityTimeShow === index }">
+                                        <p class="past_activity_time" v-if="pastActivityTimeShow === index">{{
+                                            activityItem.ACTIVITY_DATE }}</p>
                                         <div>
-                                            <button :value="index" @click="addScore($event), addScoreShow = !addScoreShow"
-                                                class="mypage_button">{{ addScoreShow ? '確定' : '評分' }}</button>
+                                            <button :value="index"
+                                                @click="pastActivityTimeShow === index ? pastActivityTimeShow = null : pastActivityTimeShow = index"
+                                                class="mypage_button">{{
+                                                    pastActivityTimeShow === index ? '關閉' : '查看' }}</button>
                                         </div>
-
                                     </div>
                                 </li>
                                 <p v-if="activityItems.length === 0">無歷史紀錄</p>
@@ -222,7 +211,70 @@
                     <!-------------------------------任務區塊------------------------------->
 
                     <div class="mission_board">
-                        <missionList></missionList>
+                        <!-- <missionList></missionList> -->
+                        <ul class="mission_list">
+                            <h4>今日任務</h4>
+                            <li>
+                                <div class="mission">
+                                    <div>
+                                        <img :src="loginMissionCheck">
+                                    </div>
+                                    <p>每日登入獎勵</p>
+                                </div>
+                                <div class="mission_award">
+                                    <img src="../assets/images/mypage/gold_coin.png">
+                                    <p>+10</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="mission">
+                                    <div>
+                                        <img :src="wanderMissionCheck">
+                                    </div>
+                                    <p>流浪一次</p>
+                                </div>
+                                <div class="mission_award">
+                                    <img src="../assets/images/mypage/gold_coin.png">
+                                    <p>+15</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="mission">
+                                    <div>
+                                        <img :src="snakeMissionCheck">
+                                    </div>
+                                    <p>貪食蛇遊玩一次</p>
+                                </div>
+                                <div class="mission_award">
+                                    <img src="../assets/images/mypage/gold_coin.png">
+                                    <p>+10</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="mission">
+                                    <div>
+                                        <img :src="millionMissionCheck">
+                                    </div>
+                                    <p>百萬小學堂遊玩一次</p>
+                                </div>
+                                <div class="mission_award">
+                                    <img src="../assets/images/mypage/gold_coin.png">
+                                    <p>+10</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="mission">
+                                    <div>
+                                        <img :src="postMissionCheck">
+                                    </div>
+                                    <p>發表公開新貼文</p>
+                                </div>
+                                <div class="mission_award">
+                                    <img src="../assets/images/mypage/gold_coin.png">
+                                    <p>+20</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -245,8 +297,6 @@
 import layout from '@/components/layout.vue'
 import postItem from '@/components/postItem.vue'
 import addPost from '@/components/addPost.vue'
-import editActivityScore from '@/components/editActivityScore.vue'
-import missionList from '@/components/missionList.vue'
 
 import friendView from '@/assets/images/icon/friend-view-select.svg';
 import globalView from '@/assets/images/icon/global-view-select-2.svg';
@@ -254,20 +304,20 @@ import privateView from '@/assets/images/icon/private-view-select.svg';
 
 import { useUserStore } from '@/store/user';
 
+import unFinish from '@/assets/images/mypage/unFinish_icon.png'
+import finish from '@/assets/images/mypage/Finish_icon.png'
+
 export default {
     components: {
         layout,
         postItem,
-        addPost,
-        editActivityScore,
-        missionList
+        addPost
     },
 
     data() {
         return {
             collectionShow: false,
             postShow: false,
-            add_score: false,
             selectedBoxes: [],
             maxSelection: 3,
             id: '',
@@ -295,10 +345,21 @@ export default {
             exhibit_collection_A: '',
             exhibit_collection_B: '',
             exhibit_collection_C: '',
+            loginIsCompleted: false,
+            loginMissionCheck: unFinish,
+            wanderIsCompleted: false,
+            wanderMissionCheck: unFinish,
+            postIsCompleted: false,
+            postMissionCheck: unFinish,
+            snakeIsCompleted: false,
+            snakeMissionCheck: unFinish,
+            millionIsCompleted: false,
+            millionMissionCheck: unFinish,
             // isUpload: false,
-            addScoreShow: false,
-            scores: Array(5).fill(0),
+            pastActivityTimeShow: null,
+            // scores: Array(5).fill(5),
             activityItems: [],
+            activityPastDay: [],
             //buttonColor: false,
             collections: {
                 SSR: [],
@@ -321,6 +382,9 @@ export default {
 
         //讀取使用者貼文
         this.getPostItems();
+
+        //讀取任務紀錄
+        this.getMission();
     },
     methods: {
         async getData() {
@@ -352,6 +416,7 @@ export default {
             });
             axios.post("api/history_activity.php", { id: this.id }).then((resData) => {
                 this.activityItems = resData.data;
+                this.activityPastDay = resData.data[0].ACTIVITY_DATE;
                 // this.activityItem.name = resData.data.ACTIVITY_NAME;
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
@@ -367,18 +432,117 @@ export default {
                 console.log(e);
             });
         },
+
         light() {
             this.star = true;
         },
-        addScore(e) {
-            console.log(e.target.value)
 
+        getMission() {
+            //登入任務檢查
+            axios.post("api/mission_check_login.php", { id: this.id }).then((resData) => {
+                if (resData.data.loginIsCompleted) {
+                    // 有登入紀錄，代表今天已經登入過
+                    this.loginTime = resData.data.loginTime;
+                    console.log('登入' + this.loginTime)
+
+                    // 更換圖片路徑
+                    this.loginMissionCheck = finish;
+                    // 更新會員金幣及任務完成次數
+                    axios.post("api/mission_check_login_return.php", { id: this.id })
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                } else {
+                    this.loginMissionCheck = unFinish;
+                }
+            }).catch((e) => {
+                console.log(e);
+            });
+
+
+            //流浪任務檢查
+            axios.post("api/mission_check_wander.php", { id: this.id }).then((resData) => {
+                if (resData.data.wanderIsCompleted) {
+                    this.wanderTime = resData.data.wanderTime;
+                    console.log('流浪' + this.wanderTime)
+
+                    // 更換圖片路徑
+                    this.wanderMissionCheck = finish;
+                    // 更新會員金幣及任務完成次數
+                    axios.post("api/mission_check_wander_return.php", { id: this.id })
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                } else {
+                    this.wanderMissionCheck = unFinish;
+                }
+            }).catch((e) => {
+                console.log(e);
+            });
+
+
+            //貼文任務檢查
+            axios.post("api/mission_check_post.php", { id: this.id }).then((resData) => {
+                if (resData.data.postIsCompleted) {
+                    this.postTime = resData.data.postTime;
+                    console.log('貼文' + this.postTime)
+
+                    // 更換圖片路徑
+                    this.postMissionCheck = finish;
+                    // 更新會員金幣及任務完成次數
+                    axios.post("api/mission_check_post_return.php", { id: this.id })
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                } else {
+                    this.postMissionCheck = unFinish;
+                }
+            }).catch((e) => {
+                console.log(e);
+            });
+
+
+            //貪食蛇任務檢查
+            axios.post("api/mission_check_snake.php", { id: this.id }).then((resData) => {
+                if (resData.data.snakeIsCompleted) {
+                    this.snakeTime = resData.data.snakeTime;
+                    console.log('貪食蛇' + this.snakeTime)
+
+                    // 更換圖片路徑
+                    this.snakeMissionCheck = finish;
+                    // 更新會員金幣及任務完成次數
+                    axios.post("api/mission_check_snake_return.php", { id: this.id })
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                } else {
+                    this.snakeMissionCheck = unFinish;
+                }
+            }).catch((e) => {
+                console.log(e);
+            });
+
+
+            //百萬學堂任務檢查
+            axios.post("api/mission_check_million.php", { id: this.id }).then((resData) => {
+                if (resData.data.millionIsCompleted) {
+                    this.millionTime = resData.data.millionTime;
+                    console.log('百萬學堂' + this.millionTime)
+
+                    // 更換圖片路徑
+                    this.millionMissionCheck = finish;
+                    // 更新會員金幣及任務完成次數
+                    axios.post("api/mission_check_million_return.php", { id: this.id })
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                } else {
+                    this.millionMissionCheck = unFinish;
+                }
+            }).catch((e) => {
+                console.log(e);
+            });
         },
-
-        //判斷星星是否有更動過,如果有更動過的話按紐更換顏色並改變顯示的字
-        //         if(star[i] > 0){
-        //     this.buttonColor = true;
-        // },
 
         toggleSelection(index) {
             const selectedIndex = this.selectedBoxes.indexOf(index);
@@ -387,7 +551,7 @@ export default {
                 // 如果已經選中,取消選擇
                 this.selectedBoxes.splice(selectedIndex, 1);
             } else {
-                // 如果未選中,並且未達到最大選擇數,選中
+                // 如果未選中,並且未達到最大選擇數,選取起來
                 if (this.selectedBoxes.length < this.maxSelection) {
                     this.selectedBoxes.push(index);
                 }
@@ -636,7 +800,7 @@ export default {
                 });
         },
 
-    }
+    },
 
 
 }

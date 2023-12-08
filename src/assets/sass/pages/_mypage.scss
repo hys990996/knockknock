@@ -377,7 +377,7 @@
             border-radius: 20px;
             z-index: 10;
             position: absolute;
-            top: 45%;
+            top: 30%;
             left: 50%;
             transform: translate(-50%, -50%);
 
@@ -803,6 +803,7 @@
 
         .activity {
             width: 70%;
+            margin-top: 0;
 
             @include media-breakpoint-down(lg) {
                 width: 90%;
@@ -897,43 +898,47 @@
                         display: flex;
                         padding: 10px;
 
-                        .score-box-bg {
-                            background-color: $secondary-color-4;
-
-                        }
-
-                        .score_box {
+                        .activity_time_box {
                             width: 160px;
                             display: flex;
                             justify-content: end;
                             border-radius: 20px;
                             position: relative;
 
+                            &.activity_time-bg {
+                                background-color: $secondary-color-4;
 
-                            .score {
-                                align-items: center;
-                                justify-content: center;
-                                padding-left: 10px;
-                                justify-items: center;
-                                display: flex;
-
-                                .star_box {
-                                    display: flex;
-                                }
-
-                                div {
-                                    padding: 1px;
-
-                                    .star {
-                                        fill: rgb(153, 153, 153);
-
-                                        &.light {
-                                            fill: rgb(255, 255, 55);
-
-                                        }
-                                    }
-                                }
                             }
+
+                            .past_activity_time {
+                                padding: 5px;
+
+                            }
+
+                            // .score {
+                            //     align-items: center;
+                            //     justify-content: center;
+                            //     padding-left: 10px;
+                            //     justify-items: center;
+                            //     display: flex;
+
+                            //     .star_box {
+                            //         display: flex;
+                            //     }
+
+                            //     div {
+                            //         padding: 1px;
+
+                            //         .star {
+                            //             fill: rgb(153, 153, 153);
+
+                            //             &.light {
+                            //                 fill: rgb(255, 255, 55);
+
+                            //             }
+                            //         }
+                            //     }
+                            // }
                         }
                     }
 
