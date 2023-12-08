@@ -20,7 +20,7 @@ $accessoriesImageChange= $req['accessoriesImageChange'];
 
 
 
-$sql="UPDATE MEMBER SET
+$sql="UPDATE member SET
     MEMBER_FIRST_NAME = :first_Name,
     MEMBER_LAST_NAME = :last_Name,
     MEMBER_PHONE = :tel,

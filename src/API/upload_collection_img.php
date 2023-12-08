@@ -9,7 +9,7 @@ $imageData = $req['imageData'];
 
 $decodedImage = base64_encode($imageData);
 
-$sql = "UPDATE COLLECTION SET COLLECTION_IMAGE = :base64Image WHERE COLLECTION_ID = :id";
+$sql = "UPDATE collection SET COLLECTION_IMAGE = :base64Image WHERE COLLECTION_ID = :id";
 
 $statement = $pdo->prepare($sql);
 $statement->bindValue(":id", $id);

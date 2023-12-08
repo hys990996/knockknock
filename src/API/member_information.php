@@ -5,7 +5,7 @@ include("conn.php");
 $req = json_decode(file_get_contents("php://input"),true);
 $id = $req['id'];
 
-$sql="SELECT * FROM MEMBER where MEMBER_ID = :id";
+$sql="SELECT * FROM member where MEMBER_ID = :id";
 
 $statement = $pdo->prepare($sql);
 $statement -> bindValue(":id",$id);

@@ -4,8 +4,8 @@ include("conn.php");
 
 $req = json_decode(file_get_contents("php://input"), true);
 $sql = "SELECT * 
-        FROM MEMBER t1
-        JOIN POST t2 ON t1.MEMBER_ID = t2.MEMBER_ID
+        FROM member t1
+        JOIN post t2 ON t1.MEMBER_ID = t2.MEMBER_ID
         ORDER BY RAND() LIMIT 1";
 
 $statement = $pdo->prepare($sql);
@@ -15,8 +15,8 @@ $data1 = $statement->fetchAll(PDO::FETCH_ASSOC);
 if ($data1) {
     $memberId = $data1[0]['MEMBER_ID'];
     $sql = "SELECT * 
-            FROM POST t3
-            JOIN POST_IMAGE t4 ON t3.POST_ID = t4.POST_ID
+            FROM post t3
+            JOIN post_image t4 ON t3.POST_ID = t4.POST_ID
             WHERE t3.MEMBER_ID = :memberId
             ORDER BY RAND() LIMIT 1";
 

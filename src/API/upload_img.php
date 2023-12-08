@@ -7,7 +7,7 @@ $imageData = $req['imageData'];
 
 $decodedImage = base64_encode($imageData);
 
-$sql = "UPDATE MEMBER SET MEMBER_PIC = :base64Image WHERE MEMBER_ID = :id";
+$sql = "UPDATE member SET MEMBER_PIC = :base64Image WHERE MEMBER_ID = :id";
 
 $statement = $pdo->prepare($sql);
 $statement->bindValue(":id", $id);

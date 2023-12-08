@@ -26,8 +26,8 @@ $req = json_decode(file_get_contents("php://input"), true);
 $id = $req['id'];
 
 $sql = "SELECT ACTIVITY_NAME,ACTIVITY_DATE FROM
-        REGISTER t1
-        JOIN ACTIVITY t2 ON t1.ACTIVITY_ID = t2.ACTIVITY_ID
+        register t1
+        JOIN activity t2 ON t1.ACTIVITY_ID = t2.ACTIVITY_ID
         WHERE MEMBER_ID = :id
         AND ACTIVITY_DATE > NOW()
         ORDER BY ABS(DATEDIFF(ACTIVITY_DATE, NOW()))

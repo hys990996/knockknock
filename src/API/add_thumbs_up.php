@@ -7,7 +7,7 @@ $postId=$req['postId'];
 
 
 
-$sql="INSERT INTO POST_LIKES(
+$sql="INSERT INTO post_likes(
     POST_ID,
     POST_MEMBER_LIKE)
     values
