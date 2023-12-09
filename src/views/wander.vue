@@ -142,7 +142,7 @@ export default {
             accessoriesImageChange: '',
             gift_img: '',
             postImg: '',
-            buttonText: 'Start'
+            buttonText: 'Start',
             ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
