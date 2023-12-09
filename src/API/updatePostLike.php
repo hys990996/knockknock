@@ -11,7 +11,7 @@ $action = $likeData["action"];
 switch ($action) {
     case "P":
         $sql = "UPDATE post
-                SET POST_LIKES=POST_LIKES+1
+                SET POST_LIKES=POST_LIKES + 1
                 WHERE POST_ID = :postId";
 
         $statement = $pdo->prepare($sql);
@@ -32,7 +32,7 @@ switch ($action) {
     case "M":
 
         $sql = "UPDATE post
-                SET POST_LIKES=POST_LIKES-1
+                SET POST_LIKES=POST_LIKES - 1
                 WHERE POST_ID = :postId";
 
         $statement = $pdo->prepare($sql);

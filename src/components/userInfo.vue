@@ -12,8 +12,12 @@
             </div>
             <div class="user-detail-info">
                 <router-link :to="{ name: 'mypage' }">
-                    <div class="user-image"><img :src="userData.userImg" alt="使用者照片"></div>
+                    <div class="user-image">
+                        <img v-if="userData.userImg" :src="userStore.userImg" alt="">
+                        <img v-else src="../assets/images/login/boy-base.png" alt="使用者照片">
+                    </div>
                     <h3>{{ userData.userName }}</h3>
+
                 </router-link>
             </div>
             <div class="login-out" @click="doLogout">
@@ -36,6 +40,7 @@ export default {
                 userName: '',
                 userImg: ''
             },
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     beforeMount() {
@@ -98,7 +103,7 @@ export default {
                 // console.log(this.userData);
 
                 axios
-                    .post('api/logout.php', JSON.stringify(this.userData))
+                    .post(this.ajax_url + 'logout.php', JSON.stringify(this.userData))
                     .then(response => {
                         // console.log(response.data);
                         if (response.data == '1') {

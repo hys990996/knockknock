@@ -64,7 +64,7 @@ $obj->Send['ReturnURL'] = "https://tibamef2e.com/thd103/g2/dist/ECPay_ReturnURL.
 $obj->Send['OrderResultURL'] = "https://tibamef2e.com/thd103/g2/dist/ECPay_ReturnURL.php";
  
 // $obj->Send['ClientBackURL'] = "https://ble.com.tw/test/ECPay_ClientBackURL.php"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕
-$obj->Send['ClientBackURL'] = "https://tibamef2e.com/thd103/g2/dist/activity"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕，返回按鈕點擊的頁面
+// $obj->Send['ClientBackURL'] = "https://tibamef2e.com/thd103/g2/dist/activity"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕，返回按鈕點擊的頁面
  
 $obj->Send['CustomField1'] = $payMent['ItemName'];  	//額外的欄位
 $obj->Send['CustomField2'] = $quantity;  				  	//額外的欄位

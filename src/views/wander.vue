@@ -188,7 +188,7 @@ export default {
             if (this.countdownInterval) {
                 clearInterval(this.countdownInterval);
                 if (this.buttonText === '100金幣') {
-                    axios.post("api/luxury_wandering.php", { id: this.id }).then((resData) => {
+                    axios.post(this.ajax_url + "luxury_wandering.php", { id: this.id }).then((resData) => {
                         this.giftRedDot = true;
                         this.giftLetterDot = true;
                     }).catch((e) => {
@@ -222,7 +222,7 @@ export default {
             }, 5); //快轉
             // }, 1000); //一秒更新一次-測試完改回正確數值
 
-            axios.post("api/warning_time_return.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "warning_time_return.php", { id: this.id }).then((resData) => {
 
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊

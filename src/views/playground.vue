@@ -31,7 +31,7 @@
                             <div class="ranking-item" v-for="(i, key) in schoolRank" :key="key">
 
                                 <h1>第{{ key + 1 }}名</h1>
-                                <img class="player_img" :src="'data:image/png;base64,' + i.MEMBER_PIC" alt="">
+                                <img class="player_img" :src="i.MEMBER_PIC" alt="">
                                 <p>{{ i.MEMBER_LAST_NAME }}{{ i.MEMBER_FIRST_NAME }}</p>
                             </div>
 
@@ -62,7 +62,7 @@
                         <div class="rank-list">
                             <div class="ranking-item" v-for="(i, key) in snakeRank" :key="key">
                                 <h1>第{{ key + 1 }}名</h1>
-                                <img class="player_img" :src="'data:image/png;base64,' + i.MEMBER_PIC" alt="">
+                                <img class="player_img" :src="i.MEMBER_PIC" alt="">
                                 <p>{{ i.MEMBER_LAST_NAME }}{{ i.MEMBER_FIRST_NAME }}</p>
                             </div>
 

@@ -1,7 +1,8 @@
 <?php
 
 include("conn.php");
-
+ini_set('display_errors','on');
+ini_set('memory_limit', '512M');
 $sql = "SELECT * FROM activity order by ACTIVITY_REMAINING_PLACES";
 
 

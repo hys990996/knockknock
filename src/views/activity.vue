@@ -230,7 +230,7 @@ export default {
     },
     computed: {
         showHotActivity() {
-            return this.hotActivity.slice(this.hotActivity.length - 4, this.hotActivity.length - 1)
+            return this.hotActivity
         }
     },
     mounted() {
@@ -241,9 +241,25 @@ export default {
             .then((data) => {
                 console.log(data)
                 this.totalActivity = data;
-                this.hotActivity = data;
+
                 this.activityID = this.$route.params.activityID;
-                this.upCommingActivity = this.totalActivity.filter((activity) => {
+
+                console.log(this.upCommingActivity)
+            })
+        fetch(this.ajax_url + 'showActivity_hot.php')
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                this.hotActivity = data;
+            })
+        fetch(this.ajax_url + 'upCommingActivity_hot.php')
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                this.upCommingActivity = data
+                this.upCommingActivity.filter((activity) => {
                     let currentDate = new Date();
                     let startDate = new Date(activity.ACTIVITY_DATE);
 
@@ -252,7 +268,6 @@ export default {
 
                     return startDate <= curretDate && startDate >= currentDate;
                 });
-                console.log(this.upCommingActivity)
             })
     }
 

@@ -45,6 +45,7 @@ export default {
                 // },
             ],
             showResult: false,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -66,7 +67,7 @@ export default {
                         userId: userStore.userID,
                         friendId: id,
                     }
-                    axios.post('api/addFriend.php', JSON.stringify(friendData))
+                    axios.post(this.ajax_url + 'addFriend.php', JSON.stringify(friendData))
                         .then(response => {
                             if (response.data == 1) {
                                 alert('成功發送邀請');
@@ -81,7 +82,7 @@ export default {
         getUserImg(id, i) {
             const userId = { id }
 
-            axios.post('api/gerUserImg.php', JSON.stringify(userId))
+            axios.post(this.ajax_url + 'gerUserImg.php', JSON.stringify(userId))
                 .then(response => {
                     console.log(response.data);
                     if (response.data != 'f') {
@@ -104,7 +105,7 @@ export default {
 
         console.log(keyword);
 
-        axios.post('api/searchFriends.php', JSON.stringify(keyword))
+        axios.post(this.ajax_url + 'searchFriends.php', JSON.stringify(keyword))
             .then(response => {
                 console.log('This data is from -> ' + this.$route.name + ' -> response data: ' + response.data)
                 if (response.data == '0') {

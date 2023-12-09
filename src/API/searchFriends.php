@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors','on');
 include("conn.php");
 
 $searchData = json_decode(file_get_contents("php://input"), true);
@@ -8,7 +8,7 @@ $keyword = '%' . $searchData["keyword"] . '%';
 
 $sqlSelect = "SELECT m1.MEMBER_ID,m2.FullName
               FROM member m1
-	                JOIN (SELECT MEMBER_ID,concat(MEMBER_LAST_NAME,MEMBER_FIRST_NAME) as FullName FROM MEMBER)m2
+	                JOIN (SELECT MEMBER_ID,concat(MEMBER_LAST_NAME,MEMBER_FIRST_NAME) as FullName FROM member)m2
 	                ON m1.MEMBER_ID=m2.MEMBER_ID
               WHERE m2.FullName LIKE :keyword && m1.MEMBER_ID <> :userId";
 
@@ -23,7 +23,7 @@ if (COUNT($data) != 0) {
 
     foreach ($data as $key => $value) {
 
-        $sqlSelect = "SELECT count(*) AS num FROM friends WHERE MEMBER_ID=:userId AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM FRIENDS WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
+        $sqlSelect = "SELECT count(*) AS num FROM friends WHERE MEMBER_ID=:userId AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM friends WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
 
         $statement = $pdo->prepare($sqlSelect);
         $statement->bindValue(":userId", $userId);
@@ -46,8 +46,8 @@ if (COUNT($data) != 0) {
         $statement->execute();
         $result = $statement->fetchAll();
 
-        $data[$key]["friendStatus"] = $result[0]["FRIEND_STATUS"];
-        $data[$key]["requestStatus"] = $result[0]["FRIENDS_REQUESTS_STATUS"];
+        $data[$key]["FRIEND_STATUS"] = $result[0]["FRIEND_STATUS"];
+        $data[$key]["FRIENDS_REQUESTS_STATUS"] = $result[0]["FRIENDS_REQUESTS_STATUS"];
     }
 
     // echo $data[0];

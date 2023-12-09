@@ -51,6 +51,7 @@ export default {
             friendSelect: true,
             globalSelect: false,
             privateSelect: false,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -139,7 +140,7 @@ export default {
 
                 // 新增post資料至DB
                 axios
-                    .post('api/addPost.php', JSON.stringify(post))
+                    .post(this.ajax_url + 'addPost.php', JSON.stringify(post))
                     .then(response => {
 
                         if (response.data != 0) {
@@ -186,7 +187,7 @@ export default {
             })
 
             axios
-                .post('api/addPostImgs.php', JSON.stringify(imgData))
+                .post(this.ajax_url + 'addPostImgs.php', JSON.stringify(imgData))
                 .then(response => {
                     // console.log(response.data);
                     if (response.data != 1) {

@@ -28,7 +28,7 @@
                             <button @click="postShow = !postShow" class="new_post_button Btn">發表新貼文</button>
                         </div>
                         <div class="head_sticker">
-                            <img :src="'data:image;base64,' + userImg" ref="head_sticker" alt="" v-if="userImg">
+                            <img :src="userImg" ref="head_sticker" alt="" v-if="userImg">
                         </div>
                         <div class="guide_button">
                             <router-link :to="{ name: 'mypage_edit' }">
@@ -161,13 +161,13 @@
                         </div>
                         <div class="collect">
                             <div class="collectA">
-                                <img :src="'data:image;base64,' + exhibit_collection_A" alt="" v-if="exhibit_collection_A">
+                                <img :src="exhibit_collection_A" alt="" v-if="exhibit_collection_A">
                             </div>
                             <div class="collectB">
-                                <img :src="'data:image;base64,' + exhibit_collection_B" alt="" v-if="exhibit_collection_B">
+                                <img :src="exhibit_collection_B" alt="" v-if="exhibit_collection_B">
                             </div>
                             <div class="collectC">
-                                <img :src="'data:image;base64,' + exhibit_collection_C" alt="" v-if="exhibit_collection_C">
+                                <img :src="exhibit_collection_C" alt="" v-if="exhibit_collection_C">
                             </div>
                         </div>
                     </div>
@@ -440,7 +440,7 @@ export default {
 
         getMission() {
             //登入任務檢查
-            axios.post("api/mission_check_login.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "mission_check_login.php", { id: this.id }).then((resData) => {
                 if (resData.data.loginIsCompleted) {
                     // 有登入紀錄，代表今天已經登入過
                     this.loginTime = resData.data.loginTime;
@@ -449,7 +449,7 @@ export default {
                     // 更換圖片路徑
                     this.loginMissionCheck = finish;
                     // 更新會員金幣及任務完成次數
-                    axios.post("api/mission_check_login_return.php", { id: this.id })
+                    axios.post(this.ajax_url + "mission_check_login_return.php", { id: this.id })
                         .then((response) => {
                             console.log(response.data);
                         })
@@ -462,7 +462,7 @@ export default {
 
 
             //流浪任務檢查
-            axios.post("api/mission_check_wander.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "mission_check_wander.php", { id: this.id }).then((resData) => {
                 if (resData.data.wanderIsCompleted) {
                     this.wanderTime = resData.data.wanderTime;
                     console.log('流浪' + this.wanderTime)
@@ -470,7 +470,7 @@ export default {
                     // 更換圖片路徑
                     this.wanderMissionCheck = finish;
                     // 更新會員金幣及任務完成次數
-                    axios.post("api/mission_check_wander_return.php", { id: this.id })
+                    axios.post(this.ajax_url + "mission_check_wander_return.php", { id: this.id })
                         .then((response) => {
                             console.log(response.data);
                         })
@@ -483,7 +483,7 @@ export default {
 
 
             //貼文任務檢查
-            axios.post("api/mission_check_post.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "mission_check_post.php", { id: this.id }).then((resData) => {
                 if (resData.data.postIsCompleted) {
                     this.postTime = resData.data.postTime;
                     console.log('貼文' + this.postTime)
@@ -491,7 +491,7 @@ export default {
                     // 更換圖片路徑
                     this.postMissionCheck = finish;
                     // 更新會員金幣及任務完成次數
-                    axios.post("api/mission_check_post_return.php", { id: this.id })
+                    axios.post(this.ajax_url + "mission_check_post_return.php", { id: this.id })
                         .then((response) => {
                             console.log(response.data);
                         })
@@ -504,7 +504,7 @@ export default {
 
 
             //貪食蛇任務檢查
-            axios.post("api/mission_check_snake.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "mission_check_snake.php", { id: this.id }).then((resData) => {
                 if (resData.data.snakeIsCompleted) {
                     this.snakeTime = resData.data.snakeTime;
                     console.log('貪食蛇' + this.snakeTime)
@@ -512,7 +512,7 @@ export default {
                     // 更換圖片路徑
                     this.snakeMissionCheck = finish;
                     // 更新會員金幣及任務完成次數
-                    axios.post("api/mission_check_snake_return.php", { id: this.id })
+                    axios.post(this.ajax_url + "mission_check_snake_return.php", { id: this.id })
                         .then((response) => {
                             console.log(response.data);
                         })
@@ -525,7 +525,7 @@ export default {
 
 
             //百萬學堂任務檢查
-            axios.post("api/mission_check_million.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "mission_check_million.php", { id: this.id }).then((resData) => {
                 if (resData.data.millionIsCompleted) {
                     this.millionTime = resData.data.millionTime;
                     console.log('百萬學堂' + this.millionTime)
@@ -533,7 +533,7 @@ export default {
                     // 更換圖片路徑
                     this.millionMissionCheck = finish;
                     // 更新會員金幣及任務完成次數
-                    axios.post("api/mission_check_million_return.php", { id: this.id })
+                    axios.post(this.ajax_url + "mission_check_million_return.php", { id: this.id })
                         .then((response) => {
                             console.log(response.data);
                         })

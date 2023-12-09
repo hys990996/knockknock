@@ -160,23 +160,24 @@ export default {
             username: " ",
             tempUsername: "",
             isSubmitted: false,
-            currentMessageImage: '', // 存放選中的圖片
+            currentMessageImage: '', // 存放選中的圖片,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
             imgList: [
                 {
                     id: 1,
-                    url: 'src/assets/images/user/userimage.png'
+                    url: '/thd103/g2/dist/assets/jian-86ee9b7b.png'
                 },
                 {
                     id: 2,
-                    url: 'src/assets/images/user/userimage-g.png'
+                    url: '/thd103/g2/dist/assets/boy-base-880fb11c.png'
                 },
                 {
                     id: 3,
-                    url: 'src/assets/images/chatroom/man_A.png'
+                    url: '/thd103/g2/dist/assets/shi-5cc94709.png'
                 },
                 {
                     id: 4,
-                    url: 'src/assets/images/chatroom/woman_B.png'
+                    url: '/thd103/g2/dist/assets/boy-base-880fb11c.png'
                 }
             ]
         }

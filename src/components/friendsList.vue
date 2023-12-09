@@ -43,6 +43,7 @@ export default {
 
             ],
             userId: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -62,7 +63,7 @@ export default {
                     userId: this.userId,
                     action: 'D'
                 }
-                axios.post('api/updateFriendStatus.php', JSON.stringify(deleteData))
+                axios.post(this.ajax_url + 'updateFriendStatus.php', JSON.stringify(deleteData))
                     .then(response => {
                         console.log(response.data)
                     })
@@ -88,7 +89,7 @@ export default {
                     userId: this.userId,
                     action: 'B'
                 }
-                axios.post('api/updateFriendStatus.php', JSON.stringify(blackData))
+                axios.post(this.ajax_url + 'updateFriendStatus.php', JSON.stringify(blackData))
                     .then(response => {
                         console.log(response.data)
                     })
@@ -100,7 +101,7 @@ export default {
         getUserImg(id, i) {
             const friendId = { id }
 
-            axios.post('api/gerUserImg.php', JSON.stringify(friendId))
+            axios.post(this.ajax_url + 'gerUserImg.php', JSON.stringify(friendId))
                 .then(response => {
                     // console.log(response.data);
                     if (response.data != 'f') {
@@ -122,7 +123,7 @@ export default {
             userId: this.userId,
         }
 
-        axios.post('api/getFriendList.php', JSON.stringify(userId))
+        axios.post(this.ajax_url + 'getFriendList.php', JSON.stringify(userId))
             .then(response => {
                 // console.log('This data is from -> ' + this.$route.name + ' -> response data: ' + response.data)
                 if (response.data != 0) {

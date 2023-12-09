@@ -26,6 +26,7 @@ import { useUserStore } from '@/store/user';
 export default {
     data() {
         return {
+            ajax_url: import.meta.env.VITE_AJAX_URL,
             blackFriends: [
                 // {
                 //     id: 1,
@@ -56,7 +57,7 @@ export default {
                     userId: this.userId,
                     action: 'F'
                 }
-                axios.post('api/updateFriendStatus.php', JSON.stringify(deleteData))
+                axios.post(this.ajax + 'updateFriendStatus.php', JSON.stringify(deleteData))
                     .then(response => {
                         console.log(response.data)
                     })
@@ -68,7 +69,7 @@ export default {
         getUserImg(id, i) {
             const friendId = { id }
 
-            axios.post('api/gerUserImg.php', JSON.stringify(friendId))
+            axios.post(this.ajax_url + 'gerUserImg.php', JSON.stringify(friendId))
                 .then(response => {
                     // console.log(response.data);
                     if (response.data != 'f') {
@@ -89,7 +90,7 @@ export default {
             userId: this.userId,
         }
 
-        axios.post('api/getBlackFriendList.php', JSON.stringify(userId))
+        axios.post(this.ajax_url + 'getBlackFriendList.php', JSON.stringify(userId))
             .then(response => {
                 // console.log('This data is from -> ' + this.$route.name + ' -> response data: ' + response.data)
                 if (response.data != 0) {

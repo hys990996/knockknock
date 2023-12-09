@@ -1,5 +1,5 @@
 <template>
-    <div class="post-item" v-for="(item, index) in postItems" :key="item.id">
+    <div class="post-item" v-for="(item, index) in  postItems " :key="item.id">
         <div class="post-user-delete">
             <div class="post-user-info">
                 <div class="post-user-image">
@@ -9,7 +9,7 @@
                     <p class="user-name">{{ item.userName }}</p>
                     <div class="post-time">
                         <p class="user-post-time">{{ item.createTime.replaceAll('-', '/') }}</p>
-                        <img :src="item.status" alt="">
+                        <img :src="'data:image/*;base64,' + item.status" alt="">
                     </div>
                 </div>
             </div>
@@ -23,11 +23,12 @@
             </p>
         </div>
         <div :class="['post-images', { 'show': item.postImages.length > 0 }]">
-            <div class="img-item" v-for="(img, index) in item.postImages" :key="img.id"><img :src=img.src alt=""></div>
+            <div class="img-item" v-for="(img, index) in item.postImages" :key="img.id"><img :src="img.src" alt=""></div>
         </div>
         <div class="post-feedback">
             <div class="good-block">
-                <img :src="item.liked ? like : unlike" alt="" class="good" @click="likePost($event, index, item.id)">
+                <img :src="'data:image/jpg;base64,' + item.liked ? like : unlike" alt="" class="good"
+                    @click="likePost($event, index, item.id)">
                 <p class="good-nums">{{ item.likes }}</p>
                 <p>人</p>
             </div>
@@ -39,9 +40,9 @@
         </div>
         <div class="post-reply">
             <div ref="repliedContainer" class="replied showScrollbar">
-                <div class="replied-msg" v-for="(comment, index) in item.replieds" :key="comment.id">
+                <div class="replied-msg" v-for="(comment, index) in  item.replieds " :key="comment.id">
                     <div class="user-image">
-                        <img :src=comment.userImg alt="">
+                        <img :src="comment.userImg" alt="">
                     </div>
                     <div class="replied-message">
                         <div class="user-name">{{ comment.name }}</div>
@@ -54,7 +55,7 @@
             </div>
             <div class="reply-message">
                 <div class="user-image">
-                    <img :src="userImage" alt="">
+                    <img :src="'data:image/png;base64,' + userImage" alt="">
                 </div>
                 <div class="reply-input">
                     <input type="text" class="inputCommon" @blur="bindCommentText($event)"
@@ -88,6 +89,7 @@ export default {
             like,
             userId: '',
             showDelete: true,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -126,38 +128,40 @@ export default {
             e.target.value = '';
         },
         likePost(e, i, postId) {
-            const imgString = e.target.src.substring(e.target.src.lastIndexOf('.svg') - 4, e.target.src.lastIndexOf('.svg'));
+            const imgString = e.target.src;
 
-            if (imgString != 'line') {
+            if (!imgString.includes('-line')) {
                 e.target.src = unlike;
                 this.postItems[i].likes--;
-
+                e.target.src = '/thd103/g2/dist/assets/good-line-f550979a.svg';
                 const likeData = {
                     userId: this.userId,
                     postId: postId,
                     action: 'M'
                 }
 
-                axios.post('api/updatePostLike.php', JSON.stringify(likeData))
+                axios.post(this.ajax_url + 'updatePostLike.php', JSON.stringify(likeData))
                     .then(response => {
+
                         if (response.data != 1) {
                             console.log('update fail')
                         }
                     }).catch(error => {
                         console.log(error);
                     });
+                return true;
 
             } else {
                 e.target.src = like;
                 this.postItems[i].likes++;
-
+                e.target.src = '/thd103/g2/dist/assets/good-fill-3b2acaae.svg';
                 const likeData = {
                     userId: this.userId,
                     postId: postId,
                     action: 'P'
                 }
 
-                axios.post('api/updatePostLike.php', JSON.stringify(likeData))
+                axios.post(this.ajax_url + 'updatePostLike.php', JSON.stringify(likeData))
                     .then(response => {
                         if (response.data != 1) {
                             console.log('update fail')
@@ -165,7 +169,7 @@ export default {
                     }).catch(error => {
                         console.log(error);
                     });
-
+                return true;
                 // console.log(this.postItems[i])
             }
         },
@@ -181,7 +185,7 @@ export default {
                     this.postItems.splice(i, 1);
                 }, 500);
 
-                axios.post('api/updatePostDeleted.php', { postId })
+                axios.post(this.ajax_url + 'updatePostDeleted.php', { postId })
                     .then(response => {
                         if (response.data == 1) {
                             alert('刪除成功');

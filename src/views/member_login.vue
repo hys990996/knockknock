@@ -108,7 +108,7 @@ export default {
             const userStore = useUserStore();
             userStore.userID = id;
             userStore.userName = name;
-            userStore.userImg = 'data:image;base64,' + img;
+            userStore.userImg = img;
 
         },
         clearErrorMsg() {
