@@ -10,7 +10,7 @@ $action = $likeData["action"];
 
 switch ($action) {
     case "P":
-        $sql = "UPDATE POST
+        $sql = "UPDATE post
                 SET POST_LIKES=POST_LIKES+1
                 WHERE POST_ID = :postId";
 
@@ -18,7 +18,7 @@ switch ($action) {
         $statement->bindValue(":postId", $postId);
         $data1 = $statement->execute();
 
-        $sql = "INSERT INTO POST_LIKES(POST_ID,POST_MEMBER_LIKE)
+        $sql = "INSERT INTO post_likes(POST_ID,POST_MEMBER_LIKE)
                 VALUES (:postId,:id)";
 
         $statement = $pdo->prepare($sql);
@@ -31,7 +31,7 @@ switch ($action) {
 
     case "M":
 
-        $sql = "UPDATE POST
+        $sql = "UPDATE post
                 SET POST_LIKES=POST_LIKES-1
                 WHERE POST_ID = :postId";
 
@@ -39,7 +39,7 @@ switch ($action) {
         $statement->bindValue(":postId", $postId);
         $data1 = $statement->execute();
 
-        $sql = "DELETE FROM POST_LIKES
+        $sql = "DELETE FROM post_likes
                 WHERE POST_ID = :postId AND POST_MEMBER_LIKE = :id";
 
         $statement = $pdo->prepare($sql);

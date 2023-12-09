@@ -77,7 +77,7 @@ if ( $_POST['RtnCode'] =='1' && $CheckMacValue == $_POST['CheckMacValue'] ){
     
     echo '成功';
 
-    header("Location:http://localhost:5173/activity/activity_info/".$_POST['CustomField4']);
+    header("Location:https://tibamef2e.com/thd103/g2/dist/activity/activity_info/".$_POST['CustomField4']);
   
 }
  

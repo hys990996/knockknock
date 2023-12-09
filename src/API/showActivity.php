@@ -8,7 +8,7 @@
 
 // // 允許特定的請求標頭
 // header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-
+include("conn.php");
 // 解析傳入的 JSON 數據
 $data = json_decode(file_get_contents('php://input'), true);
 

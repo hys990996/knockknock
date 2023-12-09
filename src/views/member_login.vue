@@ -42,6 +42,7 @@ import { useUserStore } from '@/store/user';
 export default {
     data() {
         return {
+            ajax_url: import.meta.env.VITE_AJAX_URL,
             loginData: {
                 userAccount: '',
                 userPassword: ''
@@ -50,6 +51,11 @@ export default {
             passwordError: '',
             accountPass: false,
         }
+    },
+    mounted() {
+        // console.log(process.env.AJAX_URL);
+        console.log(import.meta.env.VITE_AJAX_URL);
+
     },
 
     methods: {
@@ -70,7 +76,7 @@ export default {
             if (this.accountPass) {
 
                 axios
-                    .post('api/login.php', JSON.stringify(this.loginData))
+                    .post(this.ajax_url + 'login.php', JSON.stringify(this.loginData))
                     .then((response) => {
                         // console.log(response.data);
                         if (response.data == '0') {

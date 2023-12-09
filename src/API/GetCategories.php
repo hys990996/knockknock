@@ -19,7 +19,7 @@
 
 // $pdo = new PDO($dsn, $db_user, $db_pass);
 include("conn.php");
-$sql = "SELECT * from QUESTION_CATEGORY";
+$sql = "SELECT * from question_category";
 
 $pstmt = $pdo -> prepare($sql);
 

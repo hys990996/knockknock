@@ -128,6 +128,7 @@ export default {
             update_QUESTION_TITLE: '',
 
             update_QUESTION_CONTENT: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -165,7 +166,7 @@ export default {
         },
         // 管理員登出
         b_logOut() {
-            fetch("api/b_logout.php",
+            fetch(this.ajax_url + "b_logout.php",
             )
                 .then((res) => {
                     return res.json()
@@ -188,7 +189,7 @@ export default {
         b_qa_update(index) {
             const selectQaTitle = this.update_QUESTION_TITLE;
             const selectQaContent = this.update_QUESTION_CONTENT
-            fetch('api/b_qa_update.php', {
+            fetch(this.ajax_url + 'b_qa_update.php', {
                 header: { 'Content-Type': 'application/json' },
                 mode: 'cors',
                 method: 'POST',
@@ -275,7 +276,7 @@ export default {
         }
     },
     mounted() {
-        fetch('api/b_qa_category.php')
+        fetch(this.ajax_url + 'b_qa_category.php')
             .then((res) => {
                 return res.json()
             })
@@ -284,7 +285,7 @@ export default {
                 this.b_qa_category_id = data.QUESTION_CATEGORY_ID
                 console.log(data);
             });
-        fetch('api/b_qa.php')
+        fetch(this.ajax_url + 'b_qa.php')
             .then((res) => {
                 return res.json()
             })

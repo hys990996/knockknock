@@ -38,12 +38,12 @@
                         <tbody>
                             <tr v-for="(i, index) in  serveFliter" :key="i.CONTACT_ID">
                                 <th scope="row">{{ i.CONTACT_ID }}</th>
-                                <td>{{ i.MEMBER_ACCOUNT}}</td>
-                                <td>{{ i.CONTACT_CONTACT}}</td>
-                                <td>{{ i.MEMBER_FIRST_NAME}}{{i.MEMBER_LAST_NAME}}</td>
+                                <td>{{ i.MEMBER_ACCOUNT }}</td>
+                                <td>{{ i.CONTACT_CONTACT }}</td>
+                                <td>{{ i.MEMBER_FIRST_NAME }}{{ i.MEMBER_LAST_NAME }}</td>
 
                                 <!-- 反應日期 -->
-                                <td>{{ i.CONTACT_CREATETIME}}</td>
+                                <td>{{ i.CONTACT_CREATETIME }}</td>
 
                                 <!-- 回覆日期 -->
                                 <td></td>
@@ -66,7 +66,7 @@
                         <li v-for="page in Math.ceil(serveFliterID.length / itemsPerPage)" :key="page">
                             <button @click="changePage(page)">{{ page }}</button>
                         </li>
-                        
+
                     </ul>
                 </div>
 
@@ -80,11 +80,11 @@
                         <div class="editContent" v-if="serve_qa_index == index">
                             <div class="editAll_left">
                                 <span>問題編號</span>
-                                <p>{{i.CONTACT_ID}}</p>
+                                <p>{{ i.CONTACT_ID }}</p>
                                 <span>提問內容</span>
-                                <p>{{ i.CONTACT_CONTACT}}</p>
+                                <p>{{ i.CONTACT_CONTACT }}</p>
                                 <span>姓名</span>
-                                <p>{{ i.MEMBER_FIRST_NAME}}{{i.MEMBER_LAST_NAME}}</p>
+                                <p>{{ i.MEMBER_FIRST_NAME }}{{ i.MEMBER_LAST_NAME }}</p>
                                 <span>會員信箱</span>
                                 <p>{{ i.MEMBER_ACCOUNT }}</p>
                             </div>
@@ -93,7 +93,7 @@
                                 <span>問題狀態</span>
                                 <p>{{ i.CONTACT_REPLIED }}</p>
                                 <span>反應日期</span>
-                                <p>{{ i.CONTACT_CREATETIME}}</p>
+                                <p>{{ i.CONTACT_CREATETIME }}</p>
                                 <span>回覆內容</span>
                                 <p>{{ i.CONTACT_REPLY_CONTENT }}</p>
                                 <input type="date" v-if="i.state == '未回覆'">
@@ -106,7 +106,8 @@
                         </div>
                         <div class="edit_btn" v-if="serve_qa_index == index">
                             <button type="button" class="mil-link" @click="close">關閉</button>
-                            <button type="button" class="mil-link" @click="save(index)" v-if="i.CONTACT_REPLIED == 0">儲存</button>
+                            <button type="button" class="mil-link" @click="save(index)"
+                                v-if="i.CONTACT_REPLIED == 0">儲存</button>
                         </div>
                     </div>
                 </div>
@@ -128,11 +129,12 @@ export default {
             serve_qa_index: null,
             serveQuery: '',
             serve_qa: [],
-            itemsPerPage:6,
-            currentPage:1,
+            itemsPerPage: 6,
+            currentPage: 1,
 
             // 回覆資料
-            replyContent:'',
+            replyContent: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -146,20 +148,20 @@ export default {
             this.open = false;
             this.isBlurred = false;
         },
-        changePage(page){
+        changePage(page) {
             this.currentPage = page;
         },
 
-        save(index){
+        save(index) {
 
             // 按下儲存後更新資料
 
             const selectContact = this.serveFliter[index];
             // console.log(selectContact);
-            if(selectContact.CONTACT_REPLIED == 0){
+            if (selectContact.CONTACT_REPLIED == 0) {
                 selectContact.CONTACT_REPLIED == 1
                 console.log('success change');
-            }else{
+            } else {
                 console.log('nonono')
             }
 
@@ -170,20 +172,20 @@ export default {
                 replyContent: this.replyContent,
             };
 
-            fetch('api/insert_b_service.php',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
+            fetch(this.ajax_url + 'insert_b_service.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                body:JSON.stringify(replyData),
+                body: JSON.stringify(replyData),
             })
-            .then(response=>response.json())
-            .then(data=>{
-                console.log('success fetch')
-                location.reload()
-            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('success fetch')
+                    location.reload()
+                })
 
-            this.replyContent='';
+            this.replyContent = '';
             this.close();
         },
         // 管理員登出
@@ -193,7 +195,7 @@ export default {
         },
         // 管理員登出
         b_logOut() {
-            fetch("api/b_logout.php",
+            fetch(this.ajax_url + "b_logout.php",
             )
                 .then((res) => {
                     return res.json()
@@ -214,31 +216,31 @@ export default {
         },
 
     },
-    mounted(){
-        fetch('api/b_service.php',{
+    mounted() {
+        fetch(this.ajax_url + 'b_service.php', {
             method: 'POST',
-            mode:'cors',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data=>{
-            this.serve_qa = data;
-            console.log(data);
-        })
+            .then(response => response.json())
+            .then(data => {
+                this.serve_qa = data;
+                console.log(data);
+            })
     },
     computed: {
 
-        serveFliterID(){
+        serveFliterID() {
             const query = this.serveQuery.toLowerCase();
-            return this.serve_qa.filter((i)=>{
+            return this.serve_qa.filter((i) => {
                 return i.CONTACT_REPLIED.toLowerCase().includes(query);
             })
         },
 
         serveFliter() {
-            const startIndex = (this.currentPage -1) * this.itemsPerPage;
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage;
 
             return this.serveFliterID

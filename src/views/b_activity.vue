@@ -281,6 +281,7 @@ export default {
             inquireAct: [],
             // 過濾活動id
             foundActivity: [],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -325,7 +326,7 @@ export default {
         },
         // 管理員登出
         b_logOut() {
-            fetch("api/b_logout.php",
+            fetch(this.ajax_url + "b_logout.php",
             )
                 .then((res) => {
                     return res.json()
@@ -355,7 +356,7 @@ export default {
                 const fr = new FileReader();
                 fr.addEventListener("load", (e) => {
                     const imageBase64 = btoa(e.target.result);
-                    fetch("api/b_addActivity.php", {
+                    fetch(this.ajax_url + "b_addActivity.php", {
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -394,7 +395,7 @@ export default {
             const selectSActivityStatus = this.newActivityStatus
             console.log(selectSActivityStatus);
 
-            fetch('api/b_activity_updateStatus.php', {
+            fetch(this.ajax_url + 'b_activity_updateStatus.php', {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -458,7 +459,7 @@ export default {
         }
     },
     mounted() {
-        fetch("api/b_activity.php")
+        fetch(this.ajax_url + "b_activity.php")
             .then((res) => {
                 return res.json()
             })
@@ -470,7 +471,7 @@ export default {
         // 查詢報名資料
 
 
-        fetch('api/b_InquireActivity.php')
+        fetch(this.ajax_url + 'b_InquireActivity.php')
             .then((res) => {
                 return res.json()
             })

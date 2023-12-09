@@ -6,12 +6,12 @@ $memberID = json_decode(file_get_contents("php://input"), true);
 $memberId = $memberID["userID"];
 
 $sql = "SELECT p.*,m.MEMBER_FIRST_NAME,m.MEMBER_LAST_NAME,m.MEMBER_PIC
-        FROM(SELECT * FROM POST WHERE MEMBER_ID = :memberId
+        FROM(SELECT * FROM post WHERE MEMBER_ID = :memberId
 	        UNION
-            SELECT * FROM POST WHERE POST_STATUS = 0 
+            SELECT * FROM post WHERE POST_STATUS = 0 
             UNION
-	        SELECT * FROM POST WHERE MEMBER_ID IN(SELECT FRIENDS_ID FROM FRIENDS WHERE MEMBER_ID = :memberId && FRIEND_STATUS = 1) && POST_STATUS = 1) p
-        JOIN MEMBER m
+	        SELECT * FROM post WHERE MEMBER_ID IN(SELECT FRIENDS_ID FROM FRIENDS WHERE MEMBER_ID = :memberId && FRIEND_STATUS = 1) && POST_STATUS = 1) p
+        JOIN member m
 	    on p.MEMBER_ID=m.MEMBER_ID
         WHERE p.DELETED = 0
         ORDER BY POST_CREATETIME DESC";
@@ -26,7 +26,7 @@ if (COUNT($data) != 0) {
 
     foreach ($data as $key => $value) {
 
-        $sqlSelect = "SELECT * FROM POST_LIKES WHERE POST_ID = :postId AND POST_MEMBER_LIKE = :memberId";
+        $sqlSelect = "SELECT * FROM post_likes WHERE POST_ID = :postId AND POST_MEMBER_LIKE = :memberId";
         $statement = $pdo->prepare($sqlSelect);
         $statement->bindValue(":memberId", $memberId);
         $statement->bindValue(":postId", $value["POST_ID"]);

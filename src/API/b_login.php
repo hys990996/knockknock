@@ -30,7 +30,7 @@ include("conn.php");
        $token = bin2hex(random_bytes(32));
        $username = $member["username"];
        $password = $member["password"];
-       $sql = "select username,password from b_member where username = ? and password = ?";
+       $sql = "select b_username,b_password from b_member where b_username = ? and b_password = ?";
        $pstmt = $pdo->prepare($sql);
        $pstmt->bindValue(1,$username);
        $pstmt->bindValue(2,$password);

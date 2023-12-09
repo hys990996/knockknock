@@ -14,7 +14,7 @@ foreach ($imgList as $key => $value) {
     // $img = base64_decode($value);
     $img = $value;
 
-    $sqlInsert = "insert into POST_IMAGE (POST_ID,POST_IMAGE)
+    $sqlInsert = "insert into post_image (POST_ID,POST_IMAGE)
                 values (:postId,:img)";
     $statement = $pdo->prepare($sqlInsert);
     $statement->bindValue(":postId", $postId);

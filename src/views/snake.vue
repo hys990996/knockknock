@@ -51,11 +51,12 @@ export default {
             },
             gameRunning: false,
             // score: 0,
-            MEMBER_ID :0,
-            member_name:'',
-            user_img:'',
-            gameScoreCreateTime:new Date(),
-            maxScore:0
+            MEMBER_ID: 0,
+            member_name: '',
+            user_img: '',
+            gameScoreCreateTime: new Date(),
+            maxScore: 0,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -158,28 +159,28 @@ export default {
             const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
             const day = currentDate.getDate().toString().padStart(2, '0');
             const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-            fetch('api/snake_insert.php',{
-                headers:{
-                    'Content-Type':'application/json'
+            fetch(this.ajax_url + 'snake_insert.php', {
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                method:'POST',
-                mode:'cors',
-                body:JSON.stringify({
-                    userID:this.MEMBER_ID,
-                    gameID:1,
-                    gameScore:this.score,
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    userID: this.MEMBER_ID,
+                    gameID: 1,
+                    gameScore: this.score,
                     gameScoreCreateTime: formattedDateTime
 
                 })
             })
-            .then((res)=>{
-                return res.json()
-            })
-            .then((data)=>{
-                console.log(data);
-                
-            })
-            
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    console.log(data);
+
+                })
+
         },
         resetGame() {
             this.snake = {
@@ -224,41 +225,41 @@ export default {
             this.snake.direction.y = originX;
         }
     },
-    computed:{
-   
+    computed: {
+
     },
     mounted() {
         const userStore = useUserStore();
         this.MEMBER_ID = userStore.userID;
         this.member_name = userStore.userName;
-        this.user_img = 'data:image/png;base64,'+userStore.userImg;
+        this.user_img = 'data:image/png;base64,' + userStore.userImg;
 
         // 最高分數
-        fetch('api/snake_search.php',{
-            headers:{
-                    'Content-Type':'application/json'
-                },
-                method:'POST',
-                mode:'cors',
-                body:JSON.stringify({
-                    userID:this.MEMBER_ID,
-                })
+        fetch(this.ajax_url + 'snake_search.php', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({
+                userID: this.MEMBER_ID,
+            })
         })
-        .then((res)=>{
-            return res.json()
-        })
-        .then((data)=>{
-            console.log(data)
-            
-            this.maxScore = data[0][0];
-            if(this.maxScore == null){
-                this.maxScore =0
-            }
-            console.log(data[0][0])
-        })
-        
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
 
-       
+                this.maxScore = data[0][0];
+                if (this.maxScore == null) {
+                    this.maxScore = 0
+                }
+                console.log(data[0][0])
+            })
+
+
+
 
         console.log(this.$refs.canvas.width, this.$refs.canvas.height)
         document.addEventListener("keydown", (e) => {

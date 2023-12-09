@@ -169,7 +169,7 @@
 
                         <div class="upcoming">
 
-                            <div class="upcoming-card" v-for="(i,key) in upCommingActivity" :key="i.ACTIVITY_ID">
+                            <div class="upcoming-card" v-for="(i, key) in upCommingActivity" :key="i.ACTIVITY_ID">
                                 <div class="card-pic">
                                     <img :src="i.ACTIVITY_IMAGE" alt="">
                                 </div>
@@ -213,6 +213,7 @@ export default {
             activityID: 0,
             activityRegion: '',
             upCommingActivity: [],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -233,7 +234,7 @@ export default {
         }
     },
     mounted() {
-        fetch('api/showActivity.php')
+        fetch(this.ajax_url + 'showActivity.php')
             .then((res) => {
                 return res.json()
             })

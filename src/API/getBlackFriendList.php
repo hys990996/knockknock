@@ -6,8 +6,8 @@ $userID = json_decode(file_get_contents("php://input"), true);
 $id = $userID["userId"];
 
 $sql = "SELECT f.*,concat(m.MEMBER_LAST_NAME,m.MEMBER_FIRST_NAME) as FullName
-        FROM FRINEDS f
-	        JOIN MEMBER m
+        FROM friends f
+	        JOIN member m
             ON f.FRIENDS_ID = m.MEMBER_ID
         WHERE f.MEMBER_ID = :id AND f.FRIEND_STATUS = 2";
 
@@ -21,7 +21,7 @@ if (COUNT($data) != 0) {
 
     foreach ($data as $key => $value) {
 
-        $sqlSelect = "SELECT count(*) AS num FROM FRINEDS WHERE MEMBER_ID = :id AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM FRINEDS WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
+        $sqlSelect = "SELECT count(*) AS num FROM friends WHERE MEMBER_ID = :id AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM friends WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
 
         $statement = $pdo->prepare($sqlSelect);
         $statement->bindValue(":id", $id);

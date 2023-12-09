@@ -10,7 +10,7 @@ $commentCreateTime = str_replace('/', '-', $commentData['createTime']);
 $postId = $commentData['postId'];
 
 
-$sqlInsert = "INSERT INTO POST_COMMENT (COMMENT_TEXT,MEMBER_ID,COMMENT_CREATETIME,POST_ID)
+$sqlInsert = "INSERT INTO post_comment (COMMENT_TEXT,MEMBER_ID,COMMENT_CREATETIME,POST_ID)
               VALUES (:commentText,:memberId,:commentCreateTime,:postId)";
 
 $statement = $pdo->prepare($sqlInsert);

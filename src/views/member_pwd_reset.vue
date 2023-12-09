@@ -57,6 +57,7 @@ export default {
             accountError: '',
             passwordError: '',
             ckPasswordError: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
 
@@ -67,7 +68,7 @@ export default {
             } else {
                 //確認帳號是否存在於資料庫
                 axios
-                    .post('api/checkAccount.php', JSON.stringify(this.resetData))
+                    .post(this.ajax_url + 'checkAccount.php', JSON.stringify(this.resetData))
                     .then(response => {
                         console.log(response.data);
                         if (response.data != '0') {
@@ -89,7 +90,7 @@ export default {
             } else {
                 //更新會員資料
                 axios
-                    .post('api/updateMemberPwd.php', JSON.stringify(this.resetData))
+                    .post(this.ajax_url + 'updateMemberPwd.php', JSON.stringify(this.resetData))
                     .then(response => {
                         if (response.data == '1') {
                             alert('密碼重設成功，請使用新密碼重新登入');

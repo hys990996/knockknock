@@ -45,100 +45,100 @@
             <div class="content-top-R">
               <div id="btn">
                 <!-- 觸發按鈕 -->
-                <button @click="confirmRegistration(i.ACTIVITY_ID)" class="Btn Btn-dark chatbtn" :disabled="i.ACTIVITY_REMAINING_PLACES<=0" >
-                  {{ i.ACTIVITY_REMAINING_PLACES <=0 ?'已完售':'我要報名' }}
-                </button>
-                <!-- 彈跳視窗 -->
-                <div v-if="showModal" class="modal" @click="closeModal2">
-                  <!-- 彈跳視窗內容 -->
-                  <div class="modal-content" @click.stop>
-                    <span class="close" @click="
-                      showModal = false;
-                    closeModal2();
-                    ">&times;</span>
-                    <div v-if="contentChanged" class="if">
-                      <div>
-                        <p class="list2-m">付款成功</p>
-                        <div class="list2-n">
-                          <div>王小明</div>
+                <button @click="confirmRegistration(i.ACTIVITY_ID)" class="Btn Btn-dark chatbtn"
+                  :disabled="i.ACTIVITY_REMAINING_PLACES <= 0">
+                  {{ i.ACTIVITY_REMAINING_PLACES <= 0 ? '已完售' : '我要報名' }} </button>
+                    <!-- 彈跳視窗 -->
+                    <div v-if="showModal" class="modal" @click="closeModal2">
+                      <!-- 彈跳視窗內容 -->
+                      <div class="modal-content" @click.stop>
+                        <span class="close" @click="
+                          showModal = false;
+                        closeModal2();
+                        ">&times;</span>
+                        <div v-if="contentChanged" class="if">
                           <div>
-                            <img src="../assets/images/actitity-info/小明.svg" alt="小明自拍照" />
+                            <p class="list2-m">付款成功</p>
+                            <div class="list2-n">
+                              <div>王小明</div>
+                              <div>
+                                <img src="../assets/images/actitity-info/小明.svg" alt="小明自拍照" />
+                              </div>
+                            </div>
+                            <div class="list2-f">
+                              <div class="list2">
+                                <div class="gp-1">
+                                  <span class="list2-1">活動名稱</span><span class="list2-1-2">{{
+                                    activityData.ACTIVITY_NAME
+                                  }}</span>
+                                </div>
+                                <div class="gp-2">
+                                  <span class="list2-2">活動日期</span><span class="list2-2-2">{{ activityData.ACTIVITY_DATE
+                                  }}</span>
+                                </div>
+                                <div class="gp-3">
+                                  <span class="list2-3">報名人數</span><span class="list2-3-2">{{ quantity }}人</span>
+                                </div>
+                                <div class="gp-4">
+                                  <span class="list2-4">總金額</span><span class="list2-4-2"> ${{ this.total }}</span>
+                                </div>
+                              </div>
+                              <div class="gp-4">
+                                <p class="list2-check">
+                                  您已經付款報名成功，以上是您的揪團資訊。
+                                </p>
+                                <!-- 當連結被點擊時，調用 checkBeforeNavigate 方法 -->
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div class="list2-f">
-                          <div class="list2">
-                            <div class="gp-1">
-                              <span class="list2-1">活動名稱</span><span class="list2-1-2">{{
-                                activityData.ACTIVITY_NAME
-                              }}</span>
-                            </div>
-                            <div class="gp-2">
-                              <span class="list2-2">活動日期</span><span class="list2-2-2">{{ activityData.ACTIVITY_DATE
-                              }}</span>
-                            </div>
-                            <div class="gp-3">
-                              <span class="list2-3">報名人數</span><span class="list2-3-2">{{ quantity }}人</span>
-                            </div>
-                            <div class="gp-4">
-                              <span class="list2-4">總金額</span><span class="list2-4-2"> ${{ this.total }}</span>
-                            </div>
-                          </div>
-                          <div class="gp-4">
-                            <p class="list2-check">
-                              您已經付款報名成功，以上是您的揪團資訊。
-                            </p>
-                            <!-- 當連結被點擊時，調用 checkBeforeNavigate 方法 -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- @@@@@@@@@@@@@@@@@ -->
-                    <div v-else class="else" v-for="i in fetchactivity">
-                      <div  >
-                        <p class="list-m">報名資訊</p>
-                        <div class="list-n">
-                          <div>{{member_name}}</div>
+                        <!-- @@@@@@@@@@@@@@@@@ -->
+                        <div v-else class="else" v-for="i in fetchactivity">
                           <div>
-                            <img :src="user_img" alt="小明自拍照" />
+                            <p class="list-m">報名資訊</p>
+                            <div class="list-n">
+                              <div>{{ member_name }}</div>
+                              <div>
+                                <img :src="user_img" alt="小明自拍照" />
+                              </div>
+                            </div>
+                            <div class="list">
+                              <div class="list-L">
+                                <div class="group-1">
+                                  <span class="list-1">活動名稱</span><span class="list-1-2">{{
+                                    i.ACTIVITY_NAME
+                                  }}</span>
+                                </div>
+                                <div class="group-2">
+                                  <span class="list-2">活動日期</span><span class="list-2-2">
+                                    {{ i.ACTIVITY_DATE }}</span>
+                                </div>
+                                <div class="group-3">
+                                  <span class="list-3">報名人數</span><span class="list-3-2">
+                                    <input type="number" v-model.number="quantity"
+                                      @input="validateQuantity(i.ACTIVITY_SINGLE_PRICE, i.ACTIVITY_GROUP_PRICE, i.ACTIVITY_REMAINING_PLACES)"
+                                      placeholder="請輸入人數" /></span>
+                                </div>
+                                <div class="group-4">
+                                  <span class="list-4">總金額</span><span class="list-4-2">
+                                    <label v-if="quantity !== null && quantity !== ''">
+                                      {{ total }}元
+                                    </label></span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div class="list">
-                          <div class="list-L">
-                            <div class="group-1">
-                              <span class="list-1">活動名稱</span><span class="list-1-2">{{
-                                i.ACTIVITY_NAME
-                              }}</span>
-                            </div>
-                            <div class="group-2">
-                              <span class="list-2">活動日期</span><span class="list-2-2">
-                                {{ i.ACTIVITY_DATE }}</span>
-                            </div>
-                            <div class="group-3">
-                              <span class="list-3">報名人數</span><span class="list-3-2">
-                                <input type="number" v-model.number="quantity"
-                                  @input="validateQuantity(i.ACTIVITY_SINGLE_PRICE, i.ACTIVITY_GROUP_PRICE,i.ACTIVITY_REMAINING_PLACES)"
-                                  placeholder="請輸入人數" /></span>
-                            </div>
-                            <div class="group-4">
-                              <span class="list-4">總金額</span><span class="list-4-2">
-                                <label v-if="quantity !== null && quantity !== ''">
-                                  {{ total }}元
-                                </label></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- @@@@@@@@@@@@@@@@@ -->
+                          <!-- @@@@@@@@@@@@@@@@@ -->
 
-                      <div class="modal-footer">
-                        <button type="button" class="Btn Btn-dark chatbtn"
-                          @click=" EcPay(i.ACTIVITY_ID, i.ACTIVITY_DESCRIBE, i.ACTIVITY_NAME)">
-                          前往結帳
-                        </button>
+                          <div class="modal-footer">
+                            <button type="button" class="Btn Btn-dark chatbtn"
+                              @click=" EcPay(i.ACTIVITY_ID, i.ACTIVITY_DESCRIBE, i.ACTIVITY_NAME)">
+                              前往結帳
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -188,14 +188,16 @@ export default {
       // 綠界日期
       MerchantTradeDate: "",
       REGISTER_ID: 0,
-      MEMBER_ID:'',
+      MEMBER_ID: '',
       // 會員資料
-      getMember:[],
-      member_name:'',
-      user_img:''
+      getMember: [],
+      member_name: '',
+      user_img: '',
+      ajax_url: import.meta.env.VITE_AJAX_URL,
     };
   },
   mounted() {
+    console.log(process.env.AJAX_URL);
     this.activityId = this.$route.params.activityID;
     console.log('Activityinfo ID:', this.activityId);
     this.getActivityData();
@@ -203,26 +205,26 @@ export default {
     const userStore = useUserStore();
     this.MEMBER_ID = userStore.userID;
     this.member_name = userStore.userName;
-    this.user_img = 'data:image/png;base64,'+userStore.userImg;
+    this.user_img = 'data:image/png;base64,' + userStore.userImg;
 
 
-      fetch('http://localhost/1206Team/queryMember.php',{
-      method:'POST',
-      mode:'cors',
-      headers:{
-        'Content-Type':'application/json'
+    fetch(this.ajax_url + 'queryMember.php', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      body:JSON.stringify({
-        userID:userStore.userID
+      body: JSON.stringify({
+        userID: userStore.userID
       })
     })
-    .then((res)=>{
-      return res.json()
-    })
-    .then((data)=>{
-      console.log(data)
-      this.getMember = data
-    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+        this.getMember = data
+      })
   },
   methods: {
     // 確認是否報名
@@ -241,8 +243,8 @@ export default {
       this.showModal = false;
       this.contentChanged = false; // 重置內容狀態
     },
-    validateQuantity(single, group,activityRemaining) {
-      if(this.quantity>activityRemaining){
+    validateQuantity(single, group, activityRemaining) {
+      if (this.quantity > activityRemaining) {
         this.quantity = activityRemaining
       }
       if (this.quantity < 0) {
@@ -276,7 +278,7 @@ export default {
       }
     },
     getActivityData() {
-      fetch("api/activityInfo.php", {
+      fetch(this.ajax_url + "activityInfo.php", {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -299,7 +301,7 @@ export default {
     },
     // 綠界支付
     EcPay(activityId, activityDesc, activityName) {
-      fetch("api/activityApply.php", {
+      fetch(this.ajax_url + "activityApply.php", {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -329,7 +331,7 @@ export default {
           console.log(this.activityId)
         })
       setTimeout(() => {
-        fetch('api/Ecpay.php', {
+        fetch(this.ajax_url + 'Ecpay.php', {
           headers: {
             'Content-Type': 'application/json'
           },
@@ -358,7 +360,7 @@ export default {
             document.getElementById("__ecpayForm").submit();
             this.showModal = true
           })
-        fetch('api/ECPay_ReturnURL.php')
+        fetch(this.ajax_url + 'ECPay_ReturnURL.php')
           .then((res) => {
             return res.text()
           })

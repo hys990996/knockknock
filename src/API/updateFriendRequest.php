@@ -9,7 +9,7 @@ $action = $statusData["action"];
 
 switch ($action) {
     case "A":
-        $sql1 = "UPDATE FRIENDS
+        $sql1 = "UPDATE friends
                 SET FRIENDS_REQUESTS_STATUS = '1' ,FRIEND_STATUS = 1, FRIENDS_CREATETIME = NOW()
                 WHERE MEMBER_ID = :id AND FRIENDS_ID = :friendId ";
 
@@ -21,7 +21,7 @@ switch ($action) {
         break;
 
     case "R":
-        $sql2 = "UPDATE FRIENDS
+        $sql2 = "UPDATE friends
                 SET FRIENDS_REQUESTS_STATUS = 2
                 WHERE MEMBER_ID = :id AND FRIENDS_ID = :friendId";
 

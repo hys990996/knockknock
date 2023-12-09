@@ -27,7 +27,7 @@ $updateQaTitle = $data["QUESTION_TITLE"];
 $updateQaId = $data["QUESTION_ID"];
 
 // 更新狀態
-$sql = "UPDATE QUESTION SET QUESTION_CONTENT = :updateQaContent, QUESTION_TITLE = :updateQaTitle WHERE QUESTION_ID = :updateQaId";
+$sql = "UPDATE question SET QUESTION_CONTENT = :updateQaContent, QUESTION_TITLE = :updateQaTitle WHERE QUESTION_ID = :updateQaId";
 $pstmt = $pdo->prepare($sql);
 $pstmt->bindValue(':updateQaContent', $updateQaContent);
 $pstmt->bindValue(':updateQaTitle', $updateQaTitle);

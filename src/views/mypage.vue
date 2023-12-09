@@ -308,6 +308,7 @@ export default {
             },
             postItems: [],
             userName: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         };
     },
     created() {
@@ -324,7 +325,7 @@ export default {
     },
     methods: {
         async getData() {
-            axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_information.php", { id: this.id }).then((resData) => {
                 // const member_id = resData.data[0].MEMBER_ID;
                 this.constellation = resData.data[0].MEMBER_CONSTELLATION;
                 this.job = resData.data[0].MEMBER_JOB;
@@ -341,7 +342,7 @@ export default {
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
             });
-            axios.post("api/coming_soon_activity.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "coming_soon_activity.php", { id: this.id }).then((resData) => {
                 this.activity_name = resData.data[0].ACTIVITY_NAME;
                 this.activity_date = resData.data[0].ACTIVITY_DATE;
                 this.activity_start = resData.data[0].ACTIVITY_STARTDATE;
@@ -350,13 +351,13 @@ export default {
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
             });
-            axios.post("api/history_activity.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "history_activity.php", { id: this.id }).then((resData) => {
                 this.activityItems = resData.data;
                 // this.activityItem.name = resData.data.ACTIVITY_NAME;
             }).catch((e) => {
                 console.log(e) //連線錯誤的時候會執行這邊
             });
-            axios.post("api/member_collection_exhibit.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_collection_exhibit.php", { id: this.id }).then((resData) => {
 
                 this.exhibit_collection_A = resData.data[0]['COLLECTION_IMAGE'];
                 this.exhibit_collection_B = resData.data[1]['COLLECTION_IMAGE'];
@@ -399,7 +400,7 @@ export default {
         },
 
         editCollection() {
-            axios.post("api/member_collection.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_collection.php", { id: this.id }).then((resData) => {
                 // 清空舊有資料
                 this.collections.SSR = [];
                 this.collections.SR = [];
@@ -440,7 +441,7 @@ export default {
             const collectionIDs = this.selectedBoxes;
             for (let index = 0; index < this.selectedBoxes.length; index++) {
                 const id = this.selectedBoxes[index];
-                const response = await axios.post("api/member_collection_return.php", {
+                const response = await axios.post(this.ajax_url + "member_collection_return.php", {
                     id: this.id,
                     collectionID: id,
                     collectionIDs: collectionIDs,
@@ -451,7 +452,7 @@ export default {
             this.selectedBoxes = [];
 
             // 存檔後再次呼叫展示
-            axios.post("api/member_collection_exhibit.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_collection_exhibit.php", { id: this.id }).then((resData) => {
                 this.exhibit_collection_A = resData.data[0]['COLLECTION_IMAGE'];
                 this.exhibit_collection_B = resData.data[1]['COLLECTION_IMAGE'];
                 this.exhibit_collection_C = resData.data[2]['COLLECTION_IMAGE'];
@@ -487,7 +488,7 @@ export default {
 
             //傳入memberID 取回自己的貼文
             axios
-                .post('api/getMyPostItems.php', JSON.stringify(memberId))
+                .post(this.ajax_url + 'getMyPostItems.php', JSON.stringify(memberId))
                 .then(response => {
                     // console.log(response.data);
 
@@ -539,7 +540,7 @@ export default {
             const postId = { id }
 
             axios
-                .post('api/getPostImg.php', JSON.stringify(postId))
+                .post(this.ajax_url + 'getPostImg.php', JSON.stringify(postId))
                 .then(response => {
 
                     // console.log(response.data);
@@ -574,7 +575,7 @@ export default {
             const postId = { id }
 
             axios
-                .post('api/getPostComment.php', JSON.stringify(postId))
+                .post(this.ajax_url + 'getPostComment.php', JSON.stringify(postId))
                 .then(response => {
                     if (response.data != 0) {
                         // console.log(response.data);
@@ -624,7 +625,7 @@ export default {
 
             // 新增回覆資料至DB
             axios
-                .post('api/addPostComment.php', JSON.stringify(commentItem))
+                .post(this.ajax_url + 'addPostComment.php', JSON.stringify(commentItem))
                 .then(response => {
                     // console.log(response.data);
                     if (response.data != 1) {

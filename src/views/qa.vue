@@ -82,7 +82,8 @@ export default {
                     Id: "",
                     Name: ""
                 }
-            ]
+            ],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -98,7 +99,7 @@ export default {
         },
 
         GetCategories() {
-            fetch('http://localhost/knock/GetCategories.php', {
+            fetch(this.ajax_url + 'GetCategories.php', {
                 method: 'Get',
                 // 非同源
                 mode: 'cors',
@@ -121,7 +122,7 @@ export default {
         },
 
         getQuestionById(id) {
-            fetch(`http://localhost/knock/getQuestionById.php?id=${id}`, {
+            fetch(this.ajax_url + `getQuestionById.php?id=${id}`, {
                 method: 'Get',
                 // 非同源
                 mode: 'cors',
