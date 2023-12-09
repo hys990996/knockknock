@@ -2,7 +2,7 @@
 
 include("conn.php");
 
-$sql = "SELECT * FROM ACTIVITY order by ACTIVITY_REMAINING_PLACES";
+$sql = "SELECT * FROM activity order by ACTIVITY_REMAINING_PLACES";
 
 
 $statement = $pdo->prepare($sql);

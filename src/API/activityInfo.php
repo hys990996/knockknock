@@ -8,12 +8,12 @@
 
 // // 允許特定的請求標頭
 // header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-
+include("conn.php");
 // 解析傳入的 JSON 數據
 $data = json_decode(file_get_contents('php://input'), true);
 $activityId = $data["ACTIVITY_ID"];
 
-include("conn.php");
+
 // $db_host = "127.0.0.1";
 // $db_user = "root";
 // $db_pass = "password";

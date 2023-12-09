@@ -18,7 +18,7 @@
 
 include("conn.php");
 
-$sql = "select * from QUESTION_CATEGORY";
+$sql = "select * from question_category";
 $pstmt = $pdo->prepare($sql);
 $pstmt->execute();
 $qa_category = $pstmt->fetchAll();

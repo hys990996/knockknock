@@ -37,11 +37,12 @@ export default {
             password: '',
             error: false,
             Verificationcode: [],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
         getData() {
-            fetch("api/b_login.php", {
+            fetch(this.ajax_url + "b_login.php", {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

@@ -57,14 +57,14 @@ $obj->Send['ChoosePayment'] = $payMent['ChoosePayment'];
 $obj->ServiceURL = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";
 
 // 付款完成通知回傳的網址 > for 資料庫
-$obj->Send['ReturnURL'] = "http://localhost/1206Team/ECPay_ReturnURL.php";
+$obj->Send['ReturnURL'] = "https://tibamef2e.com/thd103/g2/dist/ECPay_ReturnURL.php";
 // $obj->Send['ReturnURL'] = "https://tw.yahoo.com/";
 
 // 交易成功以後會跳回去原本的頁面 > for 消費者
-$obj->Send['OrderResultURL'] = "http://localhost/1206Team/ECPay_ReturnURL.php";
+$obj->Send['OrderResultURL'] = "https://tibamef2e.com/thd103/g2/dist/ECPay_ReturnURL.php";
  
 // $obj->Send['ClientBackURL'] = "https://ble.com.tw/test/ECPay_ClientBackURL.php"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕
-$obj->Send['ClientBackURL'] = "http://localhost:5173/activity"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕，返回按鈕點擊的頁面
+$obj->Send['ClientBackURL'] = "https://tibamef2e.com/thd103/g2/dist/activity"; //ECPay顯示交易結果頁.裡面帶出返回商店按鈕，返回按鈕點擊的頁面
  
 $obj->Send['CustomField1'] = $payMent['ItemName'];  	//額外的欄位
 $obj->Send['CustomField2'] = $quantity;  				  	//額外的欄位

@@ -48,10 +48,10 @@
                         </thead>
                         <tbody>
                             <tr v-for="(mission, index) in missionFliter" :key="mission.MISSION_ID">
-                                <th scope="row">{{ mission.MISSION_ID}}</th>
+                                <th scope="row">{{ mission.MISSION_ID }}</th>
                                 <td></td>
                                 <td></td>
-                                <td>{{mission.MISSION_CONTENT}}</td>
+                                <td>{{ mission.MISSION_CONTENT }}</td>
                                 <td></td>
                                 <td></td>
                                 <td>{{ mission.MISSION_COINS }}</td>
@@ -85,9 +85,9 @@
                         <div class="editContent" v-if="selectedIndex == index">
                             <div class="editAll_left">
                                 <span>任務編號</span>
-                                <p>{{mission.MISSION_ID}}</p>
+                                <p>{{ mission.MISSION_ID }}</p>
                                 <span>任務內容</span>
-                                <p>{{mission.MISSION_CONTENT}}</p>
+                                <p>{{ mission.MISSION_CONTENT }}</p>
                             </div>
 
                             <div class="editAll_right">
@@ -123,14 +123,15 @@ export default {
             selectedIndex: null,
             missionQuery: '',
             mission: [],
-            itemsPerPage:6,
-            currentPage:1,
-            newMission:[],
+            itemsPerPage: 6,
+            currentPage: 1,
+            newMission: [],
 
             // 金幣
-            newCoin:'',
+            newCoin: '',
             // 次數
-            newTimes:'',
+            newTimes: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -149,14 +150,14 @@ export default {
             this.open = false;
             this.isBlurred = false;
         },
-        changePage(page){
+        changePage(page) {
             this.currentPage = page;
         },
 
-        save(index){
+        save(index) {
             const selectMission = this.newMission[index].MISSION_ID;
-            const dataCoin = this.newCoin!==''? this.newCoin : null ;
-            const dataTimes = this.newTimes!== ''? this.newTimes : null ;
+            const dataCoin = this.newCoin !== '' ? this.newCoin : null;
+            const dataTimes = this.newTimes !== '' ? this.newTimes : null;
 
             console.log('Sending data to backend:', {
                 MISSION_ID: selectMission,
@@ -164,23 +165,23 @@ export default {
                 newTimes: dataTimes,
             });
 
-            fetch('api/update_b_mission.php',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
+            fetch(this.ajax_url + 'update_b_mission.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                body:JSON.stringify({
+                body: JSON.stringify({
                     MISSION_ID: selectMission,
-                    newCoin: dataCoin !== '' ? dataCoin:null ,
-                    newTimes: dataTimes !==''? dataTimes:null,
+                    newCoin: dataCoin !== '' ? dataCoin : null,
+                    newTimes: dataTimes !== '' ? dataTimes : null,
                 }),
             })
-            .then(response => response.text())
-            .then(updateData=>{
-                console.log(updateData)
-                this.mission[this.selectedIndex].MISSION_COINS = updateData.MISSION_COINS;
-                this.mission[this.selectedIndex].MISSION_TIMES = updateData.MISSION_TIMES;
-            })
+                .then(response => response.text())
+                .then(updateData => {
+                    console.log(updateData)
+                    this.mission[this.selectedIndex].MISSION_COINS = updateData.MISSION_COINS;
+                    this.mission[this.selectedIndex].MISSION_TIMES = updateData.MISSION_TIMES;
+                })
             location.reload();
             this.close();
 
@@ -192,7 +193,7 @@ export default {
         },
         // 管理員登出
         b_logOut() {
-            fetch("api/b_logout.php",
+            fetch(this.ajax_url + "b_logout.php",
             )
                 .then((res) => {
                     return res.json()
@@ -213,33 +214,33 @@ export default {
         },
 
     },
-    mounted(){
-        fetch('api/b_mission.php',{
-            method:'POST',
-            mode:'cors',
-            headers:{
-                'Content-Type':'application/json',
+    mounted() {
+        fetch(this.ajax_url + 'b_mission.php', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data=>{
-            this.mission = data;
-            this.newMission = data;
-            // console.log(data);
-        })
+            .then(response => response.json())
+            .then(data => {
+                this.mission = data;
+                this.newMission = data;
+                // console.log(data);
+            })
     },
     computed: {
 
-        missionFliterID(){
+        missionFliterID() {
             const query = this.missionQuery.toLowerCase();
-            return this.mission.filter((i)=>{
+            return this.mission.filter((i) => {
                 // return i.MISSION_ID && typeof i.MISSION_ID === 'string' && i.MISSION_ID.toLowerCase().includes(query);
                 return i.MISSION_CONTENT.toLowerCase().includes(query);
             })
         },
 
         missionFliter() {
-            const startIndex = (this.currentPage -1) * this.itemsPerPage;
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage;
 
             return this.missionFliterID

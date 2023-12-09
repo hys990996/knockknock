@@ -17,7 +17,7 @@
 //  $pdo = new PDO($dsn,$db_user,$db_pass);
 include("conn.php");
 
- $sql = "select q1.QUESTION_ID, q1.QUESTION_TITLE,q1.QUESTION_CONTENT,q2.QUESTION_CATEGORY_ID,q2.QUESTION_CATEGORY_NAME from QUESTION q1 left join QUESTION_CATEGORY q2 on q1.QUESTION_CATEGORY_ID = q2.QUESTION_CATEGORY_ID";
+ $sql = "select q1.QUESTION_ID, q1.QUESTION_TITLE,q1.QUESTION_CONTENT,q2.QUESTION_CATEGORY_ID,q2.QUESTION_CATEGORY_NAME from question q1 left join question_category q2 on q1.QUESTION_CATEGORY_ID = q2.QUESTION_CATEGORY_ID";
  $pstmt = $pdo->prepare($sql);
  $pstmt->execute();
  $qa = $pstmt->fetchAll();

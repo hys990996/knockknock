@@ -6,7 +6,7 @@ $loginData = json_decode(file_get_contents("php://input"), true);
 $account = $loginData["userAccount"];
 $pwd = $loginData["userPassword"];
 
-$selectSql = "SELECT * FROM MEMBER WHERE MEMBER_ACCOUNT = ? && MEMBER_STATUS !=3";
+$selectSql = "SELECT * FROM member WHERE MEMBER_ACCOUNT = ? && MEMBER_STATUS !=3";
 
 $statement = $pdo->prepare($selectSql);
 $statement->bindValue(1, $account);
@@ -16,13 +16,13 @@ $data = $statement->fetchAll();
 if (COUNT($data) != 0 && password_verify($pwd, $data[0]['MEMBER_PASSWORD'])) {
 
     // 登入記錄
-    $recordSql = "INSERT INTO LOGIN_RECORD (LOGIN_TIME,MEMBER_ID) VALUES(now(), ?)";
+    $recordSql = "INSERT INTO login_record (LOGIN_TIME,MEMBER_ID) VALUES(now(), ?)";
     $statement = $pdo->prepare($recordSql);
     $statement->bindValue(1, $data[0]['MEMBER_ID']);
     $statement->execute();
 
     //更新會員狀態
-    $updateSql = "UPDATE MEMBER SET MEMBER_STATUS = 1 WHERE MEMBER_ID = ?";
+    $updateSql = "UPDATE member SET MEMBER_STATUS = 1 WHERE MEMBER_ID = ?";
     $statement = $pdo->prepare($updateSql);
     $statement->bindValue(1, $data[0]['MEMBER_ID']);
     $statement->execute();

@@ -25,13 +25,15 @@
               <h3>熱門問題</h3>
               <ul>
                 <!-- 顯示熱門問題，點擊觸發handleQuestionClick方法 -->
-                <li v-for="(question, index) in popularQuestions" :key="index" @click="handleQuestionClick(question)" class="chat outgoing">
+                <li v-for="(question, index) in popularQuestions" :key="index" @click="handleQuestionClick(question)"
+                  class="chat outgoing">
                   {{ question }}
                 </li>
               </ul>
             </div>
             <!-- 對話內容，顯示使用者輸入和機器人回覆 -->
-            <li v-for="(message, index) in chatbox" :key="index" :class="{ 'chat': true, 'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing' }">
+            <li v-for="(message, index) in chatbox" :key="index"
+              :class="{ 'chat': true, 'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing' }">
               <span v-if="message.type === 'incoming'" class="material-symbols-outlined">smart_toy</span>
               <p v-html="message.message"></p>
             </li>
@@ -92,21 +94,21 @@ export default {
     },
     // 處理使用者發送消息
     handleChat() {
-  if (!this.userMessage.trim()) {
-      // 如果使用者輸入為空或只包含空白字元，不處理
-      return;
-  }
+      if (!this.userMessage.trim()) {
+        // 如果使用者輸入為空或只包含空白字元，不處理
+        return;
+      }
 
-  const userMessage = this.userMessage.trim();
-  this.chatbox.push(this.createChatLi(userMessage, 'outgoing'));
-  this.userMessage = '';
+      const userMessage = this.userMessage.trim();
+      this.chatbox.push(this.createChatLi(userMessage, 'outgoing'));
+      this.userMessage = '';
 
-  this.showTypingMessage(() => {
-      let responseMessage = this.generateResponseMessage(userMessage);
-      this.chatbox.push(this.createChatLi(responseMessage, 'incoming'));
-      this.scrollChatboxToBottom();
-  });
-},
+      this.showTypingMessage(() => {
+        let responseMessage = this.generateResponseMessage(userMessage);
+        this.chatbox.push(this.createChatLi(responseMessage, 'incoming'));
+        this.scrollChatboxToBottom();
+      });
+    },
     // 處理點擊熱門問題
     handleQuestionClick(question) {
       this.chatbox.push(this.createChatLi(question, 'outgoing'));
@@ -144,9 +146,9 @@ export default {
   },
 
   mounted() {
-console.log('Component mounted');
-console.log('isChatbotVisible:', this.isChatbotVisible);
-}
+    console.log('Component mounted');
+    console.log('isChatbotVisible:', this.isChatbotVisible);
+  }
 
 };
 </script>

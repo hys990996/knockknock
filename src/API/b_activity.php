@@ -7,7 +7,7 @@
 
 // // 允許特定的請求標頭
 // header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-
+include("conn.php");
 // 解析傳入的 JSON 數據
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -20,7 +20,6 @@ $data = json_decode(file_get_contents('php://input'), true);
 //   //建立PDO物件，並放入指定的相關資料
 //   $pdo = new PDO($dsn,$db_user,$db_pass);
 
-include("conn.php");
   $sql = "SELECT * FROM activity";
   $pstmt = $pdo->prepare($sql);
   $pstmt->execute();

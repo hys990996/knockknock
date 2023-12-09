@@ -8,7 +8,7 @@ $id = $resetData['userId'];
 $account = $resetData['userAccount'];
 $pwd = password_hash($resetData['userPassword'], PASSWORD_BCRYPT);
 
-$sql = "UPDATE MEMBER
+$sql = "UPDATE member
         SET MEMBER_PASSWORD = :pwd
         WHERE MEMBER_ID = :id AND MEMBER_ACCOUNT = :account";
 

@@ -37,12 +37,12 @@
                         </thead>
                         <tbody>
                             <tr v-for="(i, index) in  fliterMember" :key="i.MEMBER_ID">
-                                <th scope="row">{{ i.MEMBER_ID}}</th>
+                                <th scope="row">{{ i.MEMBER_ID }}</th>
                                 <td>{{ i.MEMBER_ACCOUNT }}</td>
                                 <td>{{ i.MEMBER_PHONE }}</td>
-                                <td>{{ i.MEMBER_FIRST_NAME}}{{i.MEMBER_LAST_NAME}}</td>
+                                <td>{{ i.MEMBER_FIRST_NAME }}{{ i.MEMBER_LAST_NAME }}</td>
                                 <td>{{ i.MEMBER_STATUS }}</td>
-                                <td>{{ i.MEMBER_CREATETIME}}</td>
+                                <td>{{ i.MEMBER_CREATETIME }}</td>
                                 <td><button @click="show(index)" class="btn btn btn-warning">編輯</button></td>
                             </tr>
                         </tbody>
@@ -55,7 +55,7 @@
                         <li v-for="page in Math.ceil(filterMemberID.length / itemsPerPage)" :key="page">
                             <button @click="changePage(page)">{{ page }}</button>
                         </li>
-                        
+
                     </ul>
                 </div>
 
@@ -74,7 +74,7 @@
                                 <span>帳號</span>
                                 <p>{{ i.MEMBER_ACCOUNT }}</p>
                                 <span>姓名</span>
-                                <p>{{ i.MEMBER_FIRST_NAME}}{{i.MEMBER_LAST_NAME}}</p>
+                                <p>{{ i.MEMBER_FIRST_NAME }}{{ i.MEMBER_LAST_NAME }}</p>
                             </div>
 
                             <div class="editAll_right">
@@ -88,7 +88,7 @@
                                 <span>電話</span>
                                 <p>{{ i.MEMBER_PHONE }}</p>
                                 <span>創建時間</span>
-                                <p>{{ i.MEMBER_CREATETIME}}</p>
+                                <p>{{ i.MEMBER_CREATETIME }}</p>
                             </div>
                         </div>
                         <div class="edit_btn" v-if="selectedIndex == index">
@@ -115,10 +115,11 @@ export default {
             selectedIndex: null,
             searchQuery: '',
             member: [],
-            itemsPerPage:6,
-            currentPage:1,
-            newStatus:'',
-            newMember:[],
+            itemsPerPage: 6,
+            currentPage: 1,
+            newStatus: '',
+            newMember: [],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -138,21 +139,21 @@ export default {
             this.isBlurred = false;
         },
 
-        changePage(page){
+        changePage(page) {
             this.currentPage = page;
         },
 
-        
+
         save(index) {
-            const selectMember = this.fliterMember[index].MEMBER_ID ;
+            const selectMember = this.fliterMember[index].MEMBER_ID;
             const dataStatus = this.newStatus;
-            
+
             console.log('Sending data to backend:', {
                 memberID: selectMember,
                 newStatus: dataStatus,
             });
 
-            fetch('api/update_b_member_status.php', {
+            fetch(this.ajax_url + 'update_b_member_status.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -160,19 +161,19 @@ export default {
                 body: JSON.stringify({
                     memberID: selectMember,
                     newStatus: dataStatus,
-            
+
                 }),
             })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                this.member.MEMBER_STATUS = data;
-                location.reload()
-               
-            })
-            .catch(error => {
-                console.error('Error updating data:', error);
-            });
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    this.member.MEMBER_STATUS = data;
+                    location.reload()
+
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                });
 
             this.close();
         },
@@ -183,7 +184,7 @@ export default {
         },
         // 管理員登出
         b_logOut() {
-            fetch("api/b_logout.php",
+            fetch(this.ajax_url + "b_logout.php",
             )
                 .then((res) => {
                     return res.json()
@@ -200,34 +201,34 @@ export default {
                 })
         },
     },
-    mounted(){
-        fetch('api/b_member.php', {
+    mounted() {
+        fetch(this.ajax_url + 'b_member.php', {
             method: 'POST',
-            mode:'cors',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data => {
-        this.member = data;
-        console.log(data);
-        })
+            .then(response => response.json())
+            .then(data => {
+                this.member = data;
+                console.log(data);
+            })
     },
     computed: {
-        filterMemberID(){
+        filterMemberID() {
             const query = this.searchQuery.toLowerCase();
-            return this.member.filter((i)=>{
+            return this.member.filter((i) => {
                 return i.MEMBER_ACCOUNT.toLowerCase().includes(query);
             })
         },
 
         fliterMember() {
             // const query = this.searchQuery.toLowerCase()
-            
-            const startIndex = (this.currentPage -1) * this.itemsPerPage;
+
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage;
-            
+
             return this.filterMemberID
                 // .filter(i => i.mail.toLowerCase().includes(query))
                 .slice(startIndex, endIndex)

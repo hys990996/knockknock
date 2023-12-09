@@ -143,6 +143,7 @@ export default {
             gift_img: '',
             postImg: '',
             buttonText: 'Start'
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     created() {
@@ -156,7 +157,7 @@ export default {
     },
     methods: {
         async getData() {
-            axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_information.php", { id: this.id }).then((resData) => {
                 const id = resData.data[0].MEMBER_ID;
                 this.id = resData.data[0].MEMBER_ID;
             }).catch((e) => {
@@ -242,7 +243,7 @@ export default {
             };
 
             try {
-                const response = await axios.post("api/gift_card.php", { giftId: this.giftId });
+                const response = await axios.post(this.ajax_url + "gift_card.php", { giftId: this.giftId });
                 const giftId = response.data[0].COLLECTION_ID;
                 this.giftTitle = response.data[0].COLLECTION_NAME;
                 this.gift_img = response.data[0].COLLECTION_IMAGE;
@@ -252,7 +253,7 @@ export default {
                 // console.log(this.giftId);
                 // console.log(giftId);
 
-                const responseReturn = await axios.post("api/gift_card_return.php", {
+                const responseReturn = await axios.post(this.ajax_url + "gift_card_return.php", {
                     id: this.id,
                     giftId: this.giftId
                 });
@@ -271,7 +272,7 @@ export default {
                 this.letterShow = false;
             };
 
-            axios.post("api/post_card.php").then(response => {
+            axios.post(this.ajax_url + "post_card.php").then(response => {
                 const postId = response.data.secondQuery[0].POST_ID;
                 const postMemberId = response.data.secondQuery[0].MEMBER_ID;
                 this.post = response.data.firstQuery[0];
@@ -293,7 +294,7 @@ export default {
         async addFriend() {
             this.addHim = true;
 
-            const response = await axios.post("api/add_stranger_friend.php", {
+            const response = await axios.post(this.ajax_url + "add_stranger_friend.php", {
                 id: this.id,
                 postMemberId: this.postMemberId
             });
@@ -302,7 +303,7 @@ export default {
         async like() {
             this.likePost = true;
 
-            const response = await axios.post("api/add_thumbs_up.php", {
+            const response = await axios.post(this.ajax_url + "add_thumbs_up.php", {
                 id: this.id,
                 postId: this.postId
             });

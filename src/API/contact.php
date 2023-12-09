@@ -19,7 +19,7 @@
 
 // $pdo = new PDO($dsn, $db_user, $db_pass); // INSERT INTO 跟 VALUES 要在新增 (CONTACT_ID)
 include("conn.php");
-$sql = "INSERT INTO CONTACT (CONTACT_CONTACT, CONTACT_TITLE, CONTACT_MEMBER_ID, CONTACT_CREATETIME, CONTACT_REPLY_CONTENT, CONTACT_REPLIED) VALUES (:content, :purpose, '111', NOW(), '', '0')";
+$sql = "INSERT INTO contact (CONTACT_CONTACT, CONTACT_TITLE, CONTACT_MEMBER_ID, CONTACT_CREATETIME, CONTACT_REPLY_CONTENT, CONTACT_REPLIED) VALUES (:content, :purpose, '111', NOW(), '', '0')";
 
 $pstmt = $pdo -> prepare($sql);
 $pstmt -> bindvalue(":purpose",$purpose);

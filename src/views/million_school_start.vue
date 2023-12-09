@@ -126,10 +126,11 @@ export default {
             // 總時間數
             timeLimit: 10,
             changBar: false,
-            MEMBER_ID :0,
-            member_name:'',
-            user_img:'',
-            maxScore:0
+            MEMBER_ID: 0,
+            member_name: '',
+            user_img: '',
+            maxScore: 0,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
 
         }
     },
@@ -163,16 +164,16 @@ export default {
                     // console.log(this.change)
                 }
 
-                
 
-                console.log(this.current_question == this.qa.length,this.current_question,this.qa.length-1);
-                
+
+                console.log(this.current_question == this.qa.length, this.current_question, this.qa.length - 1);
+
                 if (this.current_question == this.qa.length) {
-                   
+
                     if (!this.showAlert) {
                         this.showAlert = true;
                         // alert(`遊戲結束您獲得${this.score}分`);
-                      
+
                         clearInterval(this.setTime);
                         this.gameEnd = !this.gameEnd;
                         const currentDate = new Date();
@@ -180,26 +181,26 @@ export default {
                         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
                         const day = currentDate.getDate().toString().padStart(2, '0');
                         const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-                            fetch('api/snake_insert.php',{
-                                headers:{
-                                    'Content-Type':'application/json'
-                                },
-                                method:'POST',
-                                mode:'cors',
-                                body:JSON.stringify({
-                                    userID:this.MEMBER_ID,
-                                    gameID:2,
-                                    gameScore:this.score,
-                                    gameScoreCreateTime: formattedDateTime
+                        fetch(this.ajax_url + 'snake_insert.php', {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            method: 'POST',
+                            mode: 'cors',
+                            body: JSON.stringify({
+                                userID: this.MEMBER_ID,
+                                gameID: 2,
+                                gameScore: this.score,
+                                gameScoreCreateTime: formattedDateTime
 
-                                })
                             })
-                            .then((res)=>{
+                        })
+                            .then((res) => {
                                 return res.json()
                             })
-                            .then((data)=>{
+                            .then((data) => {
                                 console.log(data);
-                                
+
                             })
                     }
                 }
@@ -240,31 +241,31 @@ export default {
                     clearInterval(this.timer);
                     this.gameEnd = !this.gameEnd;
                     const currentDate = new Date();
-                        const year = currentDate.getFullYear();
-                        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-                        const day = currentDate.getDate().toString().padStart(2, '0');
-                        const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-                            fetch('api/snake_insert.php',{
-                                headers:{
-                                    'Content-Type':'application/json'
-                                },
-                                method:'POST',
-                                mode:'cors',
-                                body:JSON.stringify({
-                                    userID:this.MEMBER_ID,
-                                    gameID:2,
-                                    gameScore:this.score,
-                                    gameScoreCreateTime: formattedDateTime
+                    const year = currentDate.getFullYear();
+                    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                    const day = currentDate.getDate().toString().padStart(2, '0');
+                    const formattedDateTime = `${year}/${month}/${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+                    fetch(this.ajax_url + 'snake_insert.php', {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        mode: 'cors',
+                        body: JSON.stringify({
+                            userID: this.MEMBER_ID,
+                            gameID: 2,
+                            gameScore: this.score,
+                            gameScoreCreateTime: formattedDateTime
 
-                                })
-                            })
-                            .then((res)=>{
-                                return res.json()
-                            })
-                            .then((data)=>{
-                                console.log(data);
-                                
-                            })
+                        })
+                    })
+                        .then((res) => {
+                            return res.json()
+                        })
+                        .then((data) => {
+                            console.log(data);
+
+                        })
                 }
             }
         },
@@ -278,14 +279,14 @@ export default {
         const userStore = useUserStore();
         this.MEMBER_ID = userStore.userID;
         this.member_name = userStore.userName;
-        this.user_img = 'data:image/png;base64,'+userStore.userImg;
+        this.user_img = 'data:image/png;base64,' + userStore.userImg;
         console.log(this.change)
         this.barColorElement = this.$refs.barColor;
         this.$nextTick(() => {
             console.log(this.barColorElement.offsetWidth); // 使用 offsetWidth 取得元素寬度
         });
         this.setTime();
-        fetch("api/million_school.php"
+        fetch(this.ajax_url + "million_school.php"
         )
             .then((res) => {
                 return res.json();
@@ -296,27 +297,27 @@ export default {
             })
 
         // 最高分數
-        fetch('api/millionSchool_search.php',{
-        headers:{
-                'Content-Type':'application/json'
+        fetch(this.ajax_url + 'millionSchool_search.php', {
+            headers: {
+                'Content-Type': 'application/json'
             },
-            method:'POST',
-            mode:'cors',
-            body:JSON.stringify({
-                userID:this.MEMBER_ID,
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({
+                userID: this.MEMBER_ID,
             })
         })
-        .then((res)=>{
-            return res.json()
-        })
-        .then((data)=>{
-            console.log(data)
-            this.maxScore = data[0][0];
-            if(this.maxScore == null){
-                this.maxScore = 0
-            }
-            console.log(data[0][0])
-        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                this.maxScore = data[0][0];
+                if (this.maxScore == null) {
+                    this.maxScore = 0
+                }
+                console.log(data[0][0])
+            })
     }
 }
 </script>

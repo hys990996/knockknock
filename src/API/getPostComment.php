@@ -6,8 +6,8 @@ $postID = json_decode(file_get_contents("php://input"), true);
 $id = $postID["id"];
 
 $sql = "SELECT c.*,m.MEMBER_FIRST_NAME,m.MEMBER_LAST_NAME,m.MEMBER_PIC
-        FROM POST_COMMENT c
-	        JOIN MEMBER m
+        FROM post_comment c
+	        JOIN member m
             ON c.MEMBER_ID=m.MEMBER_ID
         WHERE POST_ID= :id ";
 

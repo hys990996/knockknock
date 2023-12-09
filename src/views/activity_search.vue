@@ -79,6 +79,7 @@ export default {
             areaActivity: [],
             activityRegion: '',
             activityID: 0,
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -90,7 +91,7 @@ export default {
     mounted() {
         this.activityRegion = this.$route.params.activityRegion;
         console.log(this.activityRegion);
-        fetch("api/reigonActivity.php", {
+        fetch(this.ajax_url + "reigonActivity.php", {
             headers: {
                 'Content-Type': 'application/json'
             },

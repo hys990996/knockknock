@@ -81,6 +81,7 @@ export default {
             passwordPass: false,
             bBaseImg: '',
             gBaseImg: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     mounted() {
@@ -119,7 +120,7 @@ export default {
 
                 // 進行註冊
                 axios
-                    .post('api/signUp.php', JSON.stringify(this.signUpData))
+                    .post(this.ajax_url + 'signUp.php', JSON.stringify(this.signUpData))
                     .then(response => {
                         // console.log(response.data);
                         if (response.data == '1') {
@@ -216,7 +217,7 @@ export default {
 
                 //檢查帳號是否重複
                 axios
-                    .post('api/checkAccount.php', JSON.stringify(this.signUpData))
+                    .post(this.ajax_url + 'checkAccount.php', JSON.stringify(this.signUpData))
                     .then(response => {
                         // console.log(response.data);
                         if (response.data != '0') {

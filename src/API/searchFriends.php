@@ -7,7 +7,7 @@ $userId = $searchData["userId"];
 $keyword = '%' . $searchData["keyword"] . '%';
 
 $sqlSelect = "SELECT m1.MEMBER_ID,m2.FullName
-              FROM MEMBER m1
+              FROM member m1
 	                JOIN (SELECT MEMBER_ID,concat(MEMBER_LAST_NAME,MEMBER_FIRST_NAME) as FullName FROM MEMBER)m2
 	                ON m1.MEMBER_ID=m2.MEMBER_ID
               WHERE m2.FullName LIKE :keyword && m1.MEMBER_ID <> :userId";
@@ -23,7 +23,7 @@ if (COUNT($data) != 0) {
 
     foreach ($data as $key => $value) {
 
-        $sqlSelect = "SELECT count(*) AS num FROM FRIENDS WHERE MEMBER_ID=:userId AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM FRIENDS WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
+        $sqlSelect = "SELECT count(*) AS num FROM friends WHERE MEMBER_ID=:userId AND FRIEND_STATUS=1 AND FRIENDS_ID IN (SELECT FRIENDS_ID FROM FRIENDS WHERE MEMBER_ID=:resultId AND FRIEND_STATUS=1)";
 
         $statement = $pdo->prepare($sqlSelect);
         $statement->bindValue(":userId", $userId);
@@ -38,7 +38,7 @@ if (COUNT($data) != 0) {
 
     foreach ($data as $key => $value) {
 
-        $sqlSelect = "SELECT * FROM FRIENDS WHERE MEMBER_ID=:userId AND FRIENDS_ID=:resultId";
+        $sqlSelect = "SELECT * FROM friends WHERE MEMBER_ID=:userId AND FRIENDS_ID=:resultId";
 
         $statement = $pdo->prepare($sqlSelect);
         $statement->bindValue(":userId", $userId);

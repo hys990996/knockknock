@@ -9,7 +9,7 @@ $action = $statusData["action"];
 
 switch ($action) {
     case "D": //刪除好友
-        $sql = "UPDATE FRIENDS
+        $sql = "UPDATE friends
                 SET FRIEND_STATUS = 3
                 WHERE MEMBER_ID = :id AND FRIENDS_ID = :friendId ";
 
@@ -22,7 +22,7 @@ switch ($action) {
         break;
 
     case "B": //加入黑名單
-        $sql = "UPDATE FRIENDS
+        $sql = "UPDATE friends
                 SET FRIEND_STATUS = 2
                 WHERE MEMBER_ID = :id AND FRIENDS_ID = :friendId ";
 
@@ -34,7 +34,7 @@ switch ($action) {
         break;
 
     case "F": //移除黑名單回到好友狀態
-        $sql = "UPDATE FRIENDS
+        $sql = "UPDATE friends
                 SET FRIEND_STATUS = 1
                 WHERE MEMBER_ID = :id AND FRIENDS_ID = :friendId ";
 

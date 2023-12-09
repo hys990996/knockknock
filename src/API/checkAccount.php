@@ -5,7 +5,7 @@ include("conn.php");
 $signupData = json_decode(file_get_contents("php://input"), true);
 $account = $signupData['userAccount'];
 
-$sql = "SELECT * FROM MEMBER WHERE MEMBER_ACCOUNT = ?";
+$sql = "SELECT * FROM member WHERE MEMBER_ACCOUNT = ?";
 
 $statement = $pdo->prepare($sql);
 $statement->bindValue(1, $account);

@@ -8,7 +8,7 @@ $userId = $friendData["userId"];
 $friendId = $friendData["friendId"];
 
 
-$sqlInsert = "INSERT INTO FRIENDS (MEMBER_ID,FRIENDS_ID,FRIENDS_REQUESTS_STATUS,FRIEND_REQUESTS_SEND_TIME)
+$sqlInsert = "INSERT INTO friends (MEMBER_ID,FRIENDS_ID,FRIENDS_REQUESTS_STATUS,FRIEND_REQUESTS_SEND_TIME)
               VALUES (:userId,:friendId,0,now())";
 
 $statement = $pdo->prepare($sqlInsert);

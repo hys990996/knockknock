@@ -5,7 +5,7 @@ include("conn.php");
 $postData = json_decode(file_get_contents("php://input"), true);
 $id = $postData["postId"];
 
-$sql = "UPDATE POST
+$sql = "UPDATE post
          SET DELETED = 1
          WHERE POST_ID = :id";
 

@@ -152,7 +152,8 @@ export default {
                 //     week: '星期六',
                 //     location: '大台北河濱公園'
                 // },
-            ]
+            ],
+            ajax_url: import.meta.env.VITE_AJAX_URL,
         }
     },
     methods: {
@@ -213,7 +214,7 @@ export default {
 
             // 新增回覆資料至DB
             axios
-                .post('api/addPostComment.php', JSON.stringify(commentItem))
+                .post(this.ajax_url + 'addPostComment.php', JSON.stringify(commentItem))
                 .then(response => {
                     // console.log(response.data);
                     if (response.data != 1) {
@@ -232,7 +233,7 @@ export default {
 
             //傳入memberID 取回自己、好友及公開的貼文
             axios
-                .post('api/getPostItems.php', JSON.stringify(memberId))
+                .post(this.ajax_url + 'getPostItems.php', JSON.stringify(memberId))
                 .then(response => {
                     // console.log(response.data);
 
@@ -285,7 +286,7 @@ export default {
             const postId = { id }
 
             axios
-                .post('api/getPostImg.php', JSON.stringify(postId))
+                .post(this.ajax_url + 'getPostImg.php', JSON.stringify(postId))
                 .then(response => {
 
                     // console.log(response.data);
@@ -320,7 +321,7 @@ export default {
             const postId = { id }
 
             axios
-                .post('api/getPostComment.php', JSON.stringify(postId))
+                .post(this.ajax_url + 'getPostComment.php', JSON.stringify(postId))
                 .then(response => {
                     if (response.data != 0) {
                         // console.log(response.data);
@@ -350,7 +351,7 @@ export default {
         },
         getActivities() {
 
-            axios.get('api/getHotActivities.php')
+            axios.get(this.ajax_url + 'getHotActivities.php')
                 .then(response => {
                     // console.log(response.data)
                     if (response.data != 0) {

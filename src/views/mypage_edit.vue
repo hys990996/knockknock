@@ -285,7 +285,9 @@ export default {
             hobbyB: '',
             SelfIntroduction: '',
             isUpload: false,
-            userImg: ''
+            userImg: '',
+            ajax_url: import.meta.env.VITE_AJAX_URL,
+
         };
     },
     mounted() {
@@ -300,7 +302,7 @@ export default {
     methods: {
         async getData() {
             // console.log(this.id)
-            axios.post("api/member_information.php", { id: this.id }).then((resData) => {
+            axios.post(this.ajax_url + "member_information.php", { id: this.id }).then((resData) => {
                 // console.log(resData); //我拿到資料之後要做什麼事
                 this.first_Name = resData.data[0].MEMBER_FIRST_NAME;
                 this.last_Name = resData.data[0].MEMBER_LAST_NAME;
@@ -330,7 +332,7 @@ export default {
             // console.log(this.id)
             const imageData = this.userImg.split(',')[1];
             try {
-                const response = await axios.post("api/member_information_return.php", {
+                const response = await axios.post(this.ajax_url + "member_information_return.php", {
                     id: this.id,
                     first_Name: this.first_Name,
                     last_Name: this.last_Name,
@@ -374,7 +376,7 @@ export default {
 
                 // 將圖片資料上傳到 upload_img.php
                 try {
-                    const response = await axios.post("api/upload_img.php", {
+                    const response = await axios.post(this.ajax_url + "upload_img.php", {
                         id: this.id,
                         imageData: imageData,
                     });
