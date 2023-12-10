@@ -45,6 +45,7 @@
     @include media-breakpoint-only(xs) {
       grid-template-columns: auto;
       row-gap: 60px;
+      padding-bottom: 60px;
     }
 
     .question {

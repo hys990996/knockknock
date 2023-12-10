@@ -1,6 +1,9 @@
 .chatbott{
   
   padding: 30px;
+  @include media-breakpoint-only(xs){
+    padding: 30px 0 30px 0;
+  }
   
   .chatbox .box {
     width: 200px;
@@ -239,7 +242,7 @@
       right: 0;
       bottom: 0;
       height: 100%;
-      border-radius: 0;
+      border-radius: 10px;
       width: 100%;
     }
     .chatbot .chatbox {
