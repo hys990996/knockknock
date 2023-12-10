@@ -161,13 +161,13 @@
                         </div>
                         <div class="collect">
                             <div class="collectA">
-                                <img :src="exhibit_collection_A" alt="" v-if="exhibit_collection_A">
+                                <img :src="'data:image;base64,' + exhibit_collection_A" alt="" v-if="exhibit_collection_A">
                             </div>
                             <div class="collectB">
-                                <img :src="exhibit_collection_B" alt="" v-if="exhibit_collection_B">
+                                <img :src="'data:image;base64,' + exhibit_collection_B" alt="" v-if="exhibit_collection_B">
                             </div>
                             <div class="collectC">
-                                <img :src="exhibit_collection_C" alt="" v-if="exhibit_collection_C">
+                                <img :src="'data:image;base64,' + exhibit_collection_C" alt="" v-if="exhibit_collection_C">
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ MEMBER_ID,
 FRIENDS_ID,
 FRIENDS_REQUESTS_STATUS,
 FRIEND_REQUESTS_SEND_TIME)
-VALUES(:id,:postMemberId,0,now())";
+VALUES(:postMemberId,:id,0,now())";
 
 $statement = $pdo->prepare($sql);
 
