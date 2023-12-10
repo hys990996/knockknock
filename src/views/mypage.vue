@@ -28,7 +28,7 @@
                             <button @click="postShow = !postShow" class="new_post_button Btn">發表新貼文</button>
                         </div>
                         <div class="head_sticker">
-                            <img :src="userImg" ref="head_sticker" alt="" v-if="userImg">
+                            <img :src="'data:image/jpg;base64,' + userImg" ref="head_sticker" alt="" v-if="userImg">
                         </div>
                         <div class="guide_button">
                             <router-link :to="{ name: 'mypage_edit' }">

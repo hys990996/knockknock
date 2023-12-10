@@ -30,126 +30,126 @@
                 <div class="content-top-L-3-2">
                   <span><img src="../assets/images/actitity-info/人數.svg" alt="活動名額" /></span>
                   名額{{ i.ACTIVITY_QUOTA }}人(剩餘名額:
-                  {{ i.ACTIVITY_REMAINING_PLACES }}人)
+                  {{ i.ACTIVITY_REMAINING_PLACES <= 0 ? 0 : i.ACTIVITY_REMAINING_PLACES }}人) </div>
+                </div>
+                <div class="content-top-L-4">
+                  <span>
+                    <img src="../assets/images/actitity-info/費用.svg" alt="活動費用" />
+                  </span>
+                  1人${{ i.ACTIVITY_SINGLE_PRICE }}/人 3人${{
+                    i.ACTIVITY_GROUP_PRICE
+                  }}/人
                 </div>
               </div>
-              <div class="content-top-L-4">
-                <span>
-                  <img src="../assets/images/actitity-info/費用.svg" alt="活動費用" />
-                </span>
-                1人${{ i.ACTIVITY_SINGLE_PRICE }}/人 3人${{
-                  i.ACTIVITY_GROUP_PRICE
-                }}/人
-              </div>
-            </div>
-            <div class="content-top-R">
-              <div id="btn">
-                <!-- 觸發按鈕 -->
-                <button @click="confirmRegistration(i.ACTIVITY_ID)" class="Btn Btn-dark chatbtn"
-                  :disabled="i.ACTIVITY_REMAINING_PLACES <= 0">
-                  {{ i.ACTIVITY_REMAINING_PLACES <= 0 ? '已完售' : '我要報名' }} </button>
-                    <!-- 彈跳視窗 -->
-                    <div v-if="showModal" class="modal" @click="closeModal2">
-                      <!-- 彈跳視窗內容 -->
-                      <div class="modal-content" @click.stop>
-                        <span class="close" @click="
-                          showModal = false;
-                        closeModal2();
-                        ">&times;</span>
-                        <div v-if="contentChanged" class="if">
-                          <div>
-                            <p class="list2-m">付款成功</p>
-                            <div class="list2-n">
-                              <div>王小明</div>
-                              <div>
-                                <img src="../assets/images/actitity-info/小明.svg" alt="小明自拍照" />
+              <div class="content-top-R">
+                <div id="btn">
+                  <!-- 觸發按鈕 -->
+                  <button @click="confirmRegistration(i.ACTIVITY_ID)" class="Btn Btn-dark chatbtn"
+                    :disabled="i.ACTIVITY_REMAINING_PLACES <= 0">
+                    {{ i.ACTIVITY_REMAINING_PLACES <= 0 ? '已完售' : '我要報名' }} </button>
+                      <!-- 彈跳視窗 -->
+                      <div v-if="showModal" class="modal" @click="closeModal2">
+                        <!-- 彈跳視窗內容 -->
+                        <div class="modal-content" @click.stop>
+                          <span class="close" @click="
+                            showModal = false;
+                          closeModal2();
+                          ">&times;</span>
+                          <div v-if="contentChanged" class="if">
+                            <div>
+                              <p class="list2-m">付款成功</p>
+                              <div class="list2-n">
+                                <div>王小明</div>
+                                <div>
+                                  <img src="../assets/images/actitity-info/小明.svg" alt="小明自拍照" />
+                                </div>
                               </div>
-                            </div>
-                            <div class="list2-f">
-                              <div class="list2">
-                                <div class="gp-1">
-                                  <span class="list2-1">活動名稱</span><span class="list2-1-2">{{
-                                    activityData.ACTIVITY_NAME
-                                  }}</span>
-                                </div>
-                                <div class="gp-2">
-                                  <span class="list2-2">活動日期</span><span class="list2-2-2">{{ activityData.ACTIVITY_DATE
-                                  }}</span>
-                                </div>
-                                <div class="gp-3">
-                                  <span class="list2-3">報名人數</span><span class="list2-3-2">{{ quantity }}人</span>
+                              <div class="list2-f">
+                                <div class="list2">
+                                  <div class="gp-1">
+                                    <span class="list2-1">活動名稱</span><span class="list2-1-2">{{
+                                      activityData.ACTIVITY_NAME
+                                    }}</span>
+                                  </div>
+                                  <div class="gp-2">
+                                    <span class="list2-2">活動日期</span><span class="list2-2-2">{{ activityData.ACTIVITY_DATE
+                                    }}</span>
+                                  </div>
+                                  <div class="gp-3">
+                                    <span class="list2-3">報名人數</span><span class="list2-3-2">{{ quantity }}人</span>
+                                  </div>
+                                  <div class="gp-4">
+                                    <span class="list2-4">總金額</span><span class="list2-4-2"> ${{ this.total }}</span>
+                                  </div>
                                 </div>
                                 <div class="gp-4">
-                                  <span class="list2-4">總金額</span><span class="list2-4-2"> ${{ this.total }}</span>
-                                </div>
-                              </div>
-                              <div class="gp-4">
-                                <p class="list2-check">
-                                  您已經付款報名成功，以上是您的揪團資訊。
-                                </p>
-                                <!-- 當連結被點擊時，調用 checkBeforeNavigate 方法 -->
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- @@@@@@@@@@@@@@@@@ -->
-                        <div v-else class="else" v-for="i in fetchactivity">
-                          <div>
-                            <p class="list-m">報名資訊</p>
-                            <div class="list-n">
-                              <div>{{ member_name }}</div>
-                              <div>
-                                <img :src="user_img" alt="小明自拍照" />
-                              </div>
-                            </div>
-                            <div class="list">
-                              <div class="list-L">
-                                <div class="group-1">
-                                  <span class="list-1">活動名稱</span><span class="list-1-2">{{
-                                    i.ACTIVITY_NAME
-                                  }}</span>
-                                </div>
-                                <div class="group-2">
-                                  <span class="list-2">活動日期</span><span class="list-2-2">
-                                    {{ i.ACTIVITY_DATE }}</span>
-                                </div>
-                                <div class="group-3">
-                                  <span class="list-3">報名人數</span><span class="list-3-2">
-                                    <input type="number" v-model.number="quantity"
-                                      @input="validateQuantity(i.ACTIVITY_SINGLE_PRICE, i.ACTIVITY_GROUP_PRICE, i.ACTIVITY_REMAINING_PLACES)"
-                                      placeholder="請輸入人數" /></span>
-                                </div>
-                                <div class="group-4">
-                                  <span class="list-4">總金額</span><span class="list-4-2">
-                                    <label v-if="quantity !== null && quantity !== ''">
-                                      {{ total }}元
-                                    </label></span>
+                                  <p class="list2-check">
+                                    您已經付款報名成功，以上是您的揪團資訊。
+                                  </p>
+                                  <!-- 當連結被點擊時，調用 checkBeforeNavigate 方法 -->
                                 </div>
                               </div>
                             </div>
                           </div>
                           <!-- @@@@@@@@@@@@@@@@@ -->
+                          <div v-else class="else" v-for="i in fetchactivity">
+                            <div>
+                              <p class="list-m">報名資訊</p>
+                              <div class="list-n">
+                                <div>{{ member_name }}</div>
+                                <div>
+                                  <img :src="user_img" alt="小明自拍照" />
+                                </div>
+                              </div>
+                              <div class="list">
+                                <div class="list-L">
+                                  <div class="group-1">
+                                    <span class="list-1">活動名稱</span><span class="list-1-2">{{
+                                      i.ACTIVITY_NAME
+                                    }}</span>
+                                  </div>
+                                  <div class="group-2">
+                                    <span class="list-2">活動日期</span><span class="list-2-2">
+                                      {{ i.ACTIVITY_DATE }}</span>
+                                  </div>
+                                  <div class="group-3">
+                                    <span class="list-3">報名人數</span><span class="list-3-2">
+                                      <input type="number" v-model.number="quantity"
+                                        @input="validateQuantity(i.ACTIVITY_SINGLE_PRICE, i.ACTIVITY_GROUP_PRICE, i.ACTIVITY_REMAINING_PLACES)"
+                                        placeholder="請輸入人數" /></span>
+                                  </div>
+                                  <div class="group-4">
+                                    <span class="list-4">總金額</span><span class="list-4-2">
+                                      <label v-if="quantity !== null && quantity !== ''">
+                                        {{ total }}元
+                                      </label></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- @@@@@@@@@@@@@@@@@ -->
 
-                          <div class="modal-footer">
-                            <button type="button" class="Btn Btn-dark chatbtn"
-                              @click=" EcPay(i.ACTIVITY_ID, i.ACTIVITY_DESCRIBE, i.ACTIVITY_NAME)">
-                              前往結帳
-                            </button>
+                            <div class="modal-footer">
+                              <button type="button" class="Btn Btn-dark chatbtn"
+                                @click=" EcPay(i.ACTIVITY_ID, i.ACTIVITY_DESCRIBE, i.ACTIVITY_NAME)">
+                                前往結帳
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="content-bottom">
+              <div class="b-t">
+                <p v-html="activityData.ACTIVITY_DESCRIBE.replace(`n`, '<br>')" :style="{ 'white-space': 'pre-wrap' }">
+                </p>
               </div>
             </div>
           </div>
-          <div class="content-bottom">
-            <div class="b-t">
-              <p v-html="activityData.ACTIVITY_DESCRIBE.replace(`n`, '<br>')" :style="{ 'white-space': 'pre-wrap' }"></p>
-            </div>
-          </div>
         </div>
-      </div>
-      <div id="paymentContainer"></div>
+        <div id="paymentContainer"></div>
     </template>
   </layout>
 </template>

@@ -55,7 +55,7 @@
             </div>
             <div class="reply-message">
                 <div class="user-image">
-                    <img :src="'data:image/png;base64,' + userImage" alt="">
+                    <img :src="userImage" alt="">
                 </div>
                 <div class="reply-input">
                     <input type="text" class="inputCommon" @blur="bindCommentText($event)"

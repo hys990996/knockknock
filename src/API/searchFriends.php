@@ -46,8 +46,8 @@ if (COUNT($data) != 0) {
         $statement->execute();
         $result = $statement->fetchAll();
 
-        $data[$key]["FRIEND_STATUS"] = $result[0]["FRIEND_STATUS"];
-        $data[$key]["FRIENDS_REQUESTS_STATUS"] = $result[0]["FRIENDS_REQUESTS_STATUS"];
+        $data[$key]["friendStatus"] = $result[0]["FRIEND_STATUS"];
+        $data[$key]["requestStatus"] = $result[0]["FRIENDS_REQUESTS_STATUS"];
     }
 
     // echo $data[0];

@@ -1,7 +1,7 @@
 <?php
 
 include("conn.php");
-
+ini_set('display_errors','on');
 $req = json_decode(file_get_contents("php://input"), true);
 $id = $req['id'];
 

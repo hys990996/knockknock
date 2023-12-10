@@ -13,10 +13,10 @@
             <div class="user-detail-info">
                 <router-link :to="{ name: 'mypage' }">
                     <div class="user-image">
-                        <img v-if="userData.userImg" :src="userStore.userImg" alt="">
-                        <img v-else src="../assets/images/login/boy-base.png" alt="使用者照片">
+                        <img :src="'data:image/jpg;base64,' + userData.userImg" alt="">
+
                     </div>
-                    <h3>{{ userData.userName }}</h3>
+
 
                 </router-link>
             </div>
@@ -72,6 +72,7 @@ export default {
         // console.log(this.userData);
     },
     mounted() {
+        console.log(this.userData);
 
     },
     methods: {

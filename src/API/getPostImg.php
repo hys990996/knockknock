@@ -1,7 +1,7 @@
 <?php
 
 include("conn.php");
-
+ini_set('display_errors','on');
 $postID = json_decode(file_get_contents("php://input"), true);
 $id = $postID["id"];
 

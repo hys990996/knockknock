@@ -20,7 +20,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 //   //建立PDO物件，並放入指定的相關資料
 //   $pdo = new PDO($dsn,$db_user,$db_pass);
 
-  $sql = "SELECT * FROM activity";
+  $sql = "SELECT ACTIVITY_ID,ACTIVITY_NAME,ACTIVITY_ADDRESS,ACTIVITY_DATE,ACTIVITY_STARTDATE,ACTIVITY_ENDDATE,ACTIVITY_QUOTA,ACTIVITY_REMAINING_PLACES,ACTIVITY_STATUS FROM activity";
   $pstmt = $pdo->prepare($sql);
   $pstmt->execute();
   $active = $pstmt->fetchAll();

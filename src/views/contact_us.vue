@@ -56,7 +56,7 @@
 
 <script>
 import layout from "@/components/layout.vue";
-
+import { useUserStore } from '@/store/user';
 export default {
   components: {
     layout,
@@ -68,11 +68,17 @@ export default {
       captchaInput: "",
       correctCaptcha: "",
       ajax_url: import.meta.env.VITE_AJAX_URL,
+      memberId: 0,
+      createDate: ''
     };
   },
   mounted() {
     this.refreshCaptcha();
+    const userStore = useUserStore();
+    this.memberId = userStore.userID;
+
   },
+
   methods: {
     del() {
       this.purpose = "";
@@ -139,13 +145,25 @@ export default {
       return true;
     },
 
-
+    formatDateTime() {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+      const hour = currentDate.getHours().toString().padStart(2, '0');
+      const minute = currentDate.getMinutes().toString().padStart(2, '0');
+      const second = currentDate.getSeconds().toString().padStart(2, '0');
+      // 格式化日期時間為 YYYY/MM/DD HH:mm:ss
+      return this.createDate = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
+    },
     TransBackend() {
-      let data = {
-        purpose: this.purpose, //使用者輸入的主旨
-        content: this.content // 使用者輸入的內容
-      };
-
+      // let data = {
+      //   purpose: this.purpose, //使用者輸入的主旨
+      //   content: this.content // 使用者輸入的內容
+      // };
+      const repurpose = this.purpose;
+      const recontent = this.content
+      this.formatDateTime();
       // 用fetch 發送 POST 請求後端路徑
       fetch(this.ajax_url + 'contact.php', {
         method: 'POST',
@@ -154,16 +172,34 @@ export default {
         headers: {
           'Content-Type': 'application/json'// 設定請求的 Content-Type 為 JSON 格式
         },
-        body: JSON.stringify(data) // 將資料物件轉換為 JSON 格式並放入請求的主體中
-      }).then(resp => {
-        if (resp.ok) {
-          this.purpose = "";
-          this.content = "";
-          this.captchaInput = "";
-          this.refreshCaptcha();
-          alert("新增成功");
-        }
-      }) // 在收到回應後 清除使用者輸入的資料 並且顯示新增成功的提示框
+        body: JSON.stringify({
+          CONTACT_CONTACT: repurpose,
+          CONTACT_TITLE: recontent,
+          CONTACT_MEMBER_ID: this.memberId,
+          CONTACT_CREATETIME: this.createDate,
+          CONTACT_REPLY_CONTENT: '',
+          CONTACT_REPLIED: 0
+        })// 將資料物件轉換為 JSON 格式並放入請求的主體中
+      })
+        .then((res) => {
+          return res.json()
+        })
+        .then((data) => {
+          console.log(data)
+          if (data.success) {
+            alert('新增成功');
+            location.reload()
+          }
+        })
+      // .then(resp => {
+      //   if (resp.ok) {
+      //     this.purpose = "";
+      //     this.content = "";
+      //     this.captchaInput = "";
+      //     this.refreshCaptcha();
+      //     alert("新增成功");
+      //   }
+      // }) // 在收到回應後 清除使用者輸入的資料 並且顯示新增成功的提示框
     },
 
     Confirm() {
@@ -177,5 +213,8 @@ export default {
 
     }
   },
+  computed: {
+
+  }
 };
 </script>

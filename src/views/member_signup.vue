@@ -98,13 +98,12 @@ export default {
             // console.log(this.gBaseImg);
         },
         imgBSelect(e) {
-
             if (this.$refs.baseGImg.classList.contains('select')) {
                 this.$refs.baseGImg.classList.remove('select');
                 this.$refs.baseBImg.classList.add('select');
             }
             this.bBaseImg = e.target.src;
-            // console.log(this.bBaseImg);
+            console.log(this.bBaseImg);
         },
         async doSignUp() {
 
