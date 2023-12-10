@@ -1,7 +1,5 @@
 <template>
-  <layout>
-    <template #section-right-content>
-      <div class="chatbotS">
+      <div class="botComp">
         <!-- 聊天機器人開啟按鈕 -->
         <button class="chatbot-toggler" @click="toggleChatbot">
           <span class="material-symbols-rounded">mode_comment</span>
@@ -44,17 +42,12 @@
           </div>
         </div>
       </div>
-    </template>
-  </layout>
 </template>
 
 <script>
-import layout from '@/components/layout.vue';
 
 export default {
-  components: {
-    layout,
-  },
+
   data() {
     return {
       isChatbotVisible: false, // 控制聊天機器人窗口是否可見
@@ -144,15 +137,15 @@ export default {
   },
 
   mounted() {
-console.log('Component mounted');
-console.log('isChatbotVisible:', this.isChatbotVisible);
+// console.log('Component mounted');
+// console.log('isChatbotVisible:', this.isChatbotVisible);
 }
 
 };
 </script>
 
 <style lang="scss">
-  .chatbotS{
+  .botComp{
   .chatbox .box {
     width: 200px;
     height: 280px;

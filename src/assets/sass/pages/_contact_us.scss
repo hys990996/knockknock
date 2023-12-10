@@ -2,7 +2,7 @@
 
 .contact {
   // border: 1px solid darkblue;
-  padding: 100px;
+  padding: 60px;
   // background: rgba(238, 238, 238, 0.6);
   width: 100%;
   margin: 0 auto;
@@ -12,7 +12,7 @@
   } 
 
   @include media-breakpoint-only(xs) {
-       padding: 20px;
+       padding: 0px;
       } 
 
   .title {
@@ -132,6 +132,8 @@
     }
 
     input{
+      margin-right: 10px;
+      width: 90px;
       border: none;
       outline: none;
       background: transparent;

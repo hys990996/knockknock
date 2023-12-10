@@ -12,9 +12,8 @@
                   <img src="../assets/images/service/email.png" alt="email">
                   <div class="content">
                       <h2>填寫表單</h2>
-                      <p>我是文字我是文字我是文字我是文字
-                          我是文字我是文字我是文字我是文字
-                          </p>
+                      <p>
+                        請將您的意見以填寫表單方式送出，我們將於工作日由專人以郵件回復您的問題。</p>
                   </div>
               </div>
           </router-link>
@@ -24,9 +23,8 @@
                   <img src="../assets/images/service/question.png" alt="question">
                   <div class="content">
                       <h2>常見問題</h2>
-                      <p>我是文字我是文字我是文字我是文字
-                          我是文字我是文字我是文字我是文字
-                          </p>
+                      <p>
+                        您可以找到關於常見問題的解答。將可能遇到的問題都納入這裡，幫助您快速找。</p>
                   </div>
               </div>
           </router-link>
@@ -36,9 +34,7 @@
                   <img src="../assets/images/service/robot.png" alt="robot">
                   <div class="content">
                       <h2>客服機器人</h2>
-                      <p>我是文字我是文字我是文字我是文字
-                          我是文字我是文字我是文字我是文字
-                          </p>
+                      <p>機器人將為您提供幫助，只需與機器人互動，它將盡力提供準確快速的解答。</p>
                   </div>
               </div>
           </router-link>

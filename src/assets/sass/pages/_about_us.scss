@@ -134,7 +134,7 @@
         }
 
         @include media-breakpoint-only(sm) { 
-          border: 3px solid rgb(139, 0, 51);
+          // border: 3px solid rgb(139, 0, 51);
           position: initial;
           margin-bottom: 32px;
           width: 100%;
