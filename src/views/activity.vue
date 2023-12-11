@@ -259,15 +259,15 @@ export default {
             })
             .then((data) => {
                 this.upCommingActivity = data
-                this.upCommingActivity.filter((activity) => {
-                    let currentDate = new Date();
-                    let startDate = new Date(activity.ACTIVITY_DATE);
+                // this.upCommingActivity.filter((activity) => {
+                //     let currentDate = new Date();
+                //     let startDate = new Date(activity.ACTIVITY_DATE);
 
-                    let curretDate = new Date();
-                    curretDate.setMonth(currentDate.getMonth() + 2);
+                //     let curretDate = new Date();
+                //     curretDate.setMonth(currentDate.getMonth() + 2);
 
-                    return startDate <= curretDate && startDate >= currentDate;
-                });
+                //     return startDate <= curretDate && startDate >= currentDate;
+                // });
             })
     }
 

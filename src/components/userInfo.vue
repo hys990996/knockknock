@@ -11,7 +11,9 @@
                 <input ref="searchFriend" type="search" placeholder="搜尋用戶" @keyup.enter="search" @blur="closeSearch">
             </div>
             <div class="user-detail-info">
+
                 <router-link :to="{ name: 'mypage' }">
+                    <h3>{{ userData.userName }}</h3>
                     <div class="user-image">
                         <img :src="'data:image/jpg;base64,' + userData.userImg" alt="">
 

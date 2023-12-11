@@ -177,7 +177,7 @@ export default {
                 },
                 {
                     id: 4,
-                    url: '/thd103/g2/dist/assets/boy-base-880fb11c.png'
+                    url: '/thd103/g2/dist/assets/face_scare-0303d344.png'
                 }
             ]
         }

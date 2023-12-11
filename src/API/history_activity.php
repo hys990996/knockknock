@@ -11,7 +11,8 @@ $sql = "SELECT * FROM
         JOIN activity t2 ON t1.ACTIVITY_ID = t2.ACTIVITY_ID
         WHERE MEMBER_ID = :id
         AND ACTIVITY_DATE < NOW()
-        ORDER BY ABS(DATEDIFF(ACTIVITY_DATE, NOW()))";
+        ORDER BY ABS(DATEDIFF(ACTIVITY_DATE, NOW()))
+        LIMIT 3";
 
 $statement = $pdo->prepare($sql);
 $statement->bindValue(":id", $id);

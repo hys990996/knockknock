@@ -194,6 +194,7 @@ export default {
       member_name: '',
       user_img: '',
       ajax_url: import.meta.env.VITE_AJAX_URL,
+      now: ''
     };
   },
   mounted() {
@@ -382,6 +383,7 @@ export default {
       // 格式化日期時間為 YYYY/MM/DD HH:mm:ss
       this.MerchantTradeDate = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
     },
+
   },
   computed: {
     total() {

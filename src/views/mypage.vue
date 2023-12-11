@@ -69,6 +69,7 @@
                     <div class="collection_window">
                         <div class="collection_window_title">
                             <h4>編輯蒐藏品</h4>
+                            <p>還沒有蒐藏品嗎?去流浪一下吧!</p>
                             <button @click="collectionShow = !collectionShow">
                                 <img src="../assets/images/mypage/X.png" alt="x">
                             </button>
@@ -133,7 +134,7 @@
 
                 <!-------------------------------蒐藏品區塊------------------------------->
                 <div class="tag">
-                    <span v-if="constellation != '-'"> {{ constellation }} </span>
+                    <span v-if="constellation && constellation !== '-'"> {{ constellation }} </span>
                     <span v-if="job"> {{ job }} </span>
                     <span v-if="city"> {{ city }} </span>
                     <span v-if="hobbyA"> {{ hobbyA }} </span>

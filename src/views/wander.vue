@@ -273,7 +273,7 @@ export default {
             };
 
             axios.post(this.ajax_url + "post_card.php").then(response => {
-                const postId = response.data.secondQuery[0].POST_ID;
+                const postId = response.data.secondQuery.POST_ID;
                 const postMemberId = response.data.secondQuery[0].MEMBER_ID;
                 this.post = response.data.firstQuery[0];
                 this.postAvatar = response.data.firstQuery[0];

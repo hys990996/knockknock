@@ -1,6 +1,6 @@
 <template>
     <main class="main-block">
-        <!-- <botComp></botComp> -->
+        <botComp></botComp>
         <div class="main">
             <section class="section section-left">
                 <navbar :show="navBarShow"></navbar>
@@ -30,13 +30,13 @@
 //import 這頁需要的元件
 import navbar from '@/components/navBar.vue'
 import userinfo from '@/components/userInfo.vue'
-// import botComp from '@/components/botComp.vue'
+import botComp from '@/components/botComp.vue'
 
 export default {
     components: {
         navbar,
         userinfo,
-        // botComp
+        botComp
     },
     data() {
         return {

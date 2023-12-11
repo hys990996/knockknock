@@ -138,8 +138,8 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(i, index) in foundActivity" :key="i.ACTIVITY_ID">
-                                        <th scope="row">{{ i.MEMBER_FIRST_NAME
-                                        }}{{ i.MEMBER_LAST_NAME }}</th>
+                                        <th scope="row">{{ i.MEMBER_LAST_NAME }}{{ i.MEMBER_FIRST_NAME
+                                        }}</th>
                                         <td>{{ i.MEMBER_PHONE
                                         }}</td>
                                         <td>{{ i.MEMBER_ACCOUNT

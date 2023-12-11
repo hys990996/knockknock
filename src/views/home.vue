@@ -8,7 +8,8 @@
                         <addPost v-else @keepPostBlock="keepPostBlock" @addPost="addPost"></addPost>
                     </div>
                     <div class="post-items">
-                        <postItem :postItems="postItems" :userImage="userData.userImg" @addComment="addComment">
+                        <postItem :postItems="postItems" :userImage="'data:image;base64,' + userData.userImg"
+                            @addComment="addComment">
                         </postItem>
                     </div>
                 </div>

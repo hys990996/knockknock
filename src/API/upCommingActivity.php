@@ -24,7 +24,10 @@ $data = json_decode(file_get_contents('php://input'), true);
 //   $pdo = new PDO($dsn,$db_user,$db_pass);
 include("conn.php");
 
-  $sql = "SELECT ACTIVITY_NAME, ACTIVITY_IMAGE, ACTIVITY_DATE FROM activity WHERE ACTIVITY_STATUS = :activityStatus";
+  $sql = "SELECT ACTIVITY_NAME, ACTIVITY_IMAGE, ACTIVITY_DATE 
+  FROM activity 
+  WHERE  :activityStatus = ACTIVITY_STATUS
+  AND ACTIVITY_DATE BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 MONTH);";
   $pstmt = $pdo->prepare($sql);
   $pstmt->bindValue(':activityStatus','正常');
   $pstmt->execute();

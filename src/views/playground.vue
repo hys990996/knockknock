@@ -28,10 +28,10 @@
                     <section class="left">
                         <h2>排行榜</h2>
                         <div class="rank-list">
-                            <div class="ranking-item" v-for="(i, key) in schoolRank" :key="key">
+                            <div class="ranking-item" v-for="(i, key) in  schoolRank " :key="key">
 
                                 <h1>第{{ key + 1 }}名</h1>
-                                <img class="player_img" :src="i.MEMBER_PIC" alt="">
+                                <img class="player_img" src="../assets/images/user/userimage-g.png" alt="">
                                 <p>{{ i.MEMBER_LAST_NAME }}{{ i.MEMBER_FIRST_NAME }}</p>
                             </div>
 
@@ -60,9 +60,9 @@
                     <section class="left">
                         <h2>排行榜</h2>
                         <div class="rank-list">
-                            <div class="ranking-item" v-for="(i, key) in snakeRank" :key="key">
+                            <div class="ranking-item" v-for="( i, key ) in  snakeRank " :key="key">
                                 <h1>第{{ key + 1 }}名</h1>
-                                <img class="player_img" :src="i.MEMBER_PIC" alt="">
+                                <img class="player_img" src="../assets/images/user/userimage.png" alt="">
                                 <p>{{ i.MEMBER_LAST_NAME }}{{ i.MEMBER_FIRST_NAME }}</p>
                             </div>
 
@@ -99,7 +99,7 @@ export default {
         const userStore = useUserStore();
         this.MEMBER_ID = userStore.userID;
         this.member_name = userStore.userName;
-        this.user_img = 'data:image/png;base64,' + userStore.userImg;
+        this.user_img = 'data:image/jpg;base64,' + userStore.userImg;
 
         // snake Ranking
         fetch(this.ajax_url + 'snakeRanking.php')

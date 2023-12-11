@@ -298,6 +298,7 @@ export default {
 
         //載入頁面時先讀取用戶資訊填在input裡
         this.getData();
+        // this.getUserinformation()
     },
     methods: {
         async getData() {
@@ -387,6 +388,32 @@ export default {
                 }
             };
         },
+        // getUserinformation() {
+
+        //     fetch(this.ajax_url + 'getUserinfo.php', {
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         method: 'POST',
+        //         mode: 'cors',
+        //         body: JSON.stringify({
+        //             id: this.id,
+        //         })
+        //     })
+        //         .then((res) => {
+        //             return res.json()
+        //         })
+        //         .then((data) => {
+        //             console.log(data);
+        //             const store = useUserStore(); // 使用 useStore() 方法來獲取 store 實例
+        //             store.userName = data[0].MEMBER_FIRST_NAME + data[0].MEMBER_LAST_NAME
+        //             store.userImg = data[0].MEMBER_PIC
+        //         })
+
+
+
+        // },
+
 
 
         ball_animation() {

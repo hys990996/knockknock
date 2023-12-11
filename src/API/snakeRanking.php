@@ -16,7 +16,7 @@ foreach ($res as $key => $value) {
         "GAME_SCORE" => $value["GAME_SCORE"],
         "MEMBER_FIRST_NAME" => $value["MEMBER_FIRST_NAME"],
         "MEMBER_LAST_NAME" => $value["MEMBER_LAST_NAME"],
-        "MEMBER_PIC" => base64_encode($value["MEMBER_PIC"]),
+        "MEMBER_PIC" => base64_encode($value["MEMBER_PIC"]) ,
     ]);
 }
 echo json_encode($resbody);

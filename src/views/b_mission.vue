@@ -245,7 +245,25 @@ export default {
 
             return this.missionFliterID
                 .slice(startIndex, endIndex)
-        },
+        }, getUserName() {
+            const cookie = document.cookie;
+            const cookiesArray = cookie.split(';');
+            let username = '';
+            cookiesArray.forEach((cookieItem) => {
+                const [name, value] = cookieItem.trim().split('=');
+                if (name === 'bUserName') {
+                    username = value;
+                }
+            });
+            // 如果找到 'bUserName' 的 cookie，則取出其值
+            if (username !== '') {
+                console.log(`Username: ${username}`);
+                return username; // 返回取得的 username
+            } else {
+                console.log('找不到 bUserName 的 Cookie');
+                return ''; // 或者返回空字符串或其他你認為合適的值
+            }
+        }
 
 
     },

@@ -6,6 +6,7 @@ $req = json_decode(file_get_contents("php://input"), true);
 $sql = "SELECT * 
         FROM member t1
         JOIN post t2 ON t1.MEMBER_ID = t2.MEMBER_ID
+        -- WHERE  DELETED=0
         ORDER BY RAND() LIMIT 1";
 
 $statement = $pdo->prepare($sql);
