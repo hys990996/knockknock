@@ -1,12 +1,14 @@
 <?php
 
 include("conn.php");
+$id = $req['id'];
 
 $req = json_decode(file_get_contents("php://input"), true);
 $sql = "SELECT * 
         FROM member t1
         JOIN post t2 ON t1.MEMBER_ID = t2.MEMBER_ID
-        -- WHERE  DELETED=0
+        JOIN post_image
+        WHERE DELETED=0 AND POST_IMAGE IS not null
         ORDER BY RAND() LIMIT 1";
 
 $statement = $pdo->prepare($sql);
@@ -14,15 +16,15 @@ $statement->execute();
 $data1 = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 if ($data1) {
-    $memberId = $data1[0]['MEMBER_ID'];
+    $memberId = $data1[0]['POST_ID'];
     $sql = "SELECT * 
             FROM post t3
             JOIN post_image t4 ON t3.POST_ID = t4.POST_ID
-            WHERE t3.MEMBER_ID = :memberId
+            WHERE t3.POST_ID = :postId
             ORDER BY RAND() LIMIT 1";
 
     $statement = $pdo->prepare($sql);
-    $statement->bindParam(':memberId', $memberId, PDO::PARAM_INT);
+    $statement->bindParam(':postId', $postId, PDO::PARAM_INT);
     $statement->execute();
     $data2 = $statement->fetchAll(PDO::FETCH_ASSOC);
 

@@ -84,7 +84,11 @@
                 position: relative;
 
                 @include media-breakpoint-down(md) {
-                    height: 300px;
+                    height: 350px;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    height: 400px;
                 }
 
                 .campervan {

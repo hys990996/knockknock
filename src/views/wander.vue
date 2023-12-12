@@ -24,7 +24,7 @@
                         </div>
                         <div class="middle_start">
                             <!-- ===========開始按鈕============ -->
-                            <button @click="start(); limit(); deduct()" class="start Btn" :class="{ 'limit': cd }"
+                            <button @click="start(); limit()" class="start Btn" :class="{ 'limit': cd }"
                                 :disabled="countingDown">{{ buttonText }}</button>
                         </div>
 
@@ -54,7 +54,7 @@
                                 <img class="close" src="../assets/images/wander/X.png">
                             </button>
                             <div class="post_img">
-                                <img :src="'data:image;base64,' + postImg">
+                                <img :src="'data:image/*;base64,' + postImg">
                             </div>
                             <div class="post_information">
                                 <div class="avatar">
@@ -273,7 +273,8 @@ export default {
             };
 
             axios.post(this.ajax_url + "post_card.php").then(response => {
-                const postId = response.data.secondQuery.POST_ID;
+                console.log(response);
+                const postId = response.data.secondQuery[0].POST_ID;
                 const postMemberId = response.data.secondQuery[0].MEMBER_ID;
                 this.post = response.data.firstQuery[0];
                 this.postAvatar = response.data.firstQuery[0];
