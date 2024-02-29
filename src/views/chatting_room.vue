@@ -1,19 +1,6 @@
 <template>
     <layout>
         <template #section-right-content>
-            <!-- <h1>KNOCK KNOCK 聊天大廳</h1>
-            <input type="text" placeholder="username" v-model="username">
-            <input type="text" placeholder="text" v-model="message">
-            <button @click="addMessage" class="btn btn-outline-secondary">送出</button>
-            <ul class="messages">
-
-                <li v-for="(i, index) in chatroom" :key="index"
-                    :class="{ 'is-right': isCurrentUser(i.username), 'is-left': !isCurrentUser(i.username) }">
-                    <span>
-                        {{ isCurrentUser(i.username) ? 'You' : i.username }}: {{ i.message }}{{ i.time }}
-                    </span>
-                </li>
-            </ul> -->
             <div class="chatroom-start" v-if="!isSubmitted">
                 <h1>加入聊天大廳</h1>
                 <div class="user-img-section">
@@ -31,26 +18,26 @@
             <div class="chatroom" v-else>
                 <!-- <h1>聊天大廳</h1> -->
                 <div class="chat-section">
+
+                    <!-- 聊天內容的區域 -->
                     <ul v-for="(i, key) in chatroom" :key="key" ref="chatContainer">
-
-
-                        <span class="middle" :class="{
-                            'user-right': i.username === username,
-                            'user-left': i.username !== username
-                        }">
+                        <!-- 使用者頭像，判斷是不是當前用戶 -->
+                        <span class="middle"
+                            :class="{ 'user-right': i.username === username, 'user-left': i.username !== username }">
                             <img :src="i.image" alt="">
                         </span>
 
+                        <!-- 訊息內容顯示，並判斷是不是當前用戶 -->
                         <span class="bottom" :class="{
                             'content-right': i.username === username,
                             'content-left': i.username !== username
                         }">
                             <li>{{ i.message }}</li>
                         </span>
-                        <span class="top" :class="{
-                            'user-right': i.username === username,
-                            'user-left': i.username !== username
-                        }">
+
+                        <!-- 使用者名稱、發送時間，並判斷是不是當前用戶 -->
+                        <span class="top"
+                            :class="{ 'user-right': i.username === username, 'user-left': i.username !== username }">
 
                             <li class="username">{{ i.username }}</li>
                             <li> {{ i.time }}</li>
@@ -105,47 +92,7 @@ function writeUserData(userID, name, email) {
             email
         })
 }
-
-// writeUserData(3, "測試測試", "ttt@gmail.com");
-
 const messageRef = ref(db, 'chatroom/messages');
-
-// export default {
-//     components: {
-//         layout
-//     },
-//     data() {
-//         return {
-//             message: " ",
-//             chatroom: [],
-//             username: " ",
-
-//         }
-//     },
-//     methods: {
-//         isCurrentUser(username) {
-//             return username === this.username; // 返回 true 或 false
-//         },
-//         addMessage() {
-//             const date = new Date().getTime();
-//             const newMessage = push(messageRef);
-//             set(newMessage, {
-//                 username: this.username,
-//                 message: this.message,
-//                 time: new Date(date).toLocaleString()
-//             })
-//             this.message = ''
-//         },
-
-//     },
-//     mounted() {
-//         onValue(messageRef, (snapshot) => {
-//             const data = snapshot.val();
-//             // console.log(data)
-//             this.chatroom = data
-//         })
-//     }
-// }
 
 export default {
     components: {
@@ -183,24 +130,24 @@ export default {
         }
     },
     methods: {
-        forceRerender() {
-            this.$forceUpdate();
+        forceRerender() { // 強制重新渲染
+            this.$forceUpdate(); // 使用$forceUpdate 強制重新渲染
         },
+
         addMessage() {
             const date = new Date().getTime();
-            const newMessage = push(messageRef);
-            let image = this.currentMessageImage || 'src/assets/images/user/userimage.png'; // 設置預設值
+            const newMessage = push(messageRef); // 推到firebase
+            let image = this.currentMessageImage || 'src/assets/images/user/userimage.png';
 
             if (this.message !== "") {
                 set(newMessage, {
                     username: this.username,
                     message: this.message,
                     time: new Date(date).toLocaleString(),
-                    image: image, // 新增 image 屬性
+                    image: image,
                 })
                 this.message = '';
-
-                this.$nextTick(() => {
+                this.$nextTick(() => { // 傳送訊息後用nextTick確保DOM更新後再次滾到底部
                     this.scrollToBottom();
                 });
 
@@ -209,12 +156,12 @@ export default {
             }
         },
         submitUsername() {
-            if (this.tempUsername.trim() !== "") {
+            if (this.tempUsername.trim() !== "") { // 用trim把兩側空格去掉
                 this.username = this.tempUsername;
                 this.tempUsername = "";
                 this.isSubmitted = true;
 
-                this.$nextTick(() => {
+                this.$nextTick(() => { // 進入頁面用nextTick確保DOM更新後滾動到底部
                     this.scrollToBottom();
                 });
 
@@ -224,26 +171,20 @@ export default {
         },
         selectImg(image) {
             this.currentMessageImage = image || '';
-            console.log(this.currentMessageImage);
             this.active = !this.active;
             this.activeImage = image
-        }, scrollToBottom() {
-            // const chatContainer = this.$refs.chatContainer;
+        },
+        scrollToBottom() {
             const chatContainer = document.querySelector('.slot-content')
-            console.log("Trying to scroll to bottom...");
             if (chatContainer) {
-                console.log("chatContainer test is available");
                 if (chatContainer.scrollHeight > 0) {
                     setTimeout(() => {
                         chatContainer.scrollTo(0, chatContainer.scrollHeight)
-                        console.log("Scrolled successfullyfsfsfs!");
                     }, 10);
                     console.log(chatContainer.scrollHeight);
-                    // chatContainer.scroll(0, chatContainer.scrollHeight);
                     chatContainer.scroll({
                         top: 9000,
                     });
-                    console.log("Scrolled successfully!");
                 } else {
                     console.warn('chatContainer.scrollHeight is 0. Cannot scroll to bottom.')
                 }
@@ -257,8 +198,8 @@ export default {
 
     mounted() {
         this.forceRerender();
-        onValue(messageRef, (snapshot) => {
-            const data = snapshot.val();
+        onValue(messageRef, (snapshot) => { // 監聽firebase變化
+            const data = snapshot.val(); // 用snapshot抓到data的數據
             this.chatroom = data;
             this.$nextTick(() => {
                 this.scrollToBottom();
@@ -267,8 +208,6 @@ export default {
         this.$nextTick(() => {
             const chatContainer = this.$refs.chatContainer;
             if (chatContainer) {
-                // console.log("chatContainer is available");
-
             } else {
                 console.error("chatContainer is undefined.");
             }
