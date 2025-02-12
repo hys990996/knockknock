@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fantage9/buefy-vue3": "^0.9.21-alpha.14",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "axios": "^1.6.1",
     "bootstrap": "^5.3.2",
     "bootstrap-vue": "^2.23.1",
+    "buefy": "npm:@ntohq/buefy-next@^0.2.0",
+    "dayjs": "^1.11.13",
     "firebase": "^10.5.2",
     "gsap": "^3.12.2",
     "imgix.js": "^4.0.1",
@@ -20,6 +24,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "sweetalert2": "^11.16.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

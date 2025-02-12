@@ -1,102 +1,124 @@
-<template>
-    <div class="b_index">
-        <div class="b_index_login">
-            <router-link :to="{ name: 'home' }" class="nav-brandlogo">
-                <img src="../assets/images/logo/logo_desk.svg" alt="logo" />
-            </router-link>
-            <h1>管理員登入</h1>
-            <div class="login-section">
+<script setup>
+import { ref } from "vue";
+import { useApi } from "../util/useApi";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">使用者名稱</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        v-model="username">
+const { b_login } = useApi();
+const router = useRouter();
+const loading = ref(false);
 
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">使用者密碼</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
-                </div>
-                <p v-if="error">請重新檢查帳號密碼</p>
-                <!-- <p>請輸入帳號或密碼</p> -->
-                <button @click="getData" type="submit" class="btn btn-warning">送出
-                </button>
-            </div>
+const username = ref("");
+const password = ref("");
 
-        </div>
-
-    </div>
-</template>
-
-<script>
-
-export default {
-    data() {
-        return {
-            username: '',
-            password: '',
-            error: false,
-            Verificationcode: [],
-            ajax_url: import.meta.env.VITE_AJAX_URL,
-        }
-    },
-    methods: {
-        getData() {
-            fetch(this.ajax_url + "b_login.php", {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: this.username,
-                    password: this.password
-                })
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {
-
-                    console.log(data)
-                    console.log(data.success);
-                    if (data.success == true) {
-                        const expirationDate = new Date();
-                        expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
-                        const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
-                        document.cookie = `bUserId=${data.id}; expires=${expires} ; bUserName=${data.username}`
-                        document.cookie = `bUserName=${data.username};expires=${expires} `
-                        this.$router.push('/backend/member_management');
-                        console.log(data);
-
-                    } else {
-                        this.error = true;
-                        // alert("請重新檢查帳號密碼")
-                    }
-                })
-            // 在.then()方法鏈中處理伺服器回應
-            // .then((data) => {
-            //     if (data.success) {
-            //         // 登入成功，導向到另一個頁面
-            //         // 使用路由（如果使用 Vue Router）：
-            //         this.$router.push('/dashboard'); // 假設 '/dashboard' 是您想要導向的路徑
-
-            //         // 或者直接使用 JavaScript 跳轉：
-            //         // window.location.href = '/dashboard';
-            //     } else {
-            //         // 登入失敗，可能顯示錯誤訊息或採取其他操作
-            //         console.log('登入失敗');
-            //     }
-            // })
-        },
-        changeCode() {
-            this.Verificationcode
-        }
-    },
-    mounted() {
-
-    }
-}
+const login = async () => {
+  loading.value = true;
+  const response = await b_login({
+    username: username.value,
+    password: password.value,
+  });
+  loading.value = false;
+  if (!response.data.success) {
+    Swal.fire({
+      title: "登入失敗",
+      text: "請重新確認您的帳號與密碼",
+    });
+    return;
+  }
+  const expirationDate = new Date();
+  expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
+  const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
+  document.cookie = `bUserId=${response.data.id}; expires=${expires} ; bUserName=${response.data.username}`;
+  document.cookie = `bUserName=${response.data.username};expires=${expires} `;
+  router.push("/backend/member_management");
+};
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+  <div class="b_index">
+    <b-loading is-full-page v-model="loading" :can-cancel="true"></b-loading>
+    <div class="b_index_login">
+      <router-link :to="{ name: 'home' }" class="nav-brandlogo">
+        <img src="../assets/images/logo/logo_desk.svg" alt="logo" />
+      </router-link>
+      <h1>後台管理員登入</h1>
+      <div class="login-section">
+        <div class="mb-3">
+          <b-field label="使用者名稱">
+            <b-input
+              v-model="username"
+              placeholder="請輸入使用者名稱"
+              size="is-medium"
+            ></b-input>
+          </b-field>
+        </div>
+        <div class="mb-3">
+          <b-field label="使用者密碼">
+            <b-input
+              type="password"
+              password-reveal
+              v-model="password"
+              size="is-medium"
+              placeholder="請輸入密碼"
+              @keydown.enter="login"
+            ></b-input>
+          </b-field>
+        </div>
+        <b-button type="is-primary" outlined @click="login" size="is-large"
+          >登入</b-button
+        >
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- <script>
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      error: false,
+      Verificationcode: [],
+      ajax_url: import.meta.env.VITE_AJAX_URL,
+    };
+  },
+  methods: {
+    async getData() {
+      const response = await fetch(
+        "https://tibamef2e.com/thd103/g2/dist/api/" + "b_login.php",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: this.username,
+            password: this.password,
+          }),
+        }
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          if (data.success == true) {
+            const expirationDate = new Date();
+            expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
+            const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
+            document.cookie = `bUserId=${data.id}; expires=${expires} ; bUserName=${data.username}`;
+            document.cookie = `bUserName=${data.username};expires=${expires} `;
+            this.$router.push("/backend/member_management");
+          } else {
+            this.error = true;
+          }
+        });
+    },
+    changeCode() {
+      this.Verificationcode;
+    },
+  },
+  mounted() {},
+};
+</script> -->
