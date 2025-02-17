@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/home.vue";
-import Backlayout from "../components/backlayout.vue";
+import Backlayout from "../components/Backlayout.vue";
 /**
  * 後台路由守衛
  */

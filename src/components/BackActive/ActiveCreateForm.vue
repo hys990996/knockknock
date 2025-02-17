@@ -24,7 +24,6 @@ const regionOption = [
 ];
 
 const formData = reactive({
-  ACTIVITY_ID: "",
   ACTIVITY_NAME: "",
   ACTIVITY_ADDRESS: "",
   ACTIVITY_DATE: null,
@@ -143,12 +142,6 @@ const submit = async () => {
         placeholder="請輸入剩餘名額"
         :min="0"
         v-model:value="formData.ACTIVITY_REMAINING_PLACES"
-      />
-    </n-form-item>
-    <n-form-item label="活動編號" class="activeForm__col6">
-      <n-input
-        v-model:value="formData.ACTIVITY_ID"
-        placeholder="請輸入活動編號"
       />
     </n-form-item>
     <n-form-item label="活動區域" class="activeForm__col6">
