@@ -23,6 +23,6 @@ $data = json_decode(file_get_contents('php://input'), true);
   $sql = "SELECT ACTIVITY_ID,ACTIVITY_NAME,ACTIVITY_ADDRESS,ACTIVITY_DATE,ACTIVITY_STARTDATE,ACTIVITY_ENDDATE,ACTIVITY_QUOTA,ACTIVITY_REMAINING_PLACES,ACTIVITY_STATUS FROM activity";
   $pstmt = $pdo->prepare($sql);
   $pstmt->execute();
-  $active = $pstmt->fetchAll();
+  $active = $pstmt->fetchAll(PDO::FETCH_ASSOC);
   echo json_encode($active);
 ?>

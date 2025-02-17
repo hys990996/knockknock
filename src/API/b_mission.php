@@ -22,7 +22,7 @@ $sql = "SELECT * from mission";
 $pstmt = $pdo -> prepare($sql);
 
 $pstmt->execute();
-$memberList = $pstmt -> fetchAll();
+$memberList = $pstmt -> fetchAll(PDO::FETCH_ASSOC);
 
 
 

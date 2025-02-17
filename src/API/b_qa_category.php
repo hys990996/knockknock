@@ -21,6 +21,6 @@ include("conn.php");
 $sql = "select * from question_category";
 $pstmt = $pdo->prepare($sql);
 $pstmt->execute();
-$qa_category = $pstmt->fetchAll();
+$qa_category = $pstmt->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($qa_category);
 ?>

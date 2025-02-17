@@ -23,6 +23,6 @@ include("conn.php");
 $sql = "select m1.MEMBER_FIRST_NAME,m1.MEMBER_LAST_NAME,m1.MEMBER_ACCOUNT,m1.MEMBER_PHONE,r1.REGISTER_TOTAL_PRICE,r1.REGISTER_COUNT,r1.REGISTER_PAIED,r1.ACTIVITY_ID from register r1 left join activity a1 on a1.ACTIVITY_ID = r1.ACTIVITY_ID left join member m1 on r1.MEMBER_ID = m1.MEMBER_ID";
 $pstmt = $pdo->prepare($sql);
 $pstmt->execute();
-$inquireActivity = $pstmt->fetchAll();
+$inquireActivity = $pstmt->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($inquireActivity);
 ?>

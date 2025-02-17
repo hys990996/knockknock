@@ -1,9 +1,7 @@
 .bmain-block {
-  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  height: 100vh;
 
   .blurred {
     filter: blur(5.5px);
@@ -11,8 +9,7 @@
 
   .bmain {
     display: flex;
-    height: 100%;
-
+    height: 100vh;
     .bsection-left {
       width: 20%;
 
@@ -26,42 +23,13 @@
       width: 80%;
 
       &__tableSection {
+        overflow-y: auto;
         flex: 1;
-        padding: 48px 32px;
+        padding: 32px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 16px;
       }
     }
-  }
-}
-
-.topBar {
-  display: flex;
-  justify-content: space-between;
-  padding: 24px;
-  background-color: #7957d5;
-
-  &__title {
-    color: white;
-  }
-
-  &__info {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-  &__infoImg {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-image: url("/src/assets/images/user/userimage.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  &__infoName {
-    font-size: 24px;
-    color: white;
   }
 }

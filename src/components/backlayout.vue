@@ -6,14 +6,19 @@
         <backnavBar></backnavBar>
       </section>
       <section class="bsection-right">
-        <div class="topBar">
-          <h1 class="topBar__title">{{ route.meta.title }}</h1>
-          <div class="topBar__info">
-            <div class="topBar__infoImg"></div>
-            <p class="topBar__infoName">{{ userName }}</p>
-            <b-button @click="logout" type="is-info" inverted>登出</b-button>
-          </div>
-        </div>
+        <b-navbar class="topBar">
+          <template #brand>
+            <b-navbar-item tag="h1" class="topBar__title">
+              {{ route.meta.title }}
+            </b-navbar-item>
+          </template>
+          <template #end>
+            <n-dropdown :options="option">
+              <n-button type="info">{{ userName }}</n-button>
+            </n-dropdown>
+          </template>
+        </b-navbar>
+
         <div class="bsection-right__tableSection">
           <router-view></router-view>
         </div>
@@ -25,11 +30,12 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import backnavBar from "../components/backnavBar.vue";
-import { computed } from "vue";
+import { computed, h } from "vue";
 import Swal from "sweetalert2";
 import { useApi } from "../util/useApi";
 import { useLoadingStore } from "../store/loading";
 import { storeToRefs } from "pinia";
+import { NButton, NTag } from "naive-ui";
 
 const router = useRouter();
 const route = useRoute();
@@ -37,6 +43,40 @@ const { b_logout } = useApi();
 const loadingStore = useLoadingStore();
 const { loading } = storeToRefs(loadingStore);
 const { setLoading } = loadingStore;
+
+const logout = async () => {
+  Swal.fire({
+    title: "再次確認!",
+    text: "確認是否登出",
+    showCancelButton: true,
+    confirmButtonText: "確定登出",
+    cancelButtonText: "取消",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      setLoading(true);
+      await b_logout();
+      setLoading(false);
+      deletCookie("bUserName");
+      deletCookie("bUserId");
+      router.push({ path: "/backend" });
+    }
+  });
+};
+
+const option = [
+  {
+    label: "上線中",
+    key: "status",
+    disabled: true,
+  },
+  {
+    label: "登出",
+    key: "status",
+    props: {
+      onClick: logout,
+    },
+  },
+];
 
 const userName = computed(() => {
   const cookie = document.cookie;
@@ -54,24 +94,26 @@ const userName = computed(() => {
 const deletCookie = (name) => {
   document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 };
-
-const logout = async () => {
-  Swal.fire({
-    title: "再次確認!",
-    text: "確認是否登出",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "確定登出",
-    cancelButtonText: "取消",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      setLoading(true);
-      await b_logout();
-      setLoading(false);
-      deletCookie("bUserName");
-      deletCookie("bUserId");
-      router.push({ path: "/backend" });
-    }
-  });
-};
 </script>
+
+<style lang="scss" scoped>
+.topBar {
+  background-color: #7957d5;
+  padding: 12px;
+
+  &__title {
+    color: white;
+  }
+
+  &__info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__dropdown {
+    display: flex;
+    background-color: white;
+  }
+}
+</style>

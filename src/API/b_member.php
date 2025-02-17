@@ -24,7 +24,7 @@ $sql = "select MEMBER_ID, MEMBER_LAST_NAME, MEMBER_FIRST_NAME, MEMBER_ACCOUNT,ME
 $pstmt = $pdo -> prepare($sql);
 
 $pstmt->execute();
-$memberList = $pstmt -> fetchAll();
+$memberList = $pstmt -> fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($memberList);
 
 ?>

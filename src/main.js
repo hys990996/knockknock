@@ -1,11 +1,12 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import Buefy from "@fantage9/buefy-vue3";
-import "@fantage9/buefy-vue3/dist/buefy.css";
+import Buefy from "buefy";
+import "buefy/dist/buefy.css";
 import router from "./router";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import "@fortawesome/fontawesome-free/css/all.css";
+import naive from "naive-ui";
 
 //引用 bootstrap
 import "bootstrap/dist/css/bootstrap.css";
@@ -25,6 +26,7 @@ pinia.use(piniaPluginPersistedstate);
 createApp(App)
   .use(router)
   .use(pinia)
+  .use(naive)
   .use(Buefy, {
     defaultIconPack: "mdi",
   })

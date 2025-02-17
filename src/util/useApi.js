@@ -66,6 +66,70 @@ export const useApi = () => {
     });
     return result.data;
   };
+  const updateMemberStatus = async (config) => {
+    const result = await axios.post(
+      `${baseUrl}update_b_member_status.php`,
+      config,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return result.data;
+  };
+  const updataQa = async (config) => {
+    const result = await axios.post(`${baseUrl}b_qa_update.php`, config, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    });
+    return result.data;
+  };
+  const updataMission = async (config) => {
+    const result = await axios.post(`${baseUrl}update_b_mission.php`, config, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    });
+    return result.data;
+  };
+  const getDetailActive = async (data) => {
+    const result = await axios.get(
+      `${baseUrl}b_detailActive.php?ACTIVEID=${data}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    );
+    return result.data;
+  };
+  const upDateActivityStatus = async (config) => {
+    const result = await axios.post(
+      `${baseUrl}b_activity_updateStatus.php`,
+      config,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    );
+    return result.data;
+  };
+  const createActive = async (config) => {
+    const result = await axios.post(`${baseUrl}b_addActivity.php`, config, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    });
+    return result.data;
+  };
   return {
     b_login,
     b_getUser,
@@ -75,5 +139,11 @@ export const useApi = () => {
     b_qaList,
     b_qaListOption,
     b__mission,
+    updateMemberStatus,
+    updataQa,
+    updataMission,
+    getDetailActive,
+    upDateActivityStatus,
+    createActive,
   };
 };

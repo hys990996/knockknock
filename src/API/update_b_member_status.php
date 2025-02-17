@@ -30,11 +30,7 @@ $pstmt->bindValue(":memberId",$memberID);
 
 $pstmt->execute();
 
-$selectsql = "select * from  member ";
-$pstmt1= $pdo->prepare($selectsql);
-$pstmt1->execute();
-$respbody = $pstmt1->fetchAll();
-foreach ($respbody as $index=>$row){
-    echo json_encode($row["MEMBER_STATUS"]);
-}
+$respBody["success"] = true;
+$respBody["message"] = '新增成功';
+echo json_encode($respBody);
 ?>

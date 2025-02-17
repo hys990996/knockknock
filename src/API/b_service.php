@@ -20,14 +20,24 @@ include("conn.php");
 
 // $sql = "select * from contact;";
 
-$sql = "SELECT * FROM contact c
-        JOIN member m ON c.CONTACT_MEMBER_ID = m.MEMBER_ID";
+$sql = "SELECT 
+            c.CONTACT_ID, 
+            c.CONTACT_CONTACT, 
+            c.CONTACT_CREATETIME, 
+            c.CONTACT_REPLIED, 
+            c.CONTACT_REPLY_CONTENT,
+            m.MEMBER_ACCOUNT, 
+            m.MEMBER_LAST_NAME, 
+            m.MEMBER_FIRST_NAME 
+        FROM contact c
+        LEFT JOIN member m ON c.CONTACT_MEMBER_ID = m.MEMBER_ID
+        ORDER BY c.CONTACT_CREATETIME DESC";  // 按创建时间降序排列
 
 
 $pstmt = $pdo -> prepare($sql);
 
 $pstmt->execute();
-$servicerList = $pstmt -> fetchAll();
+$servicerList = $pstmt -> fetchAll(PDO::FETCH_ASSOC);
 
 
 

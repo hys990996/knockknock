@@ -20,6 +20,6 @@ include("conn.php");
  $sql = "select q1.QUESTION_ID, q1.QUESTION_TITLE,q1.QUESTION_CONTENT,q2.QUESTION_CATEGORY_ID,q2.QUESTION_CATEGORY_NAME from question q1 left join question_category q2 on q1.QUESTION_CATEGORY_ID = q2.QUESTION_CATEGORY_ID";
  $pstmt = $pdo->prepare($sql);
  $pstmt->execute();
- $qa = $pstmt->fetchAll();
+ $qa = $pstmt->fetchAll(PDO::FETCH_ASSOC);
  echo json_encode($qa);
  ?>
