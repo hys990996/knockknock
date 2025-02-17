@@ -4,7 +4,7 @@ import { useMessage } from "naive-ui";
 import { useLoadingStore } from "../../store/loading";
 
 defineOptions({
-  name: "QaForm",
+  name: "BackMemberActiveForm",
 });
 
 const props = defineProps({

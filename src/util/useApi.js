@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const useApi = () => {
-  const baseUrl = "https://tibamef2e.com/thd103/g2/dist/api/";
+  const baseUrl = import.meta.env.VITE_AJAX_URL;
   const b_login = async (config) => {
     const result = await axios.post(`${baseUrl}b_login.php`, config, {
       headers: {

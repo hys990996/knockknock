@@ -5,6 +5,7 @@ import { useLoadingStore } from "../../store/loading";
 import { reactive } from "vue";
 import FileUpload from "../FileUpload/FileUpload.vue";
 import dayjs from "dayjs";
+import { DEFAULTDAY } from "../../util/const";
 
 defineOptions({
   name: "ActiveCreateForm",
@@ -36,25 +37,29 @@ const formData = reactive({
   ACTIVITY_REGION: "",
   ACTIVITY_QUOTA: "",
   ACTIVITY_REMAINING_PLACES: "",
+  ACTIVITY_DESCRIBE: "",
 });
 
 const submit = async () => {
   const config = {
     ...formData,
-    ACTIVITY_DATE: dayjs(formData.ACTIVITY_DATE),
-    ACTIVITY_ENDDATE: dayjs(formData.ACTIVITY_ENDDATE),
-    ACTIVITY_STARTDATE: dayjs(formData.ACTIVITY_STARTDATE),
+    ACTIVITY_DATE: dayjs(formData.ACTIVITY_DATE).format(DEFAULTDAY),
+    ACTIVITY_ENDDATE: dayjs(formData.ACTIVITY_ENDDATE).format(DEFAULTDAY),
+    ACTIVITY_STARTDATE: dayjs(formData.ACTIVITY_STARTDATE).format(DEFAULTDAY),
+    ACTIVITY_GROUP_PRICE: formData.ACTIVITY_GROUP_PRICE.toString(),
+    ACTIVITY_QUOTA: formData.ACTIVITY_QUOTA.toString(),
+    ACTIVITY_SINGLE_PRICE: formData.ACTIVITY_SINGLE_PRICE.toString(),
+    ACTIVITY_REMAINING_PLACES: formData.ACTIVITY_REMAINING_PLACES.toString(),
     ACTIVITY_IMAGE: formData.ACTIVITY_IMAGE.split(",")[1],
   };
   loadingStore.setLoading(true);
   const result = await createActive(config);
   loadingStore.setLoading(false);
-  if (result) {
+  if (result.success) {
     message.success("編輯成功");
     return;
   }
   message.error("編輯失敗");
-  console.log(formData);
 };
 </script>
 <template>
@@ -168,7 +173,7 @@ const submit = async () => {
     <n-form-item label="活動描述" class="activeForm__col6">
       <n-input
         type="textarea"
-        :value="formData.ACTIVITY_DESCRIBE"
+        v-model:value="formData.ACTIVITY_DESCRIBE"
         placeholder="請輸入活動描述"
       />
     </n-form-item>

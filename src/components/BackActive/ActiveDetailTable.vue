@@ -5,7 +5,7 @@ import { DEFAULTPAGINATION } from "../../util/const";
 import { useApi } from "../../util/useApi";
 import { useLoadingStore } from "../../store/loading";
 defineOptions({
-  name: "BackMemberActiveTable",
+  name: "BackMemberActiveDetailTable",
 });
 
 const props = defineProps({
