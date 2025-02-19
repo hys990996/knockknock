@@ -11,10 +11,11 @@
 
   .b_index_login {
     border-radius: 30px;
-    width: 50%;
-    padding: 10px;
+    width: 40%;
+    padding: 32px;
     display: flex;
     flex-direction: column;
+    gap: 16px;
     justify-content: center;
     align-items: center;
     background-color: #f2effb;
@@ -37,7 +38,7 @@
     flex-direction: column;
     justify-content: center;
     margin: 10px 0;
-    gap: 16px;
+    gap: 32px;
 
     p {
       color: red;
