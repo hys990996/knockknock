@@ -56,7 +56,10 @@ const submit = async () => {
         <n-input disabled :value="formData.MEMBER_ACCOUNT" />
       </n-form-item>
       <n-form-item label="姓名" path="formData.userName">
-        <n-input disabled :value="formData.userName" />
+        <n-input
+          disabled
+          :value="`${formData.MEMBER_LAST_NAME}${formData.MEMBER_FIRST_NAME}`"
+        />
       </n-form-item>
       <n-form-item label="電話" path="formData.MEMBER_PHONE">
         <n-input disabled :value="formData.MEMBER_PHONE" />
