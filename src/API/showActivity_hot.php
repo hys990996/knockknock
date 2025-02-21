@@ -24,8 +24,8 @@ include("conn.php");
 
 $sql = "SELECT * FROM activity WHERE ACTIVITY_STATUS = :activityStatus ORDER BY ACTIVITY_ID DESC LIMIT 3";
   $pstmt = $pdo->prepare($sql);
-  $pstmt->bindValue(':activityStatus','正常');
+  $pstmt->bindValue(':activityStatus','正常', PDO::PARAM_STR);
   $pstmt->execute();
-  $active = $pstmt->fetchAll();
+  $active = $pstmt->fetchAll(PDO::FETCH_ASSOC);
   echo json_encode($active);
 ?>

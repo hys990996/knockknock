@@ -130,6 +130,23 @@ export const useApi = () => {
     });
     return result.data;
   };
+  const getRegionActive = async (data) => {
+    const result = await axios.get(`${baseUrl}reigonActivity.php?`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: data,
+    });
+    return result.data;
+  };
+  const getActive = async () => {
+    const result = await axios.get(`${baseUrl}showActivity.php?`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return result.data;
+  };
   return {
     b_login,
     b_getUser,
@@ -145,5 +162,7 @@ export const useApi = () => {
     getDetailActive,
     upDateActivityStatus,
     createActive,
+    getRegionActive,
+    getActive,
   };
 };

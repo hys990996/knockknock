@@ -2,7 +2,7 @@
 import { useApi } from "../../util/useApi";
 import { useMessage } from "naive-ui";
 import { useLoadingStore } from "../../store/loading";
-import { reactive } from "vue";
+import { ref } from "vue";
 import FileUpload from "../FileUpload/FileUpload.vue";
 import dayjs from "dayjs";
 import { DEFAULTDAY } from "../../util/const";
@@ -23,7 +23,7 @@ const regionOption = [
   { label: "離島", value: "離島" },
 ];
 
-const formData = reactive({
+const formData = ref({
   ACTIVITY_NAME: "",
   ACTIVITY_ADDRESS: "",
   ACTIVITY_DATE: null,
@@ -41,15 +41,18 @@ const formData = reactive({
 
 const submit = async () => {
   const config = {
-    ...formData,
-    ACTIVITY_DATE: dayjs(formData.ACTIVITY_DATE).format(DEFAULTDAY),
-    ACTIVITY_ENDDATE: dayjs(formData.ACTIVITY_ENDDATE).format(DEFAULTDAY),
-    ACTIVITY_STARTDATE: dayjs(formData.ACTIVITY_STARTDATE).format(DEFAULTDAY),
-    ACTIVITY_GROUP_PRICE: formData.ACTIVITY_GROUP_PRICE.toString(),
-    ACTIVITY_QUOTA: formData.ACTIVITY_QUOTA.toString(),
-    ACTIVITY_SINGLE_PRICE: formData.ACTIVITY_SINGLE_PRICE.toString(),
-    ACTIVITY_REMAINING_PLACES: formData.ACTIVITY_REMAINING_PLACES.toString(),
-    ACTIVITY_IMAGE: formData.ACTIVITY_IMAGE.split(",")[1],
+    ...formData.value,
+    ACTIVITY_DATE: dayjs(formData.value.ACTIVITY_DATE).format(DEFAULTDAY),
+    ACTIVITY_ENDDATE: dayjs(formData.value.ACTIVITY_ENDDATE).format(DEFAULTDAY),
+    ACTIVITY_STARTDATE: dayjs(formData.value.ACTIVITY_STARTDATE).format(
+      DEFAULTDAY
+    ),
+    ACTIVITY_GROUP_PRICE: formData.value.ACTIVITY_GROUP_PRICE.toString(),
+    ACTIVITY_QUOTA: formData.value.ACTIVITY_QUOTA.toString(),
+    ACTIVITY_SINGLE_PRICE: formData.value.ACTIVITY_SINGLE_PRICE.toString(),
+    ACTIVITY_REMAINING_PLACES:
+      formData.value.value.ACTIVITY_REMAINING_PLACES.toString(),
+    ACTIVITY_IMAGE: formData.value.ACTIVITY_IMAGE.split(",")[1],
   };
   loadingStore.setLoading(true);
   const result = await createActive(config);

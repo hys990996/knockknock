@@ -6,55 +6,68 @@
         src="../assets/images/logo/logo_desk.svg"
         alt="logo"
       />
-      <b-menu>
-        <b-menu-list :activable="false">
-          <b-menu-item label="會員專區">
-            <b-menu-item
-              label="會員管理"
-              tag="router-link"
-              :to="{ name: 'b_member' }"
-            >
-            </b-menu-item>
-          </b-menu-item>
-          <b-menu-item label="會員活動專區">
-            <b-menu-item
-              label="活動管理"
-              icon="account"
-              tag="router-link"
-              :to="{ name: 'b_activity' }"
-            ></b-menu-item>
-          </b-menu-item>
-          <b-menu-item label="客服專區">
-            <b-menu-item
-              label="客服管理"
-              icon="account"
-              tag="router-link"
-              :to="{ name: 'b_service' }"
-            ></b-menu-item>
-          </b-menu-item>
-          <b-menu-item label="任務專區">
-            <b-menu-item
-              label="任務管理"
-              icon="account"
-              tag="router-link"
-              :to="{ name: 'b_mission' }"
-            ></b-menu-item>
-          </b-menu-item>
-          <b-menu-item label="會員問題專區">
-            <b-menu-item
-              label="常見問題管理"
-              icon="account"
-              tag="router-link"
-              :to="{ name: 'b_qa' }"
-            ></b-menu-item>
-          </b-menu-item>
-        </b-menu-list>
-      </b-menu>
+      <n-menu
+        :options="menuOptions"
+        @update:value="handleUpdateValue"
+        :default-value="$route.name"
+      />
     </nav>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
-const open = ref(false);
+import {
+  BookOutline,
+  PersonOutline,
+  PaperPlaneSharp,
+  PhonePortraitOutline,
+  PrismOutline,
+} from "@vicons/ionicons5";
+import { NIcon } from "naive-ui";
+import { h } from "vue";
+import { RouterLink } from "vue-router";
+
+const renderIcon = (icon) => {
+  return () => h(NIcon, null, { default: () => h(icon) });
+};
+
+const createLabel = (routeName, label) => {
+  return h(
+    RouterLink,
+    {
+      to: {
+        name: routeName,
+      },
+    },
+    { default: () => label }
+  );
+};
+
+const menuOptions = [
+  {
+    label: () => createLabel("b_member", "會員管理"),
+    key: "b_member",
+    icon: renderIcon(PersonOutline),
+  },
+  {
+    label: () => createLabel("b_activity", "活動管理"),
+    key: "b_activity",
+    icon: renderIcon(PrismOutline),
+  },
+  {
+    label: () => createLabel("b_service", "客服管理"),
+    key: "b_service",
+    icon: renderIcon(PhonePortraitOutline),
+  },
+  {
+    label: () => createLabel("b_mission", "任務管理"),
+    key: "b_mission",
+    icon: renderIcon(BookOutline),
+  },
+  {
+    label: () => createLabel("b_qa", "常見問題管理"),
+    key: "b_qa",
+    icon: renderIcon(PaperPlaneSharp),
+  },
+];
 </script>

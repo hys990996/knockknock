@@ -98,11 +98,11 @@ const deletCookie = (name) => {
 
 <style lang="scss" scoped>
 .topBar {
-  background-color: #7957d5;
+  background-color: #f2effb;
   padding: 12px;
 
   &__title {
-    color: white;
+    color: #7957d5;
   }
 
   &__info {

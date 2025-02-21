@@ -1,6 +1,6 @@
 <script setup>
 import { useApi } from "../util/useApi";
-import { onMounted, ref, markRaw, nextTick, computed, reactive } from "vue";
+import { onMounted, ref, shallowRef, nextTick, computed, reactive } from "vue";
 import { useLoadingStore } from "../store/loading";
 import MemberTable from "../components/BackMember/MemberTable.vue";
 import MemberForm from "../components/BackMember/MemberForm.vue";
@@ -22,7 +22,7 @@ const activeTab = ref("0");
 const tabs = reactive([
   {
     name: "會員列表",
-    component: markRaw(MemberTable),
+    component: shallowRef(MemberTable),
     id: "0",
     bind: computed(() => ({
       tableData: data.value,
@@ -37,7 +37,7 @@ const editAddTab = (value) => {
   if (existingTabIndex === -1) {
     const newTab = {
       name: `${value.MEMBER_LAST_NAME}${value.MEMBER_FIRST_NAME}`,
-      component: markRaw(MemberForm),
+      component: shallowRef(MemberForm),
       id: value.MEMBER_ID,
       bind: { memberData: value },
       isClosed: true,
