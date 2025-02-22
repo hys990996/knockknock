@@ -1,17 +1,18 @@
 <script setup>
 import layout from "@/components/layout.vue";
 import ActiveCard from "../components/Active/ActiveCard.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useApi } from "../util/useApi";
 const { getActive } = useApi();
 const activeData = ref([]);
+const isLoading = ref(false);
 const getAllActive = async () => {
+  isLoading.value = true;
   const response = await getActive();
+  isLoading.value = false;
   activeData.value = response;
 };
-onMounted(() => {
-  getAllActive();
-});
+getAllActive();
 </script>
 <template>
   <layout>
@@ -32,31 +33,13 @@ onMounted(() => {
               <img src="../assets/images/activity/party friend.png" alt="" />
             </div>
           </div>
-          <div class="banner-pic">
-            <!-- 圖片 -->
-          </div>
         </div>
 
         <!-- hot topic bar -->
         <div class="sub-bar">
           <div>最新活動</div>
         </div>
-        <n-carousel
-          effect="card"
-          prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
-          next-slide-style="transform: translateX(50%) translateZ(-800px);"
-          style="height: 350px"
-          :show-dots="false"
-        >
-          <n-carousel-item
-            v-for="item in activeData"
-            :key="item.ACTIVITY_ID"
-            :style="{ width: '60%' }"
-          >
-            <ActiveCard v-if="activeData" :data="item" />
-          </n-carousel-item>
-        </n-carousel>
-
+        <ActiveCard :is-loading="isLoading" :data="activeData" />
         <!-- activity region bar -->
         <div class="sub-bar">
           <div>活動地區</div>
