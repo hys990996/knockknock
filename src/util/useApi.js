@@ -139,11 +139,12 @@ export const useApi = () => {
     });
     return result.data;
   };
-  const getActive = async () => {
+  const getActive = async (data) => {
     const result = await axios.get(`${baseUrl}showActivity.php?`, {
       headers: {
         "Content-Type": "application/json",
       },
+      params: data,
     });
     return result.data;
   };

@@ -1,17 +1,27 @@
 <script setup>
 import layout from "@/components/layout.vue";
 import ActiveCard from "../components/Active/ActiveCard.vue";
-import { ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useApi } from "../util/useApi";
 const { getActive } = useApi();
-const activeData = ref([]);
+const activeData = ref({});
 const isLoading = ref(false);
+const cardConfig = reactive({
+  page: 1,
+  total: 1,
+});
+
 const getAllActive = async () => {
   isLoading.value = true;
-  const response = await getActive();
+  const response = await getActive({
+    page: cardConfig.page,
+    perPage: 1,
+  });
   isLoading.value = false;
-  activeData.value = response;
+  activeData.value = response.data;
+  cardConfig.total = Number(response.total);
 };
+
 getAllActive();
 </script>
 <template>
@@ -34,12 +44,17 @@ getAllActive();
             </div>
           </div>
         </div>
-
         <!-- hot topic bar -->
         <div class="sub-bar">
           <div>最新活動</div>
         </div>
         <ActiveCard :is-loading="isLoading" :data="activeData" />
+        <n-pagination
+          class="pagina"
+          v-model:page="cardConfig.page"
+          :page-count="cardConfig.total"
+          @change="getAllActive"
+        />
         <!-- activity region bar -->
         <div class="sub-bar">
           <div>活動地區</div>
@@ -110,3 +125,8 @@ getAllActive();
     </template>
   </layout>
 </template>
+<style lang="scss" scoped>
+.pagina {
+  margin-top: 16px;
+}
+</style>

@@ -19,7 +19,7 @@ const getActicve = async () => {
   });
   isLoading.value = false;
   activeData.value = response.data;
-  totalCount.value = response.total;
+  totalCount.value = Number(response.total);
 };
 
 const pageTotalCount = computed(() => {

@@ -67,7 +67,7 @@ const linkDetail = (activityID) => {
               </n-icon>
               <div>{{ cardItem.context }}:{{ i[cardItem.key] }}</div>
             </div>
-            <n-button strong secondary @clikc="linkDetail(i.ACTIVITY_ID)"
+            <n-button strong secondary @click="linkDetail(i.ACTIVITY_ID)"
               >前往查看</n-button
             >
           </div>

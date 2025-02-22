@@ -5,7 +5,7 @@ defineOptions({
   name: "ActiveCard",
 });
 const props = defineProps({
-  data: Array,
+  data: Object,
   isLoading: Boolean,
 });
 const router = useRouter();
@@ -17,46 +17,35 @@ const link = () => {
 };
 </script>
 <template>
-  <n-carousel
-    effect="card"
-    prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
-    next-slide-style="transform: translateX(50%) translateZ(-800px);"
-    style="height: 350px"
-    :show-dots="false"
-  >
-    <n-carousel-item
-      v-for="item in data"
-      :key="item.ACTIVITY_ID"
-      class="activeCardCarousel"
-      :style="{ width: '60%' }"
-    >
-      <section class="activeCard">
-        <n-image
-          class="activeCard__img"
-          width="250"
-          :src="item?.ACTIVITY_IMAGE"
-        />
-        <div class="activeCard__content">
-          <h2 class="activeCard__title">{{ item?.ACTIVITY_NAME }}</h2>
-          <div>
+  <section class="activeCard" v-if="isLoading">
+    <n-skeleton height="300px" />
+  </section>
+  <section class="activeCard" v-else>
+    <n-image class="activeCard__img" width="250" :src="data?.ACTIVITY_IMAGE" />
+    <div class="activeCard__content">
+      <h2 class="activeCard__title">{{ data?.ACTIVITY_NAME }}</h2>
+      <div class="activeCard__price">
+        <div class="activeCard__priceDetail">
+          <p class="activeCard__location">
             <n-icon size="24">
               <LocationOutline />
             </n-icon>
-            <span>{{ item?.ACTIVITY_REGION }}</span>
-          </div>
-          <p class="activeCard__location">
-            活動地點:{{ item?.ACTIVITY_ADDRESS }}
+            <span>{{ data?.ACTIVITY_REGION }}</span>
+            活動地點:{{ data?.ACTIVITY_ADDRESS }}
           </p>
-          <p>活動日期:{{ item?.ACTIVITY_DATE }}</p>
-          <p>活欉名額:{{ item?.ACTIVITY_QUOTA }}</p>
-          <p>剩餘名額:{{ item?.ACTIVITY_REMAINING_PLACES }}</p>
-          <p>單人價格:{{ item?.ACTIVITY_SINGLE_PRICE }}</p>
-          <p>團體價格:{{ item?.ACTIVITY_GROUP_PRICE }}</p>
-          <n-button strong secondary @click="link"> 查看詳情 </n-button>
+          <p>活動日期:{{ data?.ACTIVITY_DATE }}</p>
+          <p>活欉名額:{{ data?.ACTIVITY_QUOTA }}</p>
+          <p>剩餘名額:{{ data?.ACTIVITY_REMAINING_PLACES }}</p>
         </div>
-      </section>
-    </n-carousel-item>
-  </n-carousel>
+        <div class="activeCard__priceSection">
+          <p>單人價格:{{ data?.ACTIVITY_SINGLE_PRICE }}</p>
+          <p>團體價格:{{ data?.ACTIVITY_GROUP_PRICE }}</p>
+        </div>
+      </div>
+
+      <n-button strong secondary @click="link"> 查看詳情 </n-button>
+    </div>
+  </section>
 </template>
 <style lang="scss" scoped>
 .activeCard {
@@ -69,6 +58,20 @@ const link = () => {
 
   &:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  &__price {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  &__priceDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  &__priceSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
   &__location {
     overflow: hidden;
@@ -84,6 +87,7 @@ const link = () => {
     padding: 12px 16px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 8px;
     color: #66669a;
     font-size: 14px;
