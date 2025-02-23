@@ -13,7 +13,6 @@ const data = ref([]);
 const getUser = async () => {
   setLoading(true);
   const response = await useApi.b_getUser();
-  console.log(response);
   setLoading(false);
   data.value = response;
 };
