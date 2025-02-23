@@ -1,10 +1,9 @@
 <script setup>
-import {  onMounted, reactive, ref, computed, nextTick } from "vue";
+import { onMounted, reactive, ref, computed, nextTick } from "vue";
 import QaTable from "../components/BackQa/QaTable.vue";
 import { useApi } from "../util/useApi";
 import { useLoadingStore } from "../store/loading";
 import QaForm from "../components/BackQa/QaForm.vue";
-const { b_qaList, b_qaListOption } = useApi();
 const loadingStore = useLoadingStore();
 const { setLoading } = loadingStore;
 const qaList = ref([]);
@@ -12,7 +11,10 @@ const selectOption = ref([]);
 
 const getQaList = async () => {
   setLoading(true);
-  const result = await Promise.all([b_qaList(), b_qaListOption()]);
+  const result = await Promise.all([
+    useApi.b_qaList(),
+    useApi.b_qaListOption(),
+  ]);
   setLoading(false);
   qaList.value = result[0];
   selectOption.value = result[1].map((item) => ({

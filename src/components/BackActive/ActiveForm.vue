@@ -11,7 +11,6 @@ const props = defineProps({
   formData: Object,
 });
 
-const { upDateActivityStatus } = useApi();
 const loadingStore = useLoadingStore();
 
 const message = useMessage();
@@ -27,7 +26,7 @@ const submit = async () => {
     ACTIVITY_ID: props.formData.ACTIVITY_ID,
   };
   loadingStore.setLoading(true);
-  const result = await upDateActivityStatus(config);
+  const result = await useApi.updateActivityStatus(config);
   loadingStore.setLoading(false);
   if (result) {
     message.success("編輯成功");
@@ -51,7 +50,7 @@ const submit = async () => {
       <n-form-item label="活動日期">
         <n-input disabled :value="formData.ACTIVITY_DATE" />
       </n-form-item>
-      <n-form-item label="使用者狀態" path="treeSelectValue">
+      <n-form-item label="活動狀態" path="treeSelectValue">
         <n-select
           v-model:value="formData.ACTIVITY_STATUS"
           placeholder="請選擇狀態"

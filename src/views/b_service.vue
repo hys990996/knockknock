@@ -4,13 +4,12 @@ import ServiceTable from "../components/BackService/ServiceTable.vue";
 import { useApi } from "../util/useApi";
 import { useLoadingStore } from "../store/loading";
 import ServiecForm from "../components/BackService/ServiecForm.vue";
-const { b_getService } = useApi();
 const loadingStore = useLoadingStore();
 const { setLoading } = loadingStore;
 const serviceData = ref([]);
 const getService = async () => {
   setLoading(true);
-  const response = await b_getService();
+  const response = await useApi.b_getService();
   setLoading(false);
   serviceData.value = response;
 };

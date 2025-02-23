@@ -12,7 +12,6 @@ const props = defineProps({
   formData: Object,
 });
 
-const { updataQa } = useApi();
 const loadingStore = useLoadingStore();
 
 const message = useMessage();
@@ -25,7 +24,7 @@ const replayConfig = reactive({
 
 const submit = async () => {
   loadingStore.setLoading(true);
-  const result = await updataQa(replayConfig);
+  const result = await useApi.updateQa(replayConfig);
   loadingStore.setLoading(false);
   if (result) {
     message.success("編輯成功");

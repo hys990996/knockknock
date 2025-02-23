@@ -14,7 +14,6 @@ const props = defineProps({
   memberData: Object,
 });
 
-const { updateMemberStatus } = useApi();
 const loadingStore = useLoadingStore();
 
 const formData = reactive(props.memberData);
@@ -33,7 +32,7 @@ const submit = async () => {
     newStatus: formData.MEMBER_STATUS,
   };
   loadingStore.setLoading(true);
-  const result = await updateMemberStatus(config);
+  const result = await useApi.updateMemberStatus(config);
   loadingStore.setLoading(false);
   if (result) {
     message.success("編輯成功");

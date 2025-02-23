@@ -4,7 +4,6 @@ import { useApi } from "../util/useApi";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
 
-const { b_login } = useApi();
 const router = useRouter();
 const loading = ref(false);
 
@@ -13,7 +12,7 @@ const password = ref("");
 
 const login = async () => {
   loading.value = true;
-  const response = await b_login({
+  const response = await useApi.b_login({
     username: username.value,
     password: password.value,
   });

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { NButton, NTag } from "naive-ui";
 import { DEFAULTPAGINATION } from "../../util/const";
 import { useApi } from "../../util/useApi";
 import { useLoadingStore } from "../../store/loading";
@@ -15,11 +14,10 @@ const props = defineProps({
 const emits = defineEmits(["edit:click", "detail:click"]);
 const loadingStore = useLoadingStore();
 
-const { getDetailActive } = useApi();
 const data = ref([]);
 const getDetail = async () => {
   loadingStore.setLoading(true);
-  const response = await getDetailActive(props.id);
+  const response = await useApi.getDetailActive(props.id);
   loadingStore.setLoading(false);
   data.value = response.data;
 };

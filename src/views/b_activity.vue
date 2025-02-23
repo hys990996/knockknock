@@ -6,7 +6,7 @@ import { useLoadingStore } from "../store/loading";
 import ActiveForm from "../components/BackActive/ActiveForm.vue";
 import ActiveDetailTable from "../components/BackActive/ActiveDetailTable.vue";
 import ActiveCreateForm from "../components/BackActive/ActiveCreateForm.vue";
-const { b_getActive } = useApi();
+
 const loadingStore = useLoadingStore();
 const { setLoading } = loadingStore;
 
@@ -14,7 +14,7 @@ const data = ref([]);
 
 const getActive = async () => {
   setLoading(true);
-  const response = await b_getActive();
+  const response = await useApi.b_getActive();
   setLoading(false);
   data.value = response;
 };

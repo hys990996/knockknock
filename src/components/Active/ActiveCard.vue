@@ -31,7 +31,7 @@ const link = () => {
               <LocationOutline />
             </n-icon>
             <span>{{ data?.ACTIVITY_REGION }}</span>
-            活動地點:{{ data?.ACTIVITY_ADDRESS }}
+            {{ data?.ACTIVITY_ADDRESS }}
           </p>
           <p>活動日期:{{ data?.ACTIVITY_DATE }}</p>
           <p>活欉名額:{{ data?.ACTIVITY_QUOTA }}</p>

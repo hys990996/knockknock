@@ -1,169 +1,89 @@
 import axios from "axios";
 
-export const useApi = () => {
-  const baseUrl = import.meta.env.VITE_AJAX_URL;
-  const b_login = async (config) => {
-    const result = await axios.post(`${baseUrl}b_login.php`, config, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+class ApiService {
+  constructor(baseURL) {
+    this.api = axios.create({
+      baseURL,
+      headers: { "Content-Type": "application/json" },
     });
-    return result;
-  };
-  const b_getUser = async () => {
-    const result = await axios.get(`${baseUrl}b_member.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+  }
+
+  // 统一请求方法，自动处理错误
+  async request(method, url, data = {}) {
+    try {
+      const response = await this.api({ method, url, ...data });
+      return response.data;
+    } catch (error) {
+      console.error(`API Error (${method.toUpperCase()} ${url}):`, error);
+      throw error;
+    }
+  }
+
+  b_login(config) {
+    return this.request("post", "b_login.php", { data: config });
+  }
+
+  b_getUser() {
+    return this.request("get", "b_member.php");
+  }
+
+  b_logout() {
+    return this.request("get", "b_logout.php");
+  }
+
+  b_getActive() {
+    return this.request("get", "b_activity.php");
+  }
+
+  b_getService() {
+    return this.request("get", "b_service.php");
+  }
+
+  b_qaList() {
+    return this.request("get", "b_qa.php");
+  }
+
+  b_qaListOption() {
+    return this.request("get", "b_qa_category.php");
+  }
+
+  b_mission() {
+    return this.request("get", "b_mission.php");
+  }
+
+  updateMemberStatus(config) {
+    return this.request("post", "update_b_member_status.php", { data: config });
+  }
+
+  updateQa(config) {
+    return this.request("post", "b_qa_update.php", { data: config });
+  }
+
+  updateMission(config) {
+    return this.request("post", "update_b_mission.php", { data: config });
+  }
+
+  getDetailActive(ACTIVEID) {
+    return this.request("get", "b_detailActive.php", { params: { ACTIVEID } });
+  }
+
+  updateActivityStatus(config) {
+    return this.request("post", "b_activity_updateStatus.php", {
+      data: config,
     });
-    return result.data;
-  };
-  const b_logout = async () => {
-    const result = await axios.get(`${baseUrl}b_logout.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result;
-  };
-  const b_getActive = async () => {
-    const result = await axios.get(`${baseUrl}b_activity.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result.data;
-  };
-  const b_getService = async () => {
-    const result = await axios.get(`${baseUrl}b_service.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result.data;
-  };
-  const b_qaList = async () => {
-    const result = await axios.get(`${baseUrl}b_qa.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result.data;
-  };
-  const b_qaListOption = async () => {
-    const result = await axios.get(`${baseUrl}b_qa_category.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result.data;
-  };
-  const b__mission = async () => {
-    const result = await axios.get(`${baseUrl}b_mission.php`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return result.data;
-  };
-  const updateMemberStatus = async (config) => {
-    const result = await axios.post(
-      `${baseUrl}update_b_member_status.php`,
-      config,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return result.data;
-  };
-  const updataQa = async (config) => {
-    const result = await axios.post(`${baseUrl}b_qa_update.php`, config, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    });
-    return result.data;
-  };
-  const updataMission = async (config) => {
-    const result = await axios.post(`${baseUrl}update_b_mission.php`, config, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    });
-    return result.data;
-  };
-  const getDetailActive = async (data) => {
-    const result = await axios.get(
-      `${baseUrl}b_detailActive.php?ACTIVEID=${data}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-      }
-    );
-    return result.data;
-  };
-  const upDateActivityStatus = async (config) => {
-    const result = await axios.post(
-      `${baseUrl}b_activity_updateStatus.php`,
-      config,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-      }
-    );
-    return result.data;
-  };
-  const createActive = async (config) => {
-    const result = await axios.post(`${baseUrl}b_addActivity.php`, config, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    });
-    return result.data;
-  };
-  const getRegionActive = async (data) => {
-    const result = await axios.get(`${baseUrl}reigonActivity.php?`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      params: data,
-    });
-    return result.data;
-  };
-  const getActive = async (data) => {
-    const result = await axios.get(`${baseUrl}showActivity.php?`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      params: data,
-    });
-    return result.data;
-  };
-  return {
-    b_login,
-    b_getUser,
-    b_logout,
-    b_getActive,
-    b_getService,
-    b_qaList,
-    b_qaListOption,
-    b__mission,
-    updateMemberStatus,
-    updataQa,
-    updataMission,
-    getDetailActive,
-    upDateActivityStatus,
-    createActive,
-    getRegionActive,
-    getActive,
-  };
-};
+  }
+
+  createActive(config) {
+    return this.request("post", "b_addActivity.php", { data: config });
+  }
+
+  getRegionActive(params) {
+    return this.request("get", "reigonActivity.php", { params });
+  }
+
+  getActive(params) {
+    return this.request("get", "showActivity.php", { params });
+  }
+}
+
+export const useApi = new ApiService(import.meta.env.VITE_AJAX_URL);

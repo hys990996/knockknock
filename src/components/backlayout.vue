@@ -39,7 +39,6 @@ import { NButton, NTag } from "naive-ui";
 
 const router = useRouter();
 const route = useRoute();
-const { b_logout } = useApi();
 const loadingStore = useLoadingStore();
 const { loading } = storeToRefs(loadingStore);
 const { setLoading } = loadingStore;
@@ -54,7 +53,7 @@ const logout = async () => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       setLoading(true);
-      await b_logout();
+      await useApi.b_logout();
       setLoading(false);
       deletCookie("bUserName");
       deletCookie("bUserId");

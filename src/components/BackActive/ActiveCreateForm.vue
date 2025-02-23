@@ -11,7 +11,6 @@ defineOptions({
   name: "ActiveCreateForm",
 });
 
-const { createActive } = useApi();
 const loadingStore = useLoadingStore();
 
 const message = useMessage();
@@ -55,7 +54,7 @@ const submit = async () => {
     ACTIVITY_IMAGE: formData.value.ACTIVITY_IMAGE.split(",")[1],
   };
   loadingStore.setLoading(true);
-  const result = await createActive(config);
+  const result = await useApi.createActive(config);
   loadingStore.setLoading(false);
   if (result.success) {
     message.success("編輯成功");

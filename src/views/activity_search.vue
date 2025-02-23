@@ -7,13 +7,13 @@ import ActiveSearchCard from "../components/Active/ActiveSearchCard.vue";
 
 const activeData = ref([]);
 const isLoading = ref(false);
-const { getRegionActive } = useApi();
+
 const route = useRoute();
 const page = ref(1);
 const totalCount = ref(0);
 const getActicve = async () => {
   isLoading.value = true;
-  const response = await getRegionActive({
+  const response = await useApi.getRegionActive({
     ACTIVITY_REGION: route.params.activityRegion,
     page: page.value,
   });
@@ -34,6 +34,7 @@ onMounted(() => {
 <template>
   <layout>
     <template #section-right-content>
+      <div class="sub-bar">{{ $route.params.activityRegion }}</div>
       <div class="activity-search">
         <div class="search-container">
           <ActiveSearchCard :is-loading="isLoading" :active-data="activeData" />

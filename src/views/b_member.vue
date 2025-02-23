@@ -5,7 +5,6 @@ import { useLoadingStore } from "../store/loading";
 import MemberTable from "../components/BackMember/MemberTable.vue";
 import MemberForm from "../components/BackMember/MemberForm.vue";
 
-const { b_getUser } = useApi();
 const loadingStore = useLoadingStore();
 const { setLoading } = loadingStore;
 
@@ -13,7 +12,8 @@ const data = ref([]);
 
 const getUser = async () => {
   setLoading(true);
-  const response = await b_getUser();
+  const response = await useApi.b_getUser();
+  console.log(response);
   setLoading(false);
   data.value = response;
 };

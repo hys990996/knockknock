@@ -19,7 +19,7 @@ defineProps({
 
 const router = useRouter();
 
-const cardDetail = computed(() => [
+const CARD_DETAIL = [
   { icon: CalendarNumberOutline, key: "ACTIVITY_DATE", context: "活動日期" },
   {
     icon: ManSharp,
@@ -29,7 +29,7 @@ const cardDetail = computed(() => [
   { icon: ManOutline, key: "ACTIVITY_QUOTA", context: "剩餘名額" },
   { icon: CashOutline, key: "ACTIVITY_SINGLE_PRICE", context: "單人費用" },
   { icon: Cash, key: "ACTIVITY_GROUP_PRICE", context: "多人費用" },
-]);
+];
 
 const linkDetail = (activityID) => {
   router.push({ name: "activity_info", params: { activityID } });
@@ -47,7 +47,7 @@ const linkDetail = (activityID) => {
   >
     <div class="result-card">
       <div class="result-pic">
-        <img :src="i.ACTIVITY_IMAGE" alt="" />
+        <img class="activeCard__img" :src="i.ACTIVITY_IMAGE" />
         <div class="info">
           <n-icon size="24">
             <AirplaneOutline />
@@ -61,7 +61,7 @@ const linkDetail = (activityID) => {
         <div class="result-text">
           <h3>{{ i.ACTIVITY_NAME }}</h3>
           <div class="details">
-            <div class="detail" v-for="cardItem in cardDetail">
+            <div class="detail" v-for="cardItem in CARD_DETAIL">
               <n-icon size="24">
                 <component :is="cardItem.icon" />
               </n-icon>

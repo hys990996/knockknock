@@ -12,7 +12,6 @@ const props = defineProps({
   formData: Object,
 });
 
-const { updataMission } = useApi();
 const loadingStore = useLoadingStore();
 
 const message = useMessage();
@@ -25,7 +24,7 @@ const missionConfig = reactive({
 
 const submit = async () => {
   loadingStore.setLoading(true);
-  const result = await updataMission(missionConfig);
+  const result = await useApi.updateMission(missionConfig);
   loadingStore.setLoading(false);
   if (result) {
     message.success("編輯成功");

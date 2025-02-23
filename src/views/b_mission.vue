@@ -6,11 +6,10 @@ import { useApi } from "../util/useApi";
 import MissionForm from "../components/BackMission/MissionForm.vue";
 const loadingStore = useLoadingStore();
 const { setLoading } = loadingStore;
-const { b__mission } = useApi();
 const missionData = ref([]);
 const getMission = async () => {
   setLoading(true);
-  const response = await b__mission();
+  const response = await useApi.b_mission();
   setLoading(false);
   missionData.value = response;
 };
