@@ -118,7 +118,8 @@ export default {
               this.saveToPinia(
                 response.data["ID"],
                 response.data["Fullname"],
-                response.data["img"]
+                response.data["img"],
+                response.data["Account"]
               );
 
               this.$router.push({ name: "home" });
@@ -129,12 +130,13 @@ export default {
           });
       }
     },
-    saveToPinia(id, name, img) {
+    saveToPinia(id, name, img, account) {
       //將資料存到pinia
       const userStore = useUserStore();
       userStore.userID = id;
       userStore.userName = name;
       userStore.userImg = img;
+      userStore.userAccount = account;
     },
     clearErrorMsg() {
       if (this.loginData.userAccount != "") {

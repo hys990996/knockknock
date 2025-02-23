@@ -84,6 +84,10 @@ class ApiService {
   getActive(params) {
     return this.request("get", "showActivity.php", { params });
   }
+
+  getActiveDetail(ACTIVITY_ID) {
+    return this.request("get", "activityInfo.php", { params: { ACTIVITY_ID } });
+  }
 }
 
 export const useApi = new ApiService(import.meta.env.VITE_AJAX_URL);
