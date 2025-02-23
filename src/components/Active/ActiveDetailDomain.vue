@@ -1,6 +1,10 @@
 <script setup>
 import { computed, ref } from "vue";
 import { formatTwd } from "../../util/cashFormat";
+import dayjs from "dayjs";
+import ActiveDetailModal from "./ActiveDetailModal.vue";
+import { useUserStore } from "../../store/user";
+import defaultUserImg from "../../assets/images/user/userimage.png";
 
 defineOptions({
   name: "ActiveDetailDomain",
@@ -8,6 +12,19 @@ defineOptions({
 const props = defineProps({
   detailData: Object,
 });
+
+const isOpenDialog = ref(false);
+
+const openDialog = () => {
+  isOpenDialog.value = !isOpenDialog.value;
+};
+/**
+ * 圖片錯誤處理
+ */
+const userStore = useUserStore();
+const handleErrorImg = (e) => {
+  e.target.src = defaultUserImg;
+};
 
 const CARD_CONTENT = [
   { label: "活動地點", key: "ACTIVITY_ADDRESS" },
@@ -25,6 +42,18 @@ const tagFormat = (key) => {
   }
   return "success";
 };
+
+/**
+ * 是否已超過報名日期
+ */
+const isExpired = computed(() =>
+  dayjs().isAfter(dayjs(props.detailData.ACTIVITY_ENDDATE))
+);
+
+/**
+ * 是否能報名
+ */
+const notSignup = computed(() => isExpired.value || memberCount <= 0);
 
 const memberCount = ref(0);
 const totalCount = computed(() => {
@@ -54,6 +83,11 @@ const option = computed(() => {
       footer: 'soft',
     }"
   >
+    <template #header-extra>
+      <n-tag :bordered="false" :type="isExpired ? 'error' : 'success'">
+        {{ isExpired ? "已過期" : "現正報名中" }}</n-tag
+      >
+    </template>
     <div v-for="item in CARD_CONTENT" :key="item.key" class="detailCard">
       <p>{{ item.label }}</p>
       <n-tag
@@ -79,6 +113,7 @@ const option = computed(() => {
         :options="option"
         class="detailCard"
         clearable
+        :disabled="isExpired"
       />
       <div class="detailCard">
         <p>總計</p>
@@ -96,12 +131,27 @@ const option = computed(() => {
     </template>
     <template #action>
       <div class="cardFooter">
-        <n-button type="success" :disabled="memberCount <= 0"
+        <n-button type="success" :disabled="notSignup" @click="openDialog"
           >前往報名</n-button
         >
       </div>
     </template>
   </n-card>
+  <ActiveDetailModal v-model="isOpenDialog">
+    <div class="checkModal">
+      <img :src="userStore.userImg" @error="handleErrorImg" />
+      <p>訂購人姓名：{{ userStore.userName }}</p>
+      <p>訂購人信箱：{{ userStore.userAccount }}</p>
+      <p>活動地點：{{ detailData.ACTIVITY_ADDRESS }}</p>
+      <p>活動日期：{{ detailData.ACTIVITY_DATE }}</p>
+      <p>活動費用：{{ formatTwd(totalCount) }}</p>
+    </div>
+    <template #footer>
+      <div class="checkModal__footer">
+        <n-button type="info" @click="check" size="large">前往結賬</n-button>
+      </div>
+    </template>
+  </ActiveDetailModal>
 </template>
 <style lang="scss" scoped>
 .detailImage {
@@ -121,5 +171,15 @@ const option = computed(() => {
 .cardFooter {
   display: flex;
   justify-content: end;
+}
+.checkModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
