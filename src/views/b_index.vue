@@ -17,7 +17,7 @@ const login = async () => {
     password: password.value,
   });
   loading.value = false;
-  if (!response.data.success) {
+  if (!response.success) {
     Swal.fire({
       title: "登入失敗",
       text: "請重新確認您的帳號與密碼",
@@ -27,8 +27,8 @@ const login = async () => {
   const expirationDate = new Date();
   expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
   const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
-  document.cookie = `bUserId=${response.data.id}; expires=${expires} ; bUserName=${response.data.username}`;
-  document.cookie = `bUserName=${response.data.username};expires=${expires} `;
+  document.cookie = `bUserId=${response.id}; expires=${expires} ; bUserName=${response.username}`;
+  document.cookie = `bUserName=${response.username};expires=${expires} `;
   router.push("/backend/member_management");
 };
 </script>

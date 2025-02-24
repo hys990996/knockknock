@@ -155,7 +155,9 @@ const option = computed(() => {
 </template>
 <style lang="scss" scoped>
 .detailImage {
-  height: 500px;
+  width: 60%;
+  margin: 0 auto;
+  height: 400px;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 24px;

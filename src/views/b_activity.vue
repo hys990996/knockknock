@@ -79,6 +79,12 @@ const clearTab = (value) => {
   }
 };
 
+const deleteActive = async (value) => {
+  setLoading(true);
+  const response = await useApi.deleteActive(value.ACTIVITY_ID);
+  setLoading(false);
+};
+
 onMounted(() => {
   getActive();
 });
@@ -109,6 +115,7 @@ onMounted(() => {
             v-bind="panel.bind"
             @edit:click="editAddTab"
             @detail:click="(e) => editAddTab(e, false)"
+            @delete:click="deleteActive"
           ></component>
         </keep-alive>
       </n-tab-pane>

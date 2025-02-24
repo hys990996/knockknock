@@ -1,5 +1,5 @@
 <script setup>
-import { ref, h } from "vue";
+import { h } from "vue";
 import { NButton, NTag } from "naive-ui";
 import { DEFAULTPAGINATION } from "../../util/const";
 defineOptions({
@@ -10,7 +10,7 @@ const props = defineProps({
   tableData: Array,
 });
 
-const emits = defineEmits(["edit:click", "detail:click"]);
+const emits = defineEmits(["edit:click", "detail:click", "delete:click"]);
 
 const columns = [
   {
@@ -57,7 +57,7 @@ const columns = [
         NButton,
         {
           onClick: () => {
-            emits("detail:click", row);
+            emits("delete:click", row);
           },
         },
         { default: () => "活動詳情" }
@@ -73,11 +73,27 @@ const columns = [
           onClick: () => {
             emits("edit:click", row);
           },
+          type: "info",
         },
         { default: () => "變更活動" }
       );
     },
   },
+  // {
+  //   key: "editActive",
+  //   render(row) {
+  //     return h(
+  //       NButton,
+  //       {
+  //         onClick: () => {
+  //           emits("delete:click", row);
+  //         },
+  //         type: "error",
+  //       },
+  //       { default: () => "刪除活動" }
+  //     );
+  //   },
+  // },
 ];
 
 const activeStatus = {

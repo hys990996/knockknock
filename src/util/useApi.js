@@ -88,6 +88,12 @@ class ApiService {
   getActiveDetail(ACTIVITY_ID) {
     return this.request("get", "activityInfo.php", { params: { ACTIVITY_ID } });
   }
+
+  deleteActive(ACTIVITY_ID) {
+    return this.request("delete", "activeDelete.php", {
+      params: { ACTIVITY_ID },
+    });
+  }
 }
 
 export const useApi = new ApiService(import.meta.env.VITE_AJAX_URL);
