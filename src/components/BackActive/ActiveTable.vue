@@ -57,7 +57,7 @@ const columns = [
         NButton,
         {
           onClick: () => {
-            emits("delete:click", row);
+            emits("detail:click", row);
           },
         },
         { default: () => "活動詳情" }
@@ -79,21 +79,6 @@ const columns = [
       );
     },
   },
-  // {
-  //   key: "editActive",
-  //   render(row) {
-  //     return h(
-  //       NButton,
-  //       {
-  //         onClick: () => {
-  //           emits("delete:click", row);
-  //         },
-  //         type: "error",
-  //       },
-  //       { default: () => "刪除活動" }
-  //     );
-  //   },
-  // },
 ];
 
 const activeStatus = {
