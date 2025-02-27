@@ -38,6 +38,26 @@ const formData = ref({
   ACTIVITY_DESCRIBE: "",
 });
 
+const formRef = ref(null);
+
+const rules = {
+  ACTIVITY_NAME: {
+    required: true,
+    message: "必填",
+    trigger: ["input"],
+  },
+  ACTIVITY_DESCRIBE: {
+    required: true,
+    message: "必填",
+    trigger: ["input"],
+  },
+  ACTIVITY_ADDRESS: {
+    required: true,
+    message: "必填",
+    trigger: ["input"],
+  },
+};
+
 const submit = async () => {
   const config = {
     ...formData.value,
@@ -50,9 +70,18 @@ const submit = async () => {
     ACTIVITY_QUOTA: formData.value.ACTIVITY_QUOTA.toString(),
     ACTIVITY_SINGLE_PRICE: formData.value.ACTIVITY_SINGLE_PRICE.toString(),
     ACTIVITY_REMAINING_PLACES:
-      formData.value.value.ACTIVITY_REMAINING_PLACES.toString(),
+      formData.value.ACTIVITY_REMAINING_PLACES.toString(),
     ACTIVITY_IMAGE: formData.value.ACTIVITY_IMAGE.split(",")[1],
   };
+  // formRef.value?.validate((errors) => {
+  //   if (!errors) {
+  //     message.success("Valid");
+  //   } else {
+  //     console.log(errors);
+  //     message.error("Invalid");
+  //   }
+  // });
+
   loadingStore.setLoading(true);
   const result = await useApi.createActive(config);
   loadingStore.setLoading(false);
@@ -64,35 +93,23 @@ const submit = async () => {
 };
 </script>
 <template>
-  <n-form :model="formValue" class="activeForm">
+  <n-form :model="formData" class="activeForm" :rules="rules" ref="formRef">
     <FileUpload v-model="formData.ACTIVITY_IMAGE" class="activeForm__colFile" />
-    <n-form-item
-      label="活動日期"
-      path="treeSelectValue"
-      class="activeForm__col2"
-    >
+    <n-form-item label="活動日期" class="activeForm__col2">
       <n-date-picker
         placeholder="請選擇活動日期"
         type="date"
         v-model:value="formData.ACTIVITY_DATE"
       />
     </n-form-item>
-    <n-form-item
-      label="報名開始日期"
-      path="treeSelectValue"
-      class="activeForm__col2"
-    >
+    <n-form-item label="報名開始日期" class="activeForm__col2">
       <n-date-picker
         placeholder="請選擇報名開始日期"
         type="date"
         v-model:value="formData.ACTIVITY_STARTDATE"
       />
     </n-form-item>
-    <n-form-item
-      label="報名截止日期"
-      path="treeSelectValue"
-      class="activeForm__col2"
-    >
+    <n-form-item label="報名截止日期" class="activeForm__col2">
       <n-date-picker
         placeholder="請選擇報名截止日期"
         type="date"
@@ -100,23 +117,16 @@ const submit = async () => {
       />
     </n-form-item>
 
-    <n-form-item
-      label="單人費用"
-      path="treeSelectValue"
-      class="activeForm__col2"
-    >
+    <n-form-item label="單人費用" class="activeForm__col2">
       <n-input-number
+        path="user.name"
         v-model:value="formData.ACTIVITY_SINGLE_PRICE"
         placeholder="請輸入單人費用"
         :min="0"
         :options="staatusOption"
       />
     </n-form-item>
-    <n-form-item
-      label="團體費用"
-      path="treeSelectValue"
-      class="activeForm__col2"
-    >
+    <n-form-item label="團體費用" class="activeForm__col2">
       <n-input-number
         v-model:value="formData.ACTIVITY_GROUP_PRICE"
         placeholder="請輸入團體費用"
@@ -153,19 +163,27 @@ const submit = async () => {
       />
     </n-form-item>
 
-    <n-form-item label="活動名稱" class="activeForm__col6">
+    <n-form-item label="活動名稱" class="activeForm__col6" path="ACTIVITY_NAME">
       <n-input
         placeholder="請輸入活動名稱"
         v-model:value="formData.ACTIVITY_NAME"
       />
     </n-form-item>
-    <n-form-item label="活動地點" class="activeForm__col6">
+    <n-form-item
+      label="活動地點"
+      class="activeForm__col6"
+      path="ACTIVITY_ADDRESS"
+    >
       <n-input
         placeholder="請輸入活動地點"
         v-model:value="formData.ACTIVITY_ADDRESS"
       />
     </n-form-item>
-    <n-form-item label="活動描述" class="activeForm__col6">
+    <n-form-item
+      label="活動描述"
+      class="activeForm__col6"
+      path="ACTIVITY_DESCRIBE"
+    >
       <n-input
         type="textarea"
         v-model:value="formData.ACTIVITY_DESCRIBE"

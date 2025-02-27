@@ -10,7 +10,7 @@ const route = useRoute();
 const activeDetail = ref({});
 const getDetailActive = async () => {
   const response = await useApi.getActiveDetail(route.params.activityID);
-  activeDetail.value = response;
+  activeDetail.value = response.data;
 };
 onMounted(() => {
   getDetailActive();

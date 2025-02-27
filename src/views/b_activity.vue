@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, shallowRef } from "vue";
 import ActiveTable from "../components/BackActive/ActiveTable.vue";
 import { useApi } from "../util/useApi";
 import { useLoadingStore } from "../store/loading";
@@ -36,7 +36,7 @@ const tabs = reactive([
 const addActiveTab = () => {
   const tab = {
     name: "新增活動",
-    component: ActiveCreateForm,
+    component: shallowRef(ActiveCreateForm),
     id: "active",
     bind: null,
     isClosed: false,
@@ -59,7 +59,9 @@ const editAddTab = (value, isEdit = true) => {
   if (existingTabIndex === -1) {
     const newTab = {
       name: `${isEdit ? "編輯" : ""}${value.ACTIVITY_NAME}`,
-      component: isEdit ? ActiveForm : ActiveDetailTable,
+      component: isEdit
+        ? shallowRef(ActiveForm)
+        : shallowRef(ActiveDetailTable),
       id: `${value.ACTIVITY_ID}${isEdit ? "編輯" : ""}`,
       bind: isEdit ? { formData: value } : { id: value.ACTIVITY_ID },
       isClosed: true,

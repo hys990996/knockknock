@@ -1,6 +1,7 @@
 <script setup>
 import { LocationOutline } from "@vicons/ionicons5";
 import { useRouter } from "vue-router";
+import { decodeBase64 } from "../../util/decodeBase64";
 defineOptions({
   name: "ActiveCard",
 });
@@ -9,10 +10,10 @@ const props = defineProps({
   isLoading: Boolean,
 });
 const router = useRouter();
-const link = () => {
+const link = (activityID) => {
   router.push({
     name: "activity_info",
-    params: { activityID: props.data?.ACTIVITY_ID },
+    params: { activityID },
   });
 };
 </script>
@@ -21,30 +22,38 @@ const link = () => {
     <n-skeleton height="300px" />
   </section>
   <section class="activeCard" v-else>
-    <n-image class="activeCard__img" width="250" :src="data?.ACTIVITY_IMAGE" />
-    <div class="activeCard__content">
-      <h2 class="activeCard__title">{{ data?.ACTIVITY_NAME }}</h2>
-      <div class="activeCard__price">
-        <div class="activeCard__priceDetail">
-          <p class="activeCard__location">
-            <n-icon size="24">
-              <LocationOutline />
-            </n-icon>
-            <span>{{ data?.ACTIVITY_REGION }}</span>
-            {{ data?.ACTIVITY_ADDRESS }}
-          </p>
-          <p>活動日期:{{ data?.ACTIVITY_DATE }}</p>
-          <p>活欉名額:{{ data?.ACTIVITY_QUOTA }}</p>
-          <p>剩餘名額:{{ data?.ACTIVITY_REMAINING_PLACES }}</p>
+    <template v-for="data in data">
+      <n-image
+        class="activeCard__img"
+        width="250"
+        :src="decodeBase64(data.ACTIVITY_IMAGE)"
+      />
+      <div class="activeCard__content">
+        <h2 class="activeCard__title">{{ data?.ACTIVITY_NAME }}</h2>
+        <div class="activeCard__price">
+          <div class="activeCard__priceDetail">
+            <p class="activeCard__location">
+              <n-icon size="24">
+                <LocationOutline />
+              </n-icon>
+              <span>{{ data?.ACTIVITY_REGION }}</span>
+              {{ data?.ACTIVITY_ADDRESS }}
+            </p>
+            <p>活動日期:{{ data?.ACTIVITY_DATE }}</p>
+            <p>活欉名額:{{ data?.ACTIVITY_QUOTA }}</p>
+            <p>剩餘名額:{{ data?.ACTIVITY_REMAINING_PLACES }}</p>
+          </div>
+          <div class="activeCard__priceSection">
+            <p>單人價格:{{ data?.ACTIVITY_SINGLE_PRICE }}</p>
+            <p>團體價格:{{ data?.ACTIVITY_GROUP_PRICE }}</p>
+          </div>
         </div>
-        <div class="activeCard__priceSection">
-          <p>單人價格:{{ data?.ACTIVITY_SINGLE_PRICE }}</p>
-          <p>團體價格:{{ data?.ACTIVITY_GROUP_PRICE }}</p>
-        </div>
-      </div>
 
-      <n-button strong secondary @click="link"> 查看詳情 </n-button>
-    </div>
+        <n-button strong secondary @click="link(data.ACTIVITY_ID)">
+          查看詳情
+        </n-button>
+      </div>
+    </template>
   </section>
 </template>
 <style lang="scss" scoped>

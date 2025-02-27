@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import ActiveDetailModal from "./ActiveDetailModal.vue";
 import { useUserStore } from "../../store/user";
 import defaultUserImg from "../../assets/images/user/userimage.png";
+import { decodeBase64 } from "../../util/decodeBase64";
 
 defineOptions({
   name: "ActiveDetailDomain",
@@ -50,12 +51,12 @@ const isExpired = computed(() =>
   dayjs().isAfter(dayjs(props.detailData.ACTIVITY_ENDDATE))
 );
 
+const memberCount = ref(0);
 /**
  * 是否能報名
  */
-const notSignup = computed(() => isExpired.value || memberCount <= 0);
+const notSignup = computed(() => isExpired.value || memberCount.value <= 0);
 
-const memberCount = ref(0);
 const totalCount = computed(() => {
   const isSingal = memberCount.value < 3;
   const price = isSingal
@@ -70,19 +71,16 @@ const option = computed(() => {
     (_, i) => ({ label: i + 1, value: i + 1 })
   );
 });
+
+const pay = async () => {
+  console.log("123");
+};
 </script>
 <template>
   <div class="detailImage">
-    <n-image :src="detailData.ACTIVITY_IMAGE" />
+    <n-image :src="decodeBase64(detailData.ACTIVITY_IMAGE)" />
   </div>
-  <n-card
-    :title="detailData.ACTIVITY_NAME"
-    footer-class="flex"
-    :segmented="{
-      content: true,
-      footer: 'soft',
-    }"
-  >
+  <n-card :title="detailData.ACTIVITY_NAME" footer-class="flex">
     <template #header-extra>
       <n-tag :bordered="false" :type="isExpired ? 'error' : 'success'">
         {{ isExpired ? "已過期" : "現正報名中" }}</n-tag
@@ -148,7 +146,7 @@ const option = computed(() => {
     </div>
     <template #footer>
       <div class="checkModal__footer">
-        <n-button type="info" @click="check" size="large">前往結賬</n-button>
+        <n-button type="info" @click="pay" size="large">前往結賬</n-button>
       </div>
     </template>
   </ActiveDetailModal>

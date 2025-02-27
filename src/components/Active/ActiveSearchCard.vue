@@ -7,8 +7,8 @@ import {
   ManSharp,
   AirplaneOutline,
 } from "@vicons/ionicons5";
-import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { decodeBase64 } from "../../util/decodeBase64";
 defineOptions({
   name: "ActiveSearchCard",
 });
@@ -47,7 +47,7 @@ const linkDetail = (activityID) => {
   >
     <div class="result-card">
       <div class="result-pic">
-        <img class="activeCard__img" :src="i.ACTIVITY_IMAGE" />
+        <img class="activeCard__img" :src="decodeBase64(i.ACTIVITY_IMAGE)" />
         <div class="info">
           <n-icon size="24">
             <AirplaneOutline />
