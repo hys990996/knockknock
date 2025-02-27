@@ -12,6 +12,7 @@ defineOptions({
 });
 const props = defineProps({
   detailData: Object,
+  isLoading: Boolean,
 });
 
 const isOpenDialog = ref(false);
@@ -86,46 +87,53 @@ const pay = async () => {
         {{ isExpired ? "已過期" : "現正報名中" }}</n-tag
       >
     </template>
-    <div v-for="item in CARD_CONTENT" :key="item.key" class="detailCard">
-      <p>{{ item.label }}</p>
-      <n-tag
-        v-if="['ACTIVITY_ENDDATE', 'ACTIVITY_DATE'].includes(item.key)"
-        :bordered="false"
-        :type="tagFormat(item.key)"
-        >{{ detailData[item.key] }}</n-tag
-      >
-      <p
-        v-else-if="
-          ['ACTIVITY_SINGLE_PRICE', 'ACTIVITY_GROUP_PRICE'].includes(item.key)
-        "
-      >
-        {{ formatTwd(detailData[item.key]) }}
-      </p>
+    <n-skeleton v-if="isLoading" text :repeat="7" height="40px" />
+    <template v-else>
+      <div v-for="item in CARD_CONTENT" :key="item.key" class="detailCard">
+        <p>{{ item.label }}</p>
+        <n-tag
+          v-if="['ACTIVITY_ENDDATE', 'ACTIVITY_DATE'].includes(item.key)"
+          :bordered="false"
+          :type="tagFormat(item.key)"
+          >{{ detailData[item.key] }}</n-tag
+        >
+        <p
+          v-else-if="
+            ['ACTIVITY_SINGLE_PRICE', 'ACTIVITY_GROUP_PRICE'].includes(item.key)
+          "
+        >
+          {{ formatTwd(detailData[item.key]) }}
+        </p>
 
-      <p v-else>{{ detailData[item.key] }}</p>
-    </div>
-    <template #footer>
-      <n-select
-        placeholder="請選擇活動人數"
-        v-model:value="memberCount"
-        :options="option"
-        class="detailCard"
-        clearable
-        :disabled="isExpired"
-      />
-      <div class="detailCard">
-        <p>總計</p>
-        <div>
-          <span>$</span>
-          <n-number-animation
-            ref="numberAnimate"
-            :from="0"
-            :to="totalCount"
-            locale="zh-TW"
-            show-separator
-          />
-        </div>
+        <p v-else>{{ detailData[item.key] }}</p>
       </div>
+    </template>
+
+    <template #footer>
+      <n-skeleton v-if="isLoading" text height="40px" />
+      <template v-else>
+        <n-select
+          placeholder="請選擇活動人數"
+          v-model:value="memberCount"
+          :options="option"
+          class="detailCard"
+          clearable
+          :disabled="isExpired"
+        />
+        <div class="detailCard">
+          <p>總計</p>
+          <div>
+            <span>$</span>
+            <n-number-animation
+              ref="numberAnimate"
+              :from="0"
+              :to="totalCount"
+              locale="zh-TW"
+              show-separator
+            />
+          </div>
+        </div>
+      </template>
     </template>
     <template #action>
       <div class="cardFooter">
