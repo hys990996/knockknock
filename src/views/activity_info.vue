@@ -26,7 +26,6 @@ onMounted(() => {
     <template #section-right-content>
       <div class="sub-bar">活動詳情</div>
       <ActiveDetailDomain :is-loading="isLoading" :detail-data="activeDetail" />
-      <div id="paymentContainer"></div>
     </template>
   </layout>
 </template>

@@ -69,8 +69,6 @@ $obj->Send['OrderResultURL'] = "https://tibamef2e.com/thd103/g2/dist/api/ECPay_R
 $obj->Send['CustomField1'] = $payMent['ItemName'];  	//額外的欄位
 $obj->Send['CustomField2'] = $quantity;  				  	//額外的欄位
 
-$obj->Send['CustomField3'] = $payMent["REGISTER_ID"];  				  	//額外的欄位
-
 $obj->Send['CustomField4'] = $payMent["activityId"];  				  	//額外的欄位
 
 

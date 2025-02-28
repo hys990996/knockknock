@@ -6,6 +6,7 @@ import ActiveDetailModal from "./ActiveDetailModal.vue";
 import { useUserStore } from "../../store/user";
 import defaultUserImg from "../../assets/images/user/userimage.png";
 import { decodeBase64 } from "../../util/decodeBase64";
+import { useApi } from "../../util/useApi";
 
 defineOptions({
   name: "ActiveDetailDomain",
@@ -73,8 +74,31 @@ const option = computed(() => {
   );
 });
 
-const pay = async () => {
-  console.log("123");
+/**
+ * 綠界處理
+ */
+const ECPayForm = ref(null);
+
+const singUpActive = async () => {
+  const config = {
+    MerchantTradeDate: dayjs().format("YYYY/MM/DD HH:mm:ss"),
+    PaymentType: "aio",
+    TotalAmount: totalCount.value,
+    TradeDesc: "活動",
+    ItemName: props.detailData.ACTIVITY_NAME,
+    ChoosePayment: "ALL",
+    quantity: memberCount.value,
+    activityId: props.detailData.ACTIVITY_ID,
+  };
+
+  const response = await useApi.ECPay(config);
+  if (response) {
+    const formContainer = document.createElement("div");
+    formContainer.innerHTML = response;
+    formContainer.style.display = "none";
+    document.body.appendChild(formContainer);
+    document.getElementById("__ecpayForm").submit();
+  }
 };
 </script>
 <template>
@@ -154,7 +178,9 @@ const pay = async () => {
     </div>
     <template #footer>
       <div class="checkModal__footer">
-        <n-button type="info" @click="pay" size="large">前往結賬</n-button>
+        <n-button type="info" @click="singUpActive" size="large"
+          >前往結賬</n-button
+        >
       </div>
     </template>
   </ActiveDetailModal>

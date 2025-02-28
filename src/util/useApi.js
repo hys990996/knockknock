@@ -8,7 +8,6 @@ class ApiService {
     });
   }
 
-  // 统一请求方法，自动处理错误
   async request(method, url, data = {}) {
     try {
       const response = await this.api({ method, url, ...data });
@@ -89,10 +88,12 @@ class ApiService {
     return this.request("get", "activityInfo.php", { params: { ACTIVITY_ID } });
   }
 
-  deleteActive(ACTIVITY_ID) {
-    return this.request("delete", "activeDelete.php", {
-      params: { ACTIVITY_ID },
-    });
+  postActiveSignUp(data) {
+    return this.request("post", "activityApply.php", { data });
+  }
+
+  ECPay(data) {
+    return this.request("post", "Ecpay.php", { data });
   }
 }
 
