@@ -95,6 +95,9 @@ class ApiService {
   ECPay(data) {
     return this.request("post", "Ecpay.php", { data });
   }
+  getQuestion(id) {
+    return this.request("get", "getQuestionById.php", { params: { id } });
+  }
 }
 
 export const useApi = new ApiService(import.meta.env.VITE_AJAX_URL);
