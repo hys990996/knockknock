@@ -7,6 +7,7 @@ import QaPanel from "../components/Qa/QaPanel.vue";
 const qaCatrgories = ref([]);
 const activateTab = ref("");
 const qaList = ref([]);
+const isLoading = ref(false);
 
 const getCategories = async () => {
   const response = await useApi.b_qaListOption();
@@ -15,7 +16,9 @@ const getCategories = async () => {
 };
 
 const getQaList = async () => {
+  isLoading.value = true;
   const response = await useApi.getQuestion(activateTab.value);
+  isLoading.value = false;
   qaList.value = response;
 };
 
@@ -27,7 +30,7 @@ onMounted(async () => {
 <template>
   <layout>
     <template #section-right-content>
-      <n-card style="padding: 16px; height: 100%">
+      <n-card style="padding: 16px; min-height: 100%">
         <n-tabs
           type="card"
           animated
@@ -43,6 +46,7 @@ onMounted(async () => {
             :tab="item.QUESTION_CATEGORY_NAME"
           >
             <QaPanel
+              :isLoading="isLoading"
               :panelTitle="item.QUESTION_CATEGORY_NAME"
               :panel-data="qaList"
             />

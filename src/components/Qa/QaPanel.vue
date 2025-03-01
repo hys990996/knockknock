@@ -8,6 +8,7 @@ defineOptions({
 defineProps({
   panelTitle: String,
   panelData: Array,
+  isLoading: Boolean,
 });
 
 const panelList = ref([]);
@@ -29,39 +30,46 @@ const isOpen = (id) => {
  * transition樣式
  */
 const setHeight = (el, value) => {
-  el.style.maxHeight = value ? el.scrollHeight + "px" : "0px";
+  el.style.height = typeof value === "number" ? `${value}px` : "";
 };
 
 const onBeforeEnter = (el) => {
-  setHeight(el, false);
+  setHeight(el, 0);
 };
 const onEnter = (el) => {
-  setHeight(el, true);
+  setHeight(el, el.scrollHeight);
 };
 const onAfterEnter = (el) => {
-  el.style.maxHeight = "none";
+  setHeight(el, "");
 };
 const onBeforeLeave = (el) => {
-  setHeight(el, true);
+  setHeight(el, el.scrollHeight);
 };
 const onLeave = (el) => {
-  setHeight(el, false);
+  setHeight(el, 0);
 };
 const onAfterLeave = (el) => {
-  el.style.maxHeight = "0px";
+  setHeight(el, "");
 };
 </script>
 <template>
   <n-card :title="panelTitle">
-    <template v-if="panelData?.length">
+    <n-skeleton height="30px" v-if="isLoading" repeat="4" />
+    <template v-else-if="panelData?.length">
       <section class="qaList" v-for="item in panelData" :key="item.QUESTION_ID">
-        <div class="qaList__title" @click="openPanel(item.QUESTION_ID)">
-          <p>{{ item.QUESTION_TITLE }}</p>
+        <n-skeleton height="30px" v-if="isLoading" />
+        <div
+          v-else
+          class="qaList__title"
+          @click.stop="openPanel(item.QUESTION_ID)"
+        >
+          <p class="qaList__qaTitle">{{ item.QUESTION_TITLE }}</p>
           <n-icon size="24">
             <ChevronUp v-if="isOpen(item.QUESTION_ID)" />
             <ChevronDown v-else />
           </n-icon>
         </div>
+
         <Transition
           name="panel"
           @before-enter="onBeforeEnter"
@@ -100,14 +108,21 @@ const onAfterLeave = (el) => {
       box-shadow: 3px 3px 12px rgba(150, 100, 200, 0.1); /* 超淡紫色 */
     }
   }
+  &__qaTitle {
+    font-size: 20px;
+    color: #66669a;
+  }
   &__content {
+    font-size: 18px;
     padding: 16px;
   }
 }
-// .panel {
-//   &-enter-active,
-//   &-leave-active {
-//     transition: max-height 0.3s ease-in-out;
-//   }
-// }
+.panel {
+  &-enter-active,
+  &-leave-active {
+    overflow: hidden;
+    transition: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 50ms;
+  }
+}
 </style>
