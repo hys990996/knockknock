@@ -11,6 +11,7 @@
           src="../assets/images/icon/search.svg"
           alt=""
           @click="expandSearch"
+          @error="userImgError"
         />
         <input
           ref="searchFriend"
@@ -37,6 +38,7 @@
 
 <script>
 import { useUserStore } from "@/store/user";
+import defaultImg from "@/assets/images/user/userimage.png";
 
 export default {
   inject: ["hide"],
@@ -76,9 +78,6 @@ export default {
     };
 
     // console.log(this.userData);
-  },
-  mounted() {
-    console.log(this.userData);
   },
   methods: {
     search() {
@@ -138,6 +137,9 @@ export default {
         store.$reset();
         localStorage.removeItem("userStore");
       }
+    },
+    userImgError(e) {
+      e.target.value = defaultImg;
     },
   },
 };
