@@ -37,7 +37,7 @@ onMounted(async () => {
           tab-style="min-width: 80px;"
           size="large"
           v-model:value="activateTab"
-          @click="getQaList"
+          @update:value="getQaList"
         >
           <n-tab-pane
             v-for="item in qaCatrgories"

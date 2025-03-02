@@ -57,7 +57,7 @@ onMounted(() => {
           class="pagina"
           v-model:page="cardConfig.page"
           :page-count="cardConfig.total"
-          @change="getAllActive"
+          @update:change="getAllActive"
         />
         <div class="sub-bar">最新活動</div>
         <div class="region-cards">

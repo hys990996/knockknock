@@ -58,11 +58,7 @@ const onAfterLeave = (el) => {
     <template v-else-if="panelData?.length">
       <section class="qaList" v-for="item in panelData" :key="item.QUESTION_ID">
         <n-skeleton height="30px" v-if="isLoading" />
-        <div
-          v-else
-          class="qaList__title"
-          @click.stop="openPanel(item.QUESTION_ID)"
-        >
+        <div v-else class="qaList__title" @click="openPanel(item.QUESTION_ID)">
           <p class="qaList__qaTitle">{{ item.QUESTION_TITLE }}</p>
           <n-icon size="24">
             <ChevronUp v-if="isOpen(item.QUESTION_ID)" />
