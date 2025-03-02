@@ -1,14 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import { useApi } from "../util/useApi";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import { useBackStore } from "../store/backUser";
+import dayjs from "dayjs";
+import { useMessage } from "naive-ui";
 
+const useBackUserStore = useBackStore();
 const router = useRouter();
 const loading = ref(false);
 
 const username = ref("");
 const password = ref("");
+const message = useMessage();
 
 const login = async () => {
   loading.value = true;
@@ -24,11 +29,12 @@ const login = async () => {
     });
     return;
   }
-  const expirationDate = new Date();
-  expirationDate.setHours(expirationDate.getHours() + 1); // 過期時間設定為一小時後
-  const expires = expirationDate.toUTCString(); // 將過期時間轉換為 UTC 字串;
-  document.cookie = `bUserId=${response.id}; expires=${expires} ; bUserName=${response.username}`;
-  document.cookie = `bUserName=${response.username};expires=${expires} `;
+  useBackUserStore.setUserStore({
+    userName: response.username,
+    token: response.token,
+    expire: dayjs().add(1, "hour"),
+  });
+  message.success("登入成功");
   router.push("/backend/member_management");
 };
 </script>

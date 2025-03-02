@@ -1,31 +1,24 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, useRouter } from "vue-router";
 import Home from "@/views/home.vue";
 import Backlayout from "../components/Backlayout.vue";
+import { useBackStore } from "../store/backUser";
+import { storeToRefs } from "pinia";
+import dayjs from "dayjs";
 /**
  * 後台路由守衛
  */
-const getCookie = (cookieName) => {
-  const name = cookieName + "=";
-  const decodeCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodeCookie.split(";");
-  for (let i = 0; i < cookieArray.length; i++) {
-    let cookie = cookieArray[i];
-    while (cookie.charAt(0) === " ") {
-      cookie = cookie.substring(1);
-    }
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  return null;
-};
 
 const requireBackAuth = (to, from, next) => {
-  const bUserId = getCookie("bUserId");
-  if (bUserId) {
+  const router = useRouter();
+  const backStore = useBackStore();
+  const { backUserInfo } = storeToRefs(backStore);
+  const isExpire = dayjs().isAfter(backUserInfo.value.expire);
+  const isEntry = backUserInfo.value.token && !isExpire;
+  if (isEntry) {
     next();
+    return;
   } else {
-    next({ path: "/backend" });
+    router.push({ name: "b_index" });
   }
 };
 

@@ -14,7 +14,7 @@
           </template>
           <template #end>
             <n-dropdown :options="option">
-              <n-button type="info">{{ userName }}</n-button>
+              <n-button type="info">{{ backUserInfo.userName }}</n-button>
             </n-dropdown>
           </template>
         </b-navbar>
@@ -30,13 +30,15 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import backnavBar from "../components/backnavBar.vue";
-import { computed, h } from "vue";
 import Swal from "sweetalert2";
 import { useApi } from "../util/useApi";
 import { useLoadingStore } from "../store/loading";
 import { storeToRefs } from "pinia";
-import { NButton, NTag } from "naive-ui";
+import { NButton } from "naive-ui";
+import { useBackStore } from "../store/backUser";
 
+const backUserStore = useBackStore();
+const { backUserInfo } = storeToRefs(backUserStore);
 const router = useRouter();
 const route = useRoute();
 const loadingStore = useLoadingStore();
@@ -55,8 +57,7 @@ const logout = async () => {
       setLoading(true);
       await useApi.b_logout();
       setLoading(false);
-      deletCookie("bUserName");
-      deletCookie("bUserId");
+      backUserStore.clearUserStore();
       router.push({ path: "/backend" });
     }
   });
@@ -76,23 +77,6 @@ const option = [
     },
   },
 ];
-
-const userName = computed(() => {
-  const cookie = document.cookie;
-  const cookiesArray = cookie.split(";");
-  let username = "";
-  cookiesArray.forEach((item) => {
-    const [name, value] = item.trim().split("=");
-    if (name === "bUserName") {
-      username = value;
-    }
-  });
-  return username || "";
-});
-
-const deletCookie = (name) => {
-  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-};
 </script>
 
 <style lang="scss" scoped>
