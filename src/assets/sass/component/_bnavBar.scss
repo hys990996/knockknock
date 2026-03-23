@@ -1,0 +1,12 @@
+.b_Nvabar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 100px;
+  padding: 48px 20px;
+
+  &__logo {
+    align-self: center;
+    width: 60%;
+  }
+}

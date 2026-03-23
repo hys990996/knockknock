@@ -1,54 +1,341 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/home.vue'
+import { createRouter, createWebHistory, useRouter } from "vue-router";
+import Home from "@/views/home.vue";
+import Backlayout from "../components/Backlayout.vue";
+import { useBackStore } from "../store/backUser";
+import { storeToRefs } from "pinia";
+import dayjs from "dayjs";
+/**
+ * 後台路由守衛
+ */
 
+const requireBackAuth = (to, from, next) => {
+  const router = useRouter();
+  const backStore = useBackStore();
+  const { backUserInfo } = storeToRefs(backStore);
+  const isExpire = dayjs().isAfter(backUserInfo.value.expire);
+  const isEntry = backUserInfo.value.token && !isExpire;
+  if (isEntry) {
+    next();
+    return;
+  } else {
+    router.push({ name: "b_index" });
+  }
+};
 
 const routes = [
-    {
-        // 前台 首頁
-        path: '/',
-        name: 'home',
-        component: Home
+  {
+    // 前台 首頁
+    path: "/home",
+    name: "home",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
-    {
-        // 前台 聊天大廳
-        path: '/chatting_room',
-        name: 'chatting_room',
-        component: () => import('../views/chatting_room.vue')
+    component: Home,
+  },
+  {
+    // 前台 搜尋好友
+    path: "/search_friends/:keyword?",
+    name: "search_friends",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
-    {
-        // 前台 遊樂場
-        path: '/playground',
-        name: 'playground',
-        component: () => import('../views/playground.vue')
+    component: () => import("@/views/search_friends.vue"),
+  },
+  {
+    // 前台 聊天大廳
+    path: "/chatting_room",
+    name: "chatting_room",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
-    {
-        // 前台 主題活動
-        path: '/activity',
-        name: 'activity',
-        component: () => import('../views/activity.vue')
+    component: () => import("@/views/chatting_room.vue"),
+  },
+  {
+    // 前台 遊樂場
+    path: "/playground",
+    name: "playground",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
-    {
-        // 前台 關於我們
-        path: '/about-us',
-        name: 'about-us',
-        component: () => import('../views/about_us.vue')
+    component: () => import("@/views/playground.vue"),
+  },
+  {
+    // 前台 貪食蛇
+    path: "/playground/snake",
+    name: "snake",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
-    {
-        // 前台 我有問題
-        path: '/customer-service',
-        name: 'service',
-        component: () => import('../views/service.vue')
+    component: () => import("@/views/snake.vue"),
+  },
+  {
+    // 前台 白萬小學堂
+    path: "/playground/million_school_start",
+    name: "million_school_start",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
     },
+    component: () => import("../views/million_school_start.vue"),
+  },
+  {
+    // 前台 白萬小學堂
+    path: "/playground/million_school",
+    name: "million_school",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/million_school.vue"),
+  },
+  {
+    // 前台 白萬小學堂
+    path: "/playground/million_school_end",
+    name: "million_school_end",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("../views/million_school_end.vue"),
+  },
+  {
+    // 前台 主題活動
+    path: "/activity",
+    name: "activity",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/activity.vue"),
+  },
+  {
+    // 前台 活動詳細頁
+    path: "/activity/activity_info/:activityID?",
+    name: "activity_info",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    props: true,
+    component: () => import("@/views/activity_info.vue"),
+  },
+  {
+    // 前台 活動搜尋結果
+    path: "/activity/activity_search/:activityRegion?",
+    name: "activity_search",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    props: true,
+    component: () => import("@/views/activity_search.vue"),
+  },
+  {
+    // 前台 關於我們
+    path: "/about-us",
+    name: "about-us",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/about_us.vue"),
+  },
+  {
+    // 前台 我有問題
+    path: "/customer-service",
+    name: "service",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/service.vue"),
+  },
+  {
+    // 前台 聯繫我們
+    path: "/customer-service/contact_us",
+    name: "contact_us",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/contact_us.vue"),
+  },
+  {
+    // 前台 常見問題
+    path: "/customer-service/qa",
+    name: "qa",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/qa.vue"),
+  },
+  {
+    // 前台 客服小幫手
+    path: "/customer-service/chatbot",
+    name: "chatbot",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/chatbot.vue"),
+  },
+  {
+    // 前台 個人版面
+    path: "/mypage",
+    name: "mypage",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/mypage.vue"),
+  },
+  {
+    // 前台 編輯個人版面
+    path: "/mypage/mypage_edit",
+    name: "mypage_edit",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/mypage_edit.vue"),
+  },
+  {
+    // 前台 我要去流浪
+    path: "/mypage/wander",
+    name: "wander",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/wander.vue"),
+  },
+  {
+    // 前台 好友清單
+    path: "/mypage/friends",
+    name: "friends",
+    meta: {
+      requiresAuth: true, // 添加一個 meta 屬性來標記需要登錄的頁面
+    },
+    component: () => import("@/views/friends.vue"),
+  },
+  {
+    // 前台 會員登入
+    path: "/",
+    name: "member_login",
+    component: () => import("@/views/member_login.vue"),
+  },
+  {
+    // 前台 會員註冊
+    path: "/sign_up",
+    name: "member_signup",
+    component: () => import("@/views/member_signup.vue"),
+  },
+  {
+    // 前台 會員忘記密碼
+    path: "/password_reset",
+    name: "member_pwd_reset",
+    component: () => import("@/views/member_pwd_reset.vue"),
+  },
 
-]
+  /*--------------------------  backside --------------------------*/
 
+  {
+    // 後台 登入頁
+    path: "/backend",
+    name: "b_index",
+    component: () => import("@/views/b_index.vue"),
+    children: [],
+  },
+  // 路由配置
+  {
+    path: "/backend/member_management",
+    component: Backlayout,
+    children: [
+      {
+        path: "",
+        name: "b_member",
+        component: () => import("@/views/b_member.vue"),
+        meta: { requireAuth: true, title: "會員管理" },
+        beforeEnter: requireBackAuth,
+      },
+    ],
+  },
+  {
+    path: "/backend/activity_management",
+    component: Backlayout,
+    children: [
+      {
+        path: "",
+        name: "b_activity",
+        component: () => import("@/views/b_activity.vue"),
+        meta: { requireAuth: true, title: "活動管理" },
+        beforeEnter: requireBackAuth,
+      },
+    ],
+  },
+  {
+    path: "/backend/service_management",
+    component: Backlayout,
+    children: [
+      {
+        path: "",
+        name: "b_service",
+        component: () => import("@/views/b_service.vue"),
+        meta: { requireAuth: true, title: "客服管理" },
+        beforeEnter: requireBackAuth,
+      },
+    ],
+  },
+  {
+    path: "/backend/mission_management",
+    component: Backlayout,
+    children: [
+      {
+        path: "",
+        name: "b_mission",
+        component: () => import("@/views/b_mission.vue"),
+        meta: { requireAuth: true, title: "任務管理" },
+        beforeEnter: requireBackAuth,
+      },
+    ],
+  },
+  {
+    path: "/backend/qa_management",
+    component: Backlayout,
+    children: [
+      {
+        path: "",
+        name: "b_qa",
+        component: () => import("@/views/b_qa.vue"),
+        meta: { requireAuth: true, title: "常見問題管理" },
+        beforeEnter: requireBackAuth,
+      },
+    ],
+  },
+
+  /*--------------------------  404 --------------------------*/
+  {
+    path: "/:catchAll(.*)", // 任何不存在的路徑都會跳轉到首頁
+    component: Home,
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+});
 
+router.beforeEach((to, from, next) => {
+  const noAuthPages = ["/", "/sign_up", "/password_reset"];
+  const cookies = document.cookie.split("; ");
 
+  const webCookie = [];
 
-export default router
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].split("="); // ['userID', '1']、['userName', '王小明']
+    if (cookie[0] == "userName") {
+      webCookie.push(cookie);
+    } else if (cookie[0] == "userID") {
+      webCookie.push(cookie);
+    }
+  }
 
+  if (noAuthPages.includes(to.path) && webCookie.length > 0) {
+    // 如果要訪問的頁面為登入頁，但用戶已經登錄，則跳轉到首頁
+    next({ name: "home" });
+  } else if (to.meta.requiresAuth && webCookie.length < 1) {
+    // 如果要訪問的頁面需要登錄，但用戶未登錄，則跳轉到登錄頁面
+    next({ name: "member_login" });
+  } else {
+    next();
+  }
+});
+
+export default router;

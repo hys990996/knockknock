@@ -1,0 +1,69 @@
+<script setup>
+import { nextTick, ref } from "vue";
+import { useApi } from "../util/useApi";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
+import { useBackStore } from "../store/backUser";
+import dayjs from "dayjs";
+import { useMessage } from "naive-ui";
+
+const useBackUserStore = useBackStore();
+const router = useRouter();
+const loading = ref(false);
+
+const username = ref("");
+const password = ref("");
+const message = useMessage();
+
+const login = async () => {
+  loading.value = true;
+  const response = await useApi.b_login({
+    username: username.value,
+    password: password.value,
+  });
+  loading.value = false;
+  if (!response.success) {
+    Swal.fire({
+      title: "登入失敗",
+      text: "請重新確認您的帳號與密碼",
+    });
+    return;
+  }
+  useBackUserStore.setUserStore({
+    userName: response.username,
+    token: response.token,
+    expire: dayjs().add(1, "hour"),
+  });
+  message.success("登入成功");
+  router.push("/backend/member_management");
+};
+</script>
+
+<template>
+  <div class="b_index">
+    <b-loading is-full-page v-model="loading" :can-cancel="true"></b-loading>
+    <div class="b_index_login">
+      <router-link :to="{ name: 'home' }" class="nav-brandlogo">
+        <img src="../assets/images/logo/logo_desk.svg" alt="logo" />
+      </router-link>
+      <h1>後台管理員登入</h1>
+      <div class="login-section">
+        <n-input
+          v-model:value="username"
+          placeholder="請輸入使用者名稱"
+          size="small"
+        />
+        <n-input
+          type="password"
+          show-password-on="mousedown"
+          v-model:value="password"
+          placeholder="請輸入使用者名稱"
+          size="small"
+        />
+        <n-button strong secondary type="info" @click="login" size="large">
+          登入
+        </n-button>
+      </div>
+    </div>
+  </div>
+</template>

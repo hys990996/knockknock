@@ -1,0 +1,56 @@
+.b_index {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+
+  padding: 50px;
+
+  .b_index_login {
+    border-radius: 30px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2effb;
+    font-size: $fs24;
+    color: $primary-color-1;
+
+    input {
+      width: 460px;
+    }
+  }
+
+  img {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+  }
+
+  .login-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px 0;
+    gap: 32px;
+
+    p {
+      color: red;
+      margin-bottom: 20px;
+      font-size: $fs20;
+    }
+
+    label {
+      margin: 10px 0;
+    }
+
+    input {
+      margin: 10px 0;
+    }
+  }
+}
